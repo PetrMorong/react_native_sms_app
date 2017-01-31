@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet,  Text,  View, Image, Dimensions, TextInput, TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from 'react-native-button';
+import ElevatedView from 'react-native-elevated-view'
 
 const window = Dimensions.get('window');
 
@@ -9,7 +10,7 @@ export default class Dashboard  extends Component {
     constructor(props){
         super(props)
         this.state = {
-            text: 'Campaign name',
+            text: '',
             campaignType: 'sms'
         }
     }
@@ -58,6 +59,7 @@ export default class Dashboard  extends Component {
                             style={styles.input}
                             onChangeText={(text) => this.setState({text})}
                             value={this.state.text}
+                            placeholder='Campaign name'
                         />
                         <View style={styles.wrap}>
                             <TouchableNativeFeedback onPress={(event) => this.chooseType('sms')} >
@@ -67,14 +69,13 @@ export default class Dashboard  extends Component {
                                 {smartSms}
                             </TouchableNativeFeedback>
                         </View>
-                        <View >
-                            <Button
-                                style={styles.button}
-                                styleDisabled={{color: '#757575'}}
-                                onPress={() => this.navigateToScreen('CampaignRecipients')}>
-                                CREATE CAMPAIGN
-                            </Button>
-                        </View>
+                        <Button
+                            style={styles.button}
+                            elevation={2}
+                            styleDisabled={{color: '#757575'}}
+                            onPress={() => this.navigateToScreen('CampaignRecipients')}>
+                            CREATE CAMPAIGN
+                        </Button>
                     </View>
                 </View>
             </View>
@@ -95,7 +96,10 @@ export default class Dashboard  extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundColor: 'white',
+        flex: 1
+
     },
     padding: {
         padding: 30
@@ -114,8 +118,8 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     wrap: {
-        marginTop: 20,
-       justifyContent: 'space-between',
+        marginTop: 10,
+       justifyContent: 'center',
        flexDirection: 'row'
     },
     choiceWrap: {
@@ -125,7 +129,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FAFAFA'
+        backgroundColor: '#FAFAFA',
+        margin: 15
     },
     choiceWrapActive: {
         width: 100,
@@ -134,7 +139,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FAFAFA'
+        backgroundColor: '#FAFAFA',
+        margin: 15
     },
     choiceWrapTwo: {
         width: 150,
@@ -143,7 +149,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FAFAFA'
+        backgroundColor: '#FAFAFA',
+        margin: 15
     },
     choiceWrapTwoActive: {
         width: 150,
@@ -152,7 +159,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FAFAFA'
+        backgroundColor: '#FAFAFA',
+        margin: 15
     },
     flexRow: {
         flexDirection: 'row'
@@ -172,15 +180,16 @@ const styles = StyleSheet.create({
         color: '#26A69A'
     },
     button: {
-        fontSize: 16,
-        width: 170,
+        fontSize: 14,
+        width: 160,
         fontWeight: 'normal',
         color: 'white',
-        height: 50,
-        paddingTop: 13,
-        marginTop: 30,
+        height: 45,
+        paddingTop: 12,
+        marginTop: 35,
         backgroundColor: '#BE2166',
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
+        borderRadius: 2
     }
 
 });

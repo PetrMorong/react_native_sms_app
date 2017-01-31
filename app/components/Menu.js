@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     avatarContainer: {
-        height: window.height / 3,
+        height: 200,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',

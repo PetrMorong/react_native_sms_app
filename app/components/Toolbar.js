@@ -4,25 +4,43 @@
 import React, { Component } from 'react';
 import { StyleSheet,  Text,  View, TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ElevatedView from 'react-native-elevated-view'
+
 
 export default class Toolbar extends Component {
     render() {
+        let leftIcon;
+        if(this.props.back){
+            leftIcon = <TouchableNativeFeedback  onPress={(event) => this.navigateToScreen(this.props.backLink)} >
+                <Icon style={styles.menuIcon} name="arrow-back" size={30}/>
+            </TouchableNativeFeedback>;
+        }else{
+            leftIcon = <TouchableNativeFeedback   onPress={(event) => this.openMenu()} >
+                <Icon style={styles.menuIcon} name="menu" size={30}/>
+            </TouchableNativeFeedback>;
+
+        }
+
         return (
-            <View style={styles[this.props.background]}>
-                <TouchableNativeFeedback underlayColor = {'red'}  onPress={(event) => this.openMenu()} >
-                    <Icon style={styles.menuIcon} name="menu" size={30}/>
-                </TouchableNativeFeedback>
+            <ElevatedView style={styles[this.props.background]} elevation={this.props.elevation}>
+                {leftIcon}
                 <View style={{flex: 1}}>
                     <Text style={styles.screenName} >{this.props.title}</Text>
                 </View>
                 <Icon style={styles.creditIcon} name={this.props.icon} size={25}/>
                 <Text style={styles.creditNumber}> {this.props.credit}</Text>
-            </View>
+            </ElevatedView>
         );
     }
 
     openMenu(){
         this.props.openMenu();
+    }
+
+    navigateToScreen(link){
+        this.props.navigator.push({
+            ident: link
+        })
     }
 }
 

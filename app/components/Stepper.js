@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { StyleSheet,  Text,  View, TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ElevatedView from 'react-native-elevated-view'
 
 
 export default class Stepper extends Component{
@@ -104,13 +105,13 @@ export default class Stepper extends Component{
         }
 
         return(
-            <View style={styles.container}>
+            <ElevatedView style={styles.container} elevation={2}>
                 {firstStep}
                 <View style={styles.line}></View>
                 {secondStep}
                 <View style={styles.line}></View>
                 {thirdStep}
-            </View>
+            </ElevatedView>
 
         )
     }
@@ -123,7 +124,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 5,
         paddingLeft: 15,
-        paddingRight: 15
+        paddingRight: 15,
+        backgroundColor: 'white'
     },
     line: {
         marginLeft: 5,
