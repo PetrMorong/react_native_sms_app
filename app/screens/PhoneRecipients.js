@@ -3,8 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet,  Text,  View, Image, ActivityIndicator, TextInput, TouchableNativeFeedback } from 'react-native';
-import Button from 'react-native-button';
+import { StyleSheet, Button,   Text,  View, Image, ActivityIndicator, TextInput, TouchableNativeFeedback } from 'react-native';
 import { Checkbox } from 'react-native-material-design';
 
 export default class PhoneRecipients extends Component{
@@ -45,7 +44,7 @@ export default class PhoneRecipients extends Component{
             }
 
             return(
-                <TouchableNativeFeedback key={i}>
+                <View key={i}>
                     <View style={styles.item}>
                         <View style={styles.thumbnail}>
                             {thumbnail}
@@ -58,7 +57,7 @@ export default class PhoneRecipients extends Component{
                             checked={this.state.contacts[i][3]}
                             onCheck={() => this.selectOne(i)}/>
                     </View>
-                </TouchableNativeFeedback>
+                </View>
             );
         });
 
@@ -88,7 +87,17 @@ export default class PhoneRecipients extends Component{
         }
         return(
             <View style={styles.container}>
-                {view}
+                <View style={{flex: 1}}>
+                    {view}
+                </View>
+                <View style={styles.buttonWrap}>
+                    <Button
+                        style={styles.button}
+                        elevation={2}
+                        color="#BE2166"
+                        title="Save"
+                        onPress={() => this.save()}/>
+                </View>
             </View>
         )
     }
@@ -105,6 +114,10 @@ export default class PhoneRecipients extends Component{
         let array = this.state.contacts.slice();
         array[i][3] = !array[i][3];
         this.setState({contats: array})
+    }
+
+    save(){
+
     }
 
 }
@@ -144,6 +157,13 @@ const styles = StyleSheet.create({
     checkbox: {
         backgroundColor: '#BE2166',
         color: '#BE2166',
-
+    },
+    buttonWrap: {
+        width: 160,
+        paddingTop: 12,
+        marginTop: 35,
+        alignSelf: 'flex-end',
+        marginBottom: 15
     }
+
 });

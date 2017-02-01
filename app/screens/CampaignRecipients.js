@@ -2,10 +2,10 @@
  * Created by Petr on 30.1.2017.
  */
 import React, { Component } from 'react';
-import { StyleSheet,  Text,  View, Image, Dimensions, TextInput, TouchableNativeFeedback, ScrollView} from 'react-native';
+import { StyleSheet, Button,  Text,  View, Image, Dimensions, TextInput, TouchableNativeFeedback, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Button from 'react-native-button';
-import Stepper from '../components/Stepper';
+import Step from '../components/StepperSingleStep'
+import ElevatedView from 'react-native-elevated-view'
 
 
 
@@ -15,37 +15,21 @@ export default class Dashboard  extends Component {
     constructor(props){
         super(props);
         this.state = {
-            toggleAddRecipient: false
+            recipients: []
         }
     }
 
     render() {
-        let recipient;
-        if(this.state.toggleAddRecipient){
-            recipient = <View>
-                <View style={styles.recipientSmallWrap}>
-                    <TextInput style={styles.firstName} placeholder='First name'/>
-                    <TextInput style={styles.lastName} placeholder='Last name'/>
-                </View>
-                <TextInput style={styles.phoneNumber} keyboardType='numeric' placeholder='Phone number'/>
-                <Button
-                    style={styles.buttonRecipient}
-                    styleDisabled={{color: '#757575'}}
-                    onPress={() => this.navigateToScreen('CampaignRecipients')}>
-                    Add recipient
-                </Button>
-                <View style={styles.separator}/>
-            </View>
-        }
-
         return (
             <View style={styles.container}>
-                <Stepper
-                    stepOneFinished={true}
-                    stepTwoFinished={false}
-                    stepThreeFinished={false}
-                    active={1}/>
-                <ScrollView  scrollsToTop={false} style={styles.smallContainer}>
+                <ElevatedView style={styles.stepperContainer} elevation={2}>
+                    <Step type="active" number="1" title="Recipients"/>
+                    <View style={styles.line}/>
+                    <Step type="done" number="2" title="SMS-text"/>
+                    <View style={styles.line}/>
+                    <Step type="disabled" number="3" title="Summary"/>
+                </ElevatedView>
+                <View  scrollsToTop={false} style={styles.smallContainer}>
                     <TouchableNativeFeedback onPress={() => this.navigateToScreen('PhoneRecipients')}>
                         <View style={styles.linkWrap}>
                             <Icon style={styles.blueIcon} name="phone" size={35}/>
@@ -53,35 +37,64 @@ export default class Dashboard  extends Component {
                         </View>
                     </TouchableNativeFeedback>
                     <View style={styles.separator}/>
-                    <TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('KeypadRecipients')}>
                         <View style={styles.linkWrap}>
                             <Icon style={styles.blueIcon} name="extension" size={35}/>
                             <Text style={styles.blueText}>Recipients from Bulkgate </Text>
                         </View>
                     </TouchableNativeFeedback>
                     <View style={styles.separator}/>
-                    <TouchableNativeFeedback onPress={() => this.toggleAddRecipient()}>
+                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('KeypadRecipients')}>
                         <View style={styles.linkWrap}>
                             <Icon style={styles.blueIcon} name="dialpad" size={35}/>
                             <Text style={styles.blueText}>Add recipient</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    {recipient}
-                </ScrollView>
+                </View>
+                <View style={{flex: 1}}/>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 10,marginLeft: 15, marginRight: 15 }}>
+                    <View style={{alignItems: 'center'}}>
+                        <Text style={{fontSize: 16}}>0</Text>
+                        <Icon style={{marginTop: 5}} name="phone" size={25}/>
+                    </View>
+                    <View style={{flex: 1}}/>
+                    <View style={{alignItems: 'center'}}>
+                        <Text style={{fontSize: 16}}>5</Text>
+                        <Icon style={{marginTop: 5}} name="extension" size={25}/>
+                    </View>
+                    <View style={{flex: 1}}/>
+
+                    <View style={{alignItems: 'center'}}>
+                        <Text style={{fontSize: 16}}>9</Text>
+                        <Icon style={{marginTop: 5}} name="dialpad" size={25}/>
+                    </View>
+                    <View style={{flex: 1}}/>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text  >TOTAL</Text>
+                        <Text style={{marginLeft: 10, backgroundColor: '#4CAF50', padding: 5, color: 'white', borderRadius: 2}}>14</Text>
+                    </View>
+                    <View style={styles.separator}/>
+                </View>
+                <View style={styles.separator}/>
+                <View style={styles.buttonWrap}>
+                    <Button
+                        style={styles.button}
+                        elevation={2}
+                        color="#BE2166"
+                        title="next"
+                        onPress={() => this.navigateToScreen('CampaignText')}/>
+                </View>
+
             </View>
         );
     }
 
-    toggleAddRecipient(){
-        this.setState({toggleAddRecipient: !this.state.toggleAddRecipient})
-    }
 
     navigateToScreen(link){
         this.props.navigator.push({
             ident: link
         })
     }
-
 
 }
 
@@ -94,6 +107,23 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         paddingTop: 5
+    },
+    stepperContainer: {
+        height: 80,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 5,
+        paddingLeft: 15,
+        paddingRight: 15,
+        backgroundColor: 'white'
+    },
+    line: {
+        marginLeft: 5,
+        marginRight: 5,
+        flex: 1,
+        borderBottomColor: '#D0DFE8',
+        borderBottomWidth: 1,
+        marginBottom: 15
     },
     blueIcon: {
         color: '#1580FD',
@@ -112,39 +142,14 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#E0E0E0'
     },
-    recipientSmallWrap: {
-        flexDirection: 'row',
-    },
-    firstName: {
-        flex: 1,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 5
-    },
-    lastName: {
-        flex: 1,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 5
-    },
-    phoneNumber: {
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 5
-    },
-    buttonRecipient: {
-        fontSize: 16,
-        width: 150,
-        fontWeight: 'normal',
-        color: '#BE2166',
-        height: 50,
-        paddingTop: 13,
-        marginTop: 10,
-        borderColor: '#BE2166',
-        borderWidth: 1,
+
+    buttonWrap: {
+        width: 160,
+        paddingTop: 12,
+        justifyContent: 'flex-end',
         alignSelf: 'flex-end',
-        marginRight: 10,
-        marginBottom: 15
+        marginBottom: 15,
+        marginRight: 15
     }
 
 });

@@ -11,6 +11,8 @@ import Dashboard from '../screens/Dashboard';
 import CampaignCreate from '../screens/CampaignCreate';
 import CampaignRecipients from '../screens/CampaignRecipients'
 import PhoneRecipients from '../screens/PhoneRecipients'
+import KeypadRecipients from '../screens/KeypadRecipients'
+import CampaignText from '../screens/CampaignText'
 
 export default class AppNavigator extends Component {
 
@@ -88,6 +90,46 @@ export default class AppNavigator extends Component {
                         backLink='CampaignRecipients'
                         navigator={navigator}/>
                     <PhoneRecipients />
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'KeypadRecipients'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Add contact"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='CampaignRecipients'
+                        navigator={navigator}/>
+                    <KeypadRecipients />
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'CampaignText'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Campaign SMS text"
+                        elevation={2}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <CampaignText />
                 </DrawerLayoutAndroid>
             );
         }

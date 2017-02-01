@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet,  Text,  View, Image, Dimensions, TextInput, TouchableNativeFeedback } from 'react-native';
+import { Button, StyleSheet,  Text,  View, Image, Dimensions, TextInput, TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Button from 'react-native-button';
 import ElevatedView from 'react-native-elevated-view'
 
 const window = Dimensions.get('window');
@@ -69,14 +68,15 @@ export default class Dashboard  extends Component {
                                 {smartSms}
                             </TouchableNativeFeedback>
                         </View>
-                        <Button
-                            style={styles.button}
-                            elevation={2}
-                            styleDisabled={{color: '#757575'}}
-                            onPress={() => this.navigateToScreen('CampaignRecipients')}>
-                            CREATE CAMPAIGN
-                        </Button>
                     </View>
+                </View>
+                <View style={styles.buttonWrap}>
+                    <Button
+                        style={styles.button}
+                        elevation={2}
+                        color="#BE2166"
+                        title="Create"
+                        onPress={() => this.navigateToScreen('CampaignRecipients')}/>
                 </View>
             </View>
         );
@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: 'white',
-        flex: 1
+        backgroundColor: 'white'
 
     },
     padding: {
@@ -130,7 +129,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#FAFAFA',
-        margin: 15
+        margin: 15,
+        borderRadius: 2
     },
     choiceWrapActive: {
         width: 100,
@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#FAFAFA',
-        margin: 15
+        margin: 15,
+        borderRadius: 2
     },
     choiceWrapTwo: {
         width: 150,
@@ -150,7 +151,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#FAFAFA',
-        margin: 15
+        margin: 15,
+        borderRadius: 2
     },
     choiceWrapTwoActive: {
         width: 150,
@@ -160,7 +162,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#FAFAFA',
-        margin: 15
+        margin: 15,
+        borderRadius: 2
     },
     flexRow: {
         flexDirection: 'row'
@@ -179,17 +182,12 @@ const styles = StyleSheet.create({
         marginRight: 10,
         color: '#26A69A'
     },
-    button: {
-        fontSize: 14,
+    buttonWrap: {
         width: 160,
-        fontWeight: 'normal',
-        color: 'white',
-        height: 45,
         paddingTop: 12,
-        marginTop: 35,
-        backgroundColor: '#BE2166',
+        marginRight: 15,
+        marginBottom: 15,
         alignSelf: 'flex-end',
-        borderRadius: 2
     }
 
 });
