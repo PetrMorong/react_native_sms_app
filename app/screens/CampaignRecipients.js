@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     },
 
     buttonWrap: {
-        width: 160,
+        width: 110,
         paddingTop: 12,
         justifyContent: 'flex-end',
         alignSelf: 'flex-end',

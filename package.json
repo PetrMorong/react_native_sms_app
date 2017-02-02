@@ -17,6 +17,7 @@
     "react-native-button": "^1.7.1",
     "react-native-checkbox": "^1.1.0",
     "react-native-contacts": "^0.7.1",
+    "react-native-datepicker": "^1.4.3",
     "react-native-elevated-view": "0.0.1",
     "react-native-material-button": "0.0.4",
     "react-native-material-design": "^0.3.7",
