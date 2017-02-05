@@ -54,7 +54,7 @@ export default class Menu extends Component {
                             <Text style={styles.menuLink} >Start campaign</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignList')}>
                         <View style={styles.menuRow}>
                             <Icon name="sms" style={styles.menuRightIcon}/>
                             <Text style={styles.menuLink} >Campaigns</Text>

@@ -16,7 +16,7 @@ export default class Toolbar extends Component {
             </TouchableNativeFeedback>;
         }else{
             leftIcon = <TouchableNativeFeedback   onPress={(event) => this.openMenu()} >
-                <Icon style={styles.menuIcon} name="menu" size={30}/>
+                <Icon style={styles.menuIcon} name="menu" size={25}/>
             </TouchableNativeFeedback>;
 
         }
@@ -27,7 +27,7 @@ export default class Toolbar extends Component {
                 <View style={{flex: 1}}>
                     <Text style={styles.screenName} >{this.props.title}</Text>
                 </View>
-                <Icon style={styles.creditIcon} name={this.props.icon} size={25}/>
+                <Icon style={styles.creditIcon} name={this.props.icon} size={22}/>
                 <Text style={styles.creditNumber}> {this.props.credit}</Text>
             </ElevatedView>
         );
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     },
     screenName: {
         color: 'white',
-        marginLeft: 20,
-        fontSize: 20
+        marginLeft: 15,
+        fontSize: 18
     },
     creditIcon: {
         marginRight: 5,
