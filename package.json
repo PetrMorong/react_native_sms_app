@@ -19,6 +19,7 @@
     "react-native-contacts": "^0.7.1",
     "react-native-datepicker": "^1.4.3",
     "react-native-elevated-view": "0.0.1",
+    "react-native-image-picker": "^0.25.1",
     "react-native-material-button": "0.0.4",
     "react-native-material-design": "^0.3.7",
     "react-native-side-menu": "^0.20.1",

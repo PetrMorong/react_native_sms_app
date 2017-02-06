@@ -8,15 +8,18 @@ import { DrawerLayoutAndroid, View, Text } from 'react-native'
 import Toolbar from '../components/Toolbar'
 
 import Dashboard from '../screens/Dashboard';
-import CampaignCreate from '../screens/campaign/CampaignCreate';
-import CampaignRecipients from '../screens/campaign/CampaignRecipients'
-import PhoneRecipients from '../screens/campaign/PhoneRecipients'
-import KeypadRecipients from '../screens/campaign/KeypadRecipients'
-import CampaignText from '../screens/campaign/CampaignText'
-import CampaignSummary from '../screens/campaign/CampaignSummary'
-import CampaignDashboard from '../screens/campaign/CampaignDashboard'
+import CampaignCreate from '../screens/Campaign/CampaignCreate';
+import CampaignRecipients from '../screens/Campaign/CampaignRecipients'
+import PhoneRecipients from '../screens/Campaign/PhoneRecipients'
+import KeypadRecipients from '../screens/Campaign/KeypadRecipients'
+import CampaignText from '../screens/Campaign/CampaignText'
+import CampaignSummary from '../screens/Campaign/CampaignSummary'
+import CampaignDashboard from '../screens/Campaign/CampaignDashboard'
 import CampaignList from '../screens/campaignList'
-import CampaignDeal from '../screens/campaign/CampaignDeal'
+import CampaignDeal from '../screens/Campaign/CampaignDeal'
+
+import StoreCreate from '../screens/Store/StoreCreate'
+import StoreSettings from '../screens/Store/StoreSettings'
 
 export default class AppNavigator extends Component {
 
@@ -204,11 +207,49 @@ export default class AppNavigator extends Component {
                         openMenu={() => this.drawer.openDrawer()}
                         icon="account-balance-wallet"
                         background="container"
-                        title="Campaign dashboard"
+                        title="Deal settings"
                         elevation={2}
                         credit={this.props.credit}
                         navigator={navigator}/>
                     <CampaignDeal navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'StoreCreate'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        title="Create store"
+                        background="containerNoBg"
+                        elevation={0}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <StoreCreate navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'StoreSettings'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        title="Store"
+                        background="container"
+                        elevation={2}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <StoreSettings navigator={navigator}/>
                 </DrawerLayoutAndroid>
             );
         }

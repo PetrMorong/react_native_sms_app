@@ -34,6 +34,9 @@
 		1C70BB1930C74A29BF9D0260 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA5A00015831498185B423C8 /* Octicons.ttf */; };
 		D31CDB1FFE6F451694D95ECE /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B2B131AC1924E199D243603 /* SimpleLineIcons.ttf */; };
 		F64F92B551944CE39027C734 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6044EC83DB147998AB60326 /* Zocial.ttf */; };
+		78EB1B63133D4C44B3837DF1 /* libRCTAddressBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA24CE913584E9F9325BAB6 /* libRCTAddressBook.a */; };
+		89336625F7C84AF0874B0564 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AD4F88670E4FC7894CCAF3 /* libRCTContacts.a */; };
+		F5410C86A34C4CCCA5D1A9D3 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D801288580E4CC2A154DD31 /* libRNImagePicker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -256,6 +259,12 @@
 		BA5A00015831498185B423C8 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1B2B131AC1924E199D243603 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		E6044EC83DB147998AB60326 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4CB5F78EFE004142A7982BB6 /* RCTAddressBook.xcodeproj */ = {isa = PBXFileReference; name = "RCTAddressBook.xcodeproj"; path = "../node_modules/react-native-addressbook/RCTAddressBook.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		BBA24CE913584E9F9325BAB6 /* libRCTAddressBook.a */ = {isa = PBXFileReference; name = "libRCTAddressBook.a"; path = "libRCTAddressBook.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		505CBAEEB25445D19D9D1653 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; name = "RCTContacts.xcodeproj"; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E4AD4F88670E4FC7894CCAF3 /* libRCTContacts.a */ = {isa = PBXFileReference; name = "libRCTContacts.a"; path = "libRCTContacts.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		6F430AA4AC814DC1A0B37BC2 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; name = "RNImagePicker.xcodeproj"; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		0D801288580E4CC2A154DD31 /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +292,9 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				3BC170C944FF4A5D96E36229 /* libRNVectorIcons.a in Frameworks */,
+				78EB1B63133D4C44B3837DF1 /* libRCTAddressBook.a in Frameworks */,
+				89336625F7C84AF0874B0564 /* libRCTContacts.a in Frameworks */,
+				F5410C86A34C4CCCA5D1A9D3 /* libRNImagePicker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +440,9 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				68A6FC48313147EEA8519F3C /* RNVectorIcons.xcodeproj */,
+				4CB5F78EFE004142A7982BB6 /* RCTAddressBook.xcodeproj */,
+				505CBAEEB25445D19D9D1653 /* RCTContacts.xcodeproj */,
+				6F430AA4AC814DC1A0B37BC2 /* RNImagePicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -881,6 +896,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -897,6 +915,9 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/app.app/app";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};

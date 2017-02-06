@@ -18,7 +18,7 @@ export default class Root extends Component {
 
     render() {
         return (
-           <AppNavigator user={this.props.user} credit={this.props.credit} initialRoute={{ident: "CampaignDeal"}}/>
+           <AppNavigator user={this.props.user} credit={this.props.credit} initialRoute={{ident: "StoreCreate"}}/>
         )
     }
 

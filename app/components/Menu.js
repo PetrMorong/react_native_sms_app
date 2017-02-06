@@ -20,7 +20,9 @@ export default class Menu extends Component {
         super(props);
 
         this.state = {
-            toggleSms: false
+            toggleSms: false,
+            toggleStore: false,
+            togglePayments: false
         };
     }
 
@@ -32,6 +34,15 @@ export default class Menu extends Component {
 
     toggleItem(type){
         this.setState({toggleSms: !this.state[type]});
+        if(type == 'toggleSms'){
+            this.setState({toggleSms: !this.state[type], toggleStore: false, togglePayments: false});
+        }
+        if(type == 'toggleStore'){
+            this.setState({toggleStore: !this.state[type], toggleSms: false, togglePayments: false});
+        }
+        if(type == 'togglePayments'){
+            this.setState({togglePayments: !this.state[type], toggleSms: false, toggleStore: false});
+        }
     }
 
 
@@ -103,8 +114,52 @@ export default class Menu extends Component {
             </TouchableNativeFeedback>
         }
 
+        let store;
+        if(this.state.toggleStore){
+           store = <View>
+                <TouchableNativeFeedback onPress={() => this.toggleItem('toggleStore')}>
+                    <View style={styles.menuRowActive} >
+                        <Icon name="store" style={styles.menuRightIconActive}/>
+                        <Text style={styles.menuLinkActive}>Store</Text>
+                        <View style={{flex: 1}} />
+                        <Icon name="arrow-drop-down"  style={styles.menuChevronDownActive} size={25} />
+                    </View>
+                </TouchableNativeFeedback>
+                <View style={styles.collapsableBody}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('StoreCreate')}>
+                        <View style={styles.menuRow}>
+                            <Icon name="add" style={styles.menuRightIcon}/>
+                            <Text style={styles.menuLink} >Create store</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('StoreCreate')}>
+                        <View style={styles.menuRow}>
+                            <Icon name="store" style={styles.menuRightIcon}/>
+                            <Text style={styles.menuLink} >Stores</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
+                        <View style={styles.menuRow}>
+                            <Icon name="shopping-cart" style={styles.menuRightIcon}/>
+                            <Text style={styles.menuLink} >Orders</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
+            </View>
+        }else{
+           store = <TouchableNativeFeedback onPress={() => this.toggleItem('toggleStore')}>
+                <View style={styles.menuRow}>
+                    <Icon name="store" style={styles.menuRightIcon}/>
+                    <Text style={styles.menuLink}>Store</Text>
+                    <View style={{flex: 1}} />
+                    <Icon name="arrow-drop-down"  style={styles.menuChevronDown} size={25} />
+                </View>
+            </TouchableNativeFeedback>
+        }
+
+
         return (
-            <View style={styles.menu}>
+            <ScrollView style={styles.menu}>
                 <View style={styles.avatarContainer}>
                     <Image
                         style={styles.avatar}
@@ -112,7 +167,7 @@ export default class Menu extends Component {
                     <Text style={styles.name}>{this.props.user.user.name}</Text>
                     <Text style={styles.email}>moriandr73@gmail.com</Text>
                 </View>
-                <ScrollView scrollsToTop={false}>
+                <View scrollsToTop={false}>
                     <View style={styles.menuRow} >
                         <Icon name="home"  style={styles.menuRightIcon}/>
                         <Text style={styles.menuLink} onPress={(event) => this.navigateToScreen('Dashboard')}>Dashboard</Text>
@@ -122,11 +177,8 @@ export default class Menu extends Component {
                         {smsItem}
                     </View>
 
-                    <View style={styles.menuRow}>
-                        <Icon name="store"   style={styles.menuRightIcon}/>
-                        <Text style={styles.menuLink}>Store</Text>
-                        <View style={{flex: 1}} />
-                        <Icon name="arrow-drop-down"  style={styles.menuChevronDown} size={25} />
+                    <View>
+                        {store}
                     </View>
 
                     <View style={styles.menuRow}>
@@ -148,8 +200,8 @@ export default class Menu extends Component {
                         <Text style={styles.menuLink}>Help & feedback</Text>
                         <View style={{flex: 1}} />
                     </View>
-                </ScrollView>
-            </View>
+                </View>
+            </ScrollView>
         );
     }
 };
@@ -216,10 +268,11 @@ const styles = StyleSheet.create({
     menuLinkActive: {
         fontSize: 16,
         marginLeft: 20,
-        color: 'white'
+        color: 'white',
+        fontWeight: '500'
     },
     menuChevronDownActive: {
-        marginRight: (window.width / 7),
+        marginRight: 10,
         color: 'white'
     },
     menuRightIconActive: {

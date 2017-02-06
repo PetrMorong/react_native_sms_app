@@ -17,6 +17,7 @@ export default class CampaignText extends Component {
     constructor(props){
         super(props)
         this.state = {
+            type: 'smart',
             message: '',
             sender: '',
             senderValue: '',
@@ -114,18 +115,32 @@ export default class CampaignText extends Component {
             </View>
         }
 
+        let stepper;
+        if(this.state.type == 'classic'){
+            stepper =  <ElevatedView style={styles.stepperContainer} elevation={2}>
+                <Step type="active" number="1" title="Recipients"/>
+                <View style={styles.line}/>
+                <Step type="done" number="2" title="Sms text"/>
+                <View style={styles.line}/>
+                <Step type="disabled" number="3" title="Summary"/>
+            </ElevatedView>
+        }
 
+        if(this.state.type == 'smart'){
+            stepper =  <ElevatedView style={styles.stepperContainer} elevation={2}>
+                <Step type="active" number="1" title="Recipients"/>
+                <View style={styles.line}/>
+                <Step type="done" number="2" title="Deal"/>
+                <View style={styles.line}/>
+                <Step type="done" number="3" title="Sms text"/>
+                <View style={styles.line}/>
+                <Step type="disabled" number="4" title="Summary"/>
+            </ElevatedView>
+        }
 
-1
         return(
             <View style={styles.container}>
-                <ElevatedView style={styles.stepperContainer} elevation={2}>
-                    <Step type="done" number="1" title="Recipients"/>
-                    <View style={styles.line}/>
-                    <Step type="active" number="2" title="SMS-text"/>
-                    <View style={styles.line}/>
-                    <Step type="disabled" number="3" title="Summary"/>
-                </ElevatedView>
+                {stepper}
                 <ScrollView style={{padding: 15}}>
                     <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                         <Icon name="save" size={30} style={{color: '#404040'}}/>
@@ -217,9 +232,9 @@ export default class CampaignText extends Component {
                         {restriction}
                     </View>
                     <View style={styles.separator}/>
-                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignRecipients')}>
-                            <Text style={{marginBottom: 10, marginLeft: 10, color: 'black', fontSize: 15}}>BACK</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30}}>
+                        <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignDeal')}>
+                            <Text style={{marginTop: 10, marginLeft: 10, color: 'black', fontSize: 15}}>BACK</Text>
                         </TouchableNativeFeedback>
                         <View style={styles.buttonWrap}>
                             <Button
@@ -304,12 +319,11 @@ const styles = StyleSheet.create({
         paddingRight: 15
     },
     buttonWrap: {
-        marginTop: 15,
         width: 110,
         paddingTop: 12,
         justifyContent: 'flex-end',
         alignSelf: 'flex-end',
-        marginBottom: 25,
+
     }
 
 });
