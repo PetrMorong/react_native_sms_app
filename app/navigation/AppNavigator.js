@@ -20,6 +20,10 @@ import CampaignDeal from '../screens/Campaign/CampaignDeal'
 
 import StoreCreate from '../screens/Store/StoreCreate'
 import StoreSettings from '../screens/Store/StoreSettings'
+import StoreSettingsComponent from '../screens/Store/StoreSettingsComponent'
+import ColorPickerComponent from '../screens/Store/ColorPicker'
+import CompanyData from '../screens/Store/CompanyData'
+import ShortUrl from '../screens/Store/ShortUrl'
 
 export default class AppNavigator extends Component {
 
@@ -246,10 +250,93 @@ export default class AppNavigator extends Component {
                         icon="account-balance-wallet"
                         title="Store"
                         background="container"
-                        elevation={2}
+                        elevation={0}
                         credit={this.props.credit}
                         navigator={navigator}/>
                     <StoreSettings navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        //TODO remove
+        if(route.ident == 'StoreSettingsComponent'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        title="Store"
+                        background="container"
+                        elevation={0}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <StoreSettingsComponent navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'ColorPickerComponent'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Choose color"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='StoreSettings'
+                        navigator={navigator}/>
+                    <ColorPickerComponent navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'CompanyData'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Company data"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='StoreSettings'
+                        navigator={navigator}/>
+                    <CompanyData navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'ShortUrl'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Short url"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='StoreSettings'
+                        navigator={navigator}/>
+                    <ShortUrl navigator={navigator}/>
                 </DrawerLayoutAndroid>
             );
         }
