@@ -1,7 +1,6 @@
 /**
  * Created by Petr on 30.1.2017.
  */
-
 import React, { Component } from 'react';
 import { StyleSheet, Button,   Text,  View, Image, ActivityIndicator, TextInput, TouchableNativeFeedback } from 'react-native';
 import { Checkbox } from 'react-native-material-design';

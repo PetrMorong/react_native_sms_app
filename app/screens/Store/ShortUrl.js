@@ -11,7 +11,7 @@ export default class ShortUrl extends Component{
         super(props)
         this.state = {
             url: '',
-            showHelp: true
+            showHelp: false
         }
     }
 
@@ -29,7 +29,7 @@ export default class ShortUrl extends Component{
                         <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
                             <Text>Check it out here:</Text>
                             <View style={{ padding: 5, borderWidth: 2, borderColor: 'red', marginLeft: 15}}>
-                                <Text >www.url7.com/x1</Text>
+                                <Text style={{color: '#1580FD'}}>www.url7.com/x1</Text>
                             </View>
                         </View>
                     </View>

@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image,  Button,  Text,  View, Dimensions, TouchableWithoutFeedback, TouchableNativeFeedback, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ElevatedView from 'react-native-elevated-view';
 import Toolbar from '../components/Toolbar'
 
 

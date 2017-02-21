@@ -33,7 +33,6 @@ export default class Menu extends Component {
     }
 
     toggleItem(type){
-        this.setState({toggleSms: !this.state[type]});
         if(type == 'toggleSms'){
             this.setState({toggleSms: !this.state[type], toggleStore: false, togglePayments: false});
         }
@@ -71,31 +70,31 @@ export default class Menu extends Component {
                             <Text style={styles.menuLink} >Campaigns</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('HistoryList')}>
                         <View style={styles.menuRow}>
                             <Icon name="history" style={styles.menuRightIcon}/>
                             <Text style={styles.menuLink} >History</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('ScheduledList')}>
                         <View style={styles.menuRow}>
                             <Icon name="alarm-on" style={styles.menuRightIcon}/>
                             <Text style={styles.menuLink} >Scheduled</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('InboxList')}>
                         <View style={styles.menuRow}>
                             <Icon name="call-received" style={styles.menuRightIcon}/>
                             <Text style={styles.menuLink} >Inbox</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('OutboxList')}>
                         <View style={styles.menuRow}>
                             <Icon name="call-made" style={styles.menuRightIcon}/>
                             <Text style={styles.menuLink} >Outbox</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('Statistics')}>
                         <View style={styles.menuRow}>
                             <Icon name="timeline" style={styles.menuRightIcon}/>
                             <Text style={styles.menuLink} >Statistics</Text>
@@ -132,13 +131,13 @@ export default class Menu extends Component {
                             <Text style={styles.menuLink} >Create store</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('StoreCreate')}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('StoreList')}>
                         <View style={styles.menuRow}>
                             <Icon name="store" style={styles.menuRightIcon}/>
                             <Text style={styles.menuLink} >Stores</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('OrderList')}>
                         <View style={styles.menuRow}>
                             <Icon name="shopping-cart" style={styles.menuRightIcon}/>
                             <Text style={styles.menuLink} >Orders</Text>
@@ -151,6 +150,43 @@ export default class Menu extends Component {
                 <View style={styles.menuRow}>
                     <Icon name="store" style={styles.menuRightIcon}/>
                     <Text style={styles.menuLink}>Store</Text>
+                    <View style={{flex: 1}} />
+                    <Icon name="arrow-drop-down"  style={styles.menuChevronDown} size={25} />
+                </View>
+            </TouchableNativeFeedback>
+        }
+
+        let payments;
+        if(this.state.togglePayments){
+            payments = <View>
+                <TouchableNativeFeedback onPress={() => this.toggleItem('togglePayments')}>
+                    <View style={styles.menuRowActive} >
+                        <Icon name="payment" style={styles.menuRightIconActive}/>
+                        <Text style={styles.menuLinkActive}>Payments</Text>
+                        <View style={{flex: 1}} />
+                        <Icon name="arrow-drop-down"  style={styles.menuChevronDownActive} size={25} />
+                    </View>
+                </TouchableNativeFeedback>
+                <View style={styles.collapsableBody}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('BuyCredit')}>
+                        <View style={styles.menuRow}>
+                            <Icon name="account-balance-wallet" style={styles.menuRightIcon}/>
+                            <Text style={styles.menuLink} >Buy credit</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('Transactions')}>
+                        <View style={styles.menuRow}>
+                            <Icon name="compare-arrows" style={styles.menuRightIcon}/>
+                            <Text style={styles.menuLink} >Transactions</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
+            </View>
+        }else{
+            payments = <TouchableNativeFeedback onPress={() => this.toggleItem('togglePayments')}>
+                <View style={styles.menuRow}>
+                    <Icon name="payment" style={styles.menuRightIcon}/>
+                    <Text style={styles.menuLink}>Payments</Text>
                     <View style={{flex: 1}} />
                     <Icon name="arrow-drop-down"  style={styles.menuChevronDown} size={25} />
                 </View>
@@ -176,16 +212,11 @@ export default class Menu extends Component {
                     <View>
                         {smsItem}
                     </View>
-
                     <View>
                         {store}
                     </View>
-
-                    <View style={styles.menuRow}>
-                        <Icon name="payment"  style={styles.menuRightIcon}/>
-                        <Text style={styles.menuLink}>Payments</Text>
-                        <View style={{flex: 1}} />
-                        <Icon name="arrow-drop-down"  style={styles.menuChevronDown} size={25} />
+                    <View>
+                        {payments}
                     </View>
 
                     <View style={styles.separator} />

@@ -13,12 +13,12 @@ const mapStateToProps = (store) => {
 export default class Root extends Component {
 
     componentWillMount(){
-        this.props.dispatch(fetchUser())
+        //this.props.dispatch(fetchUser())
     }
 
     render() {
         return (
-           <AppNavigator user={this.props.user} credit={this.props.credit} initialRoute={{ident: "StoreSettingsComponent"}}/>
+           <AppNavigator user={this.props.user} credit={this.props.credit} initialRoute={{ident: "Dashboard"}}/>
         )
     }
 

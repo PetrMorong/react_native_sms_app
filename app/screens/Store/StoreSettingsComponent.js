@@ -9,6 +9,12 @@ const window = Dimensions.get('window');
 let Platform = require('react-native').Platform;
 let ImagePicker = require('react-native-image-picker');
 
+let imagePickerOptions = {
+    storageOptions: {
+        skipBackup: true,
+        path: 'images'
+    }
+};
 
 export default class StoreSettingsComponent extends Component{
     constructor(props){
@@ -24,6 +30,9 @@ export default class StoreSettingsComponent extends Component{
     }
 
     render(){
+
+
+
         let cover;
         if(this.state.coverSource){
             cover = <Image style={{width: window.width, height: 180}} resizeMode='stretch' source={this.state.coverSource}/>
@@ -47,14 +56,14 @@ export default class StoreSettingsComponent extends Component{
                     style={{width: window.width / 2}}
                     placeholder='Store name'/>
                 <TouchableNativeFeedback onPress={() => this.setState({editingStoreName: false})}>
-                    <Icon name="done" size={25} style={{marginLeft: 10, color: '#6CC2BA', marginTop: 20}}/>
+                    <Icon name="done" size={30} style={{padding: 15, color: '#6CC2BA'}}/>
                 </TouchableNativeFeedback>
             </View>
         }else{
             storeName = <View style={styles.storeWrap}>
                 <Text style={{fontSize: 20, color: 'black', marginLeft: 20}}>{this.state.storeName}</Text>
                 <TouchableNativeFeedback onPress={() => this.setState({editingStoreName: true})}>
-                    <Icon name="edit" size={25} style={{marginLeft: 10, color: '#444444'}}/>
+                    <Icon name="edit" size={30} style={{padding: 15, color: '#444444'}}/>
                 </TouchableNativeFeedback>
             </View>
         }
@@ -110,20 +119,24 @@ export default class StoreSettingsComponent extends Component{
                 </View>
                 <View style={styles.separator}/>
                 <View style={styles.actionWrap}>
-                    <View style={styles.actionSmallWrap}>
-                        <Image source={require('../../images/cs.png')} resizeMode='stretch' style={{width: 30, height: 30, marginBottom: 3}}/>
-                        <Text style={{color: '#444444'}}>Language</Text>
-                    </View>
+                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('Language')}>
+                        <View style={styles.actionSmallWrap}>
+                            <Image source={require('../../images/cs.png')} resizeMode='stretch' style={{width: 30, height: 30, marginBottom: 3}}/>
+                            <Text style={{color: '#444444'}}>Language</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.navigateToScreen('ShortUrl')}>
                         <View style={styles.actionSmallWrap}>
                             <Icon name="language" size={25} style={{marginBottom: 5, color: '#444444'}}/>
-                            <Text style={{color: '#444444'}}>Shortened url</Text>
+                            <Text style={{color: '#444444'}}>Short url</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <View style={styles.actionSmallWrap}>
-                        <Icon name="add-alert" size={25} style={{marginBottom: 5, color: '#444444'}}/>
-                        <Text style={{color: '#444444'}}>Notifications</Text>
-                    </View>
+                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('Notifications')}>
+                        <View style={styles.actionSmallWrap}>
+                            <Icon name="add-alert" size={25} style={{marginBottom: 5, color: '#444444'}}/>
+                            <Text style={{color: '#444444'}}>Notifications</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                 </View>
                 <View style={styles.separator}/>
                 <View style={styles.buttonWrap}>
@@ -145,10 +158,16 @@ export default class StoreSettingsComponent extends Component{
                             <View style={styles.touchableClose} />
                         </TouchableWithoutFeedback>
                         <View style={styles.modalSmallContainer}>
-                            <TouchableNativeFeedback onPress={() => this.choosePhotoModal()}>
+                            <TouchableNativeFeedback onPress={() => this.takePhotoCover()}>
                                 <View style={styles.modalRow}>
                                     <Icon name="photo-camera" size={30} style={styles.modalIcon}/>
-                                    <Text style={styles.modalText}>Upload photo</Text>
+                                    <Text style={styles.modalText}>Take a photo</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={() => this.choosePhotoCover()}>
+                                <View style={styles.modalRow}>
+                                    <Icon name="collections" size={30} style={styles.modalIcon}/>
+                                    <Text style={styles.modalText}>Choose from gallery</Text>
                                 </View>
                             </TouchableNativeFeedback>
                             <View style={styles.separator}/>
@@ -177,10 +196,16 @@ export default class StoreSettingsComponent extends Component{
                             <View style={styles.touchableClose} />
                         </TouchableWithoutFeedback>
                         <View style={styles.modalSmallContainer}>
-                            <TouchableNativeFeedback onPress={() => this.choosePhotoLogo()}>
+                            <TouchableNativeFeedback onPress={() => this.takePhotoLogo()}>
                                 <View style={styles.modalRow}>
                                     <Icon name="photo-camera" size={30} style={styles.modalIcon}/>
-                                    <Text style={styles.modalText}>Upload photo</Text>
+                                    <Text style={styles.modalText}>Take a photo</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={() => this.choosePhotoLogo()}>
+                                <View style={styles.modalRow}>
+                                    <Icon name="collections" size={30} style={styles.modalIcon}/>
+                                    <Text style={styles.modalText}>Choose from gallery</Text>
                                 </View>
                             </TouchableNativeFeedback>
                             <View style={styles.separator}/>
@@ -226,27 +251,63 @@ export default class StoreSettingsComponent extends Component{
         this.setState({modalLogoVisible: visible});
     };
 
-    choosePhotoModal(){
-        let options = {
-            title: 'Select Avatar',
-            storageOptions: {
-                skipBackup: true,
-                path: 'images'
-            }
-        };
 
-        ImagePicker.launchImageLibrary(options, (response) => {
-
+    choosePhotoCover(){
+        ImagePicker.launchImageLibrary(imagePickerOptions, (response) => {
             if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
             }
             else {
                 let source = { uri: response.uri };
-                // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
                 this.setState({
                     coverSource: source
                 });
+                this.setModalCoverVisible(false)
+            }
+        });
+    }
+
+    choosePhotoLogo(){
+        ImagePicker.launchImageLibrary(imagePickerOptions, (response) => {
+            if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else {
+                let source = { uri: response.uri };
+                this.setState({
+                    logoSource: source
+                });
+                this.setModalLogoVisible(false)
+            }
+        });
+    }
+
+    takePhotoCover(){
+        ImagePicker.launchCamera(imagePickerOptions, (response)  => {
+            if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else {
+                let source = { uri: response.uri };
+                this.setState({
+                    coverSource: source
+                });
+                this.setModalCoverVisible(false)
+            }
+        });
+    }
+
+    takePhotoLogo(){
+        ImagePicker.launchCamera(imagePickerOptions, (response)  => {
+            if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            }
+            else {
+                let source = { uri: response.uri };
+                this.setState({
+                    logoSource: source
+                });
+                this.setModalLogoVisible(false)
             }
         });
     }
@@ -353,10 +414,10 @@ const styles = StyleSheet.create({
     },
     modalSmallContainer: {
         backgroundColor: 'white',
-        width: window.width/2 + 30,
-        height: 210,
+        width: window.width/3 * 2 + 20,
+        height: 250,
         elevation: 4,
-        padding: 10
+        padding: 5
     },
     modalRow: {
         flexDirection: 'row',

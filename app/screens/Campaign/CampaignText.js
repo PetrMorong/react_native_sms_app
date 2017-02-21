@@ -11,7 +11,6 @@ import DatePicker from 'react-native-datepicker';
 const window = Dimensions.get('window');
 
 export default class CampaignText extends Component {
-
     constructor(props){
         super(props)
         this.state = {

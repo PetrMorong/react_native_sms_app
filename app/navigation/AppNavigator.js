@@ -7,7 +7,8 @@ import Menu from '../components/Menu'
 import { DrawerLayoutAndroid, View, Text } from 'react-native'
 import Toolbar from '../components/Toolbar'
 
-import Dashboard from '../screens/Dashboard';
+import Dashboard from '../screens/Dashboard/Dashboard';
+
 import CampaignCreate from '../screens/Campaign/CampaignCreate';
 import CampaignRecipients from '../screens/Campaign/CampaignRecipients'
 import PhoneRecipients from '../screens/Campaign/PhoneRecipients'
@@ -20,10 +21,38 @@ import CampaignDeal from '../screens/Campaign/CampaignDeal'
 
 import StoreCreate from '../screens/Store/StoreCreate'
 import StoreSettings from '../screens/Store/StoreSettings'
-import StoreSettingsComponent from '../screens/Store/StoreSettingsComponent'
 import ColorPickerComponent from '../screens/Store/ColorPicker'
 import CompanyData from '../screens/Store/CompanyData'
 import ShortUrl from '../screens/Store/ShortUrl'
+import Notifications from '../screens/Store/Notifications'
+import CustomerSms from '../screens/Store/CustomerSms'
+import CustomerEmail from '../screens/Store/CustomerEmail'
+import OwnerSms from '../screens/Store/OwnerSms'
+import OwnerEmail from '../screens/Store/OwnerEmail'
+import Language from '../screens/Store/Language'
+import StoreList from '../screens/Store/StoreList'
+
+import Order from '../screens/Orders/Order'
+import OrderList from '../screens/Orders/OrderList'
+
+import HistoryList from '../screens/History/HistoryList'
+import CampaignDetail from '../screens/History/CampaignDetail'
+
+import ScheduledList from '../screens/Scheduled/ScheduledList'
+import ScheduledDetail from '../screens/Scheduled/ScheduledDetail'
+
+import InboxList from '../screens/Inbox/InboxList'
+import InboxDetail from '../screens/Inbox/InboxDetail'
+
+import OutboxList from '../screens/Outbox/OutboxList'
+import OutboxDetail from '../screens/Outbox/OutboxDetail'
+
+import Chat from '../components/Chat'
+import ChatDetail from '../components/ChatDetail'
+
+import BuyCredit from '../screens/Payments/BuyCredit'
+
+import Statistics from '../screens/Statistics/Statistics'
 
 export default class AppNavigator extends Component {
 
@@ -42,7 +71,7 @@ export default class AppNavigator extends Component {
                         background="container"
                         title="Dashboard"
                         credit={this.props.credit}
-                        elevation={2}/>
+                        elevation={0}/>
                     <Dashboard />
                 </DrawerLayoutAndroid>
             )
@@ -257,26 +286,6 @@ export default class AppNavigator extends Component {
                 </DrawerLayoutAndroid>
             );
         }
-        //TODO remove
-        if(route.ident == 'StoreSettingsComponent'){
-            return(
-                <DrawerLayoutAndroid
-                    drawerWidth={300}
-                    drawerPosition={DrawerLayoutAndroid.positions.Left}
-                    ref={(_drawer) => this.drawer = _drawer}
-                    renderNavigationView={() => menu}>
-                    <Toolbar
-                        openMenu={() => this.drawer.openDrawer()}
-                        icon="account-balance-wallet"
-                        title="Store"
-                        background="container"
-                        elevation={0}
-                        credit={this.props.credit}
-                        navigator={navigator}/>
-                    <StoreSettingsComponent navigator={navigator}/>
-                </DrawerLayoutAndroid>
-            );
-        }
         if(route.ident == 'ColorPickerComponent'){
             return(
                 <DrawerLayoutAndroid
@@ -340,6 +349,370 @@ export default class AppNavigator extends Component {
                 </DrawerLayoutAndroid>
             );
         }
+        if(route.ident == 'Notifications'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Notifications"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='StoreSettings'
+                        navigator={navigator}/>
+                    <Notifications navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'CustomerSms'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Customer sms"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='Notifications'
+                        navigator={navigator}/>
+                    <CustomerSms navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'CustomerEmail'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Customer email"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='Notifications'
+                        navigator={navigator}/>
+                    <CustomerEmail navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'OwnerEmail'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Shop owner email"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='Notifications'
+                        navigator={navigator}/>
+                    <OwnerEmail navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'OwnerSms'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Shop owner sms"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='Notifications'
+                        navigator={navigator}/>
+                    <OwnerSms navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'Language'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Language"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='StoreSettings'
+                        navigator={navigator}/>
+                    <Language navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'Order'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Order navigator={navigator} />
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'OrderList'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Orders"
+                        credit={this.props.credit}
+                        elevation={2}/>
+                    <OrderList navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'BuyCredit'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="containerNoBg"
+                        title="Buy credit"
+                        credit={this.props.credit}
+                        elevation={0}/>
+                    <BuyCredit navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'Statistics'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Statistics"
+                        elevation={0}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <Statistics navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'StoreList'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Stores"
+                        elevation={2}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <StoreList navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'HistoryList'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="History"
+                        elevation={2}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <HistoryList navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'CampaignDetail'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Campaign detail"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='HistoryList'
+                        navigator={navigator}/>
+                    <CampaignDetail navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'Chat'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Chat navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'ChatDetail'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <ChatDetail navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'ScheduledList'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Scheduled"
+                        elevation={2}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <ScheduledList navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'ScheduledDetail'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <ScheduledDetail navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'InboxList'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Inbox"
+                        elevation={2}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <InboxList navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'InboxDetail'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <InboxDetail navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'OutboxList'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Outbox"
+                        elevation={2}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <OutboxList navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'OutboxDetail'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <InboxDetail navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+
     }
 
     render() {

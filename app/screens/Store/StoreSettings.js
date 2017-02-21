@@ -3,10 +3,7 @@
  */
 import React, { Component } from 'react';
 import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, ScrollView} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Step from '../../components/StepperSingleStep';
-import ElevatedView from 'react-native-elevated-view';
-import DatePicker from 'react-native-datepicker';
+
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 import StoreSettingsComponent from './StoreSettingsComponent'
@@ -62,6 +59,7 @@ export default class StoreSettings extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white'
     },
 
 });
