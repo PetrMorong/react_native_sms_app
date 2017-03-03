@@ -14,6 +14,7 @@ export default class OwnerSms extends Component{
             switchUnicode: false,
             switchVariables: false,
             active: true,
+            smsCount: 0,
             variables: [ ['< first_name >', '100%'],['< last_name >', '100%'], ['< email >', '100%'], ['< phone_number >', '100%'], ['< gender >', '100%']]
         }
     }
@@ -21,7 +22,7 @@ export default class OwnerSms extends Component{
     render(){
         let variables = this.state.variables.map((variable, i) => {
             return(
-                <TouchableNativeFeedback key={i}>
+                <TouchableNativeFeedback key={i}  onPress={()=>this.setVariable(variable[0])}>
                     <View style={styles.variableStyle}>
                         <Text  style={{color: '#4CAF76'}}>{variable[0]}</Text>
                         <Text  style={{color: '#4CAF76'}}>{variable[1]}</Text>
@@ -76,16 +77,13 @@ export default class OwnerSms extends Component{
                         ref="message"
                         multiline={true}
                         onChangeText={(message) => this.setState({message})}
-                        value={this.state.message}/>
+                        value={this.state.message}
+                        onChange={()=>this.countMessage(this.state.switchUnicode)}/>
                     <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-                        <Text style={styles.fontSize10}>Total SMS:</Text>
-                        <Text style={styles.messageStats}>2</Text>
-                        <Text style={styles.fontSize10}>Recipients:</Text>
-                        <Text style={styles.messageStats}>3</Text>
                         <Text style={styles.fontSize10}>SMS:</Text>
-                        <Text style={styles.messageStats}>5</Text>
+                        <Text style={styles.messageStats}>{this.state.smsCount}</Text>
                         <Text style={styles.fontSize10}>Length:</Text>
-                        <Text style={styles.messageStats}>130/120</Text>
+                        <Text style={styles.messageStats}>{this.state.message.length}</Text>
                     </View>
                 </View>
                 <View style={{marginTop: 40}}>
@@ -106,7 +104,7 @@ export default class OwnerSms extends Component{
                     <View style={styles.switchWrap}>
                         <Text >Unicode</Text>
                         <Switch
-                            onValueChange={(value) => this.setState({switchUnicode: value})}
+                            onValueChange={(value) => { this.setState({switchUnicode: value}); this.countMessage(value) }}
                             value={this.state.switchUnicode} />
                     </View>
                 </View>
@@ -154,6 +152,47 @@ export default class OwnerSms extends Component{
             </View>
 
         )
+    }
+
+    navigateToScreen(link){
+        this.props.navigator.push({
+            ident: link
+        })
+    }
+
+    setVariable(variable){
+        this.setState({message: this.state.message + " " + variable})
+        this.countMessage()
+    }
+
+    countMessage(unicodeValue){
+
+        let countMax;
+        let count;
+        let smsCount;
+        let totalSmsCount;
+
+        if(unicodeValue){
+            countMax = 70;
+            count = 67;
+        }else{
+            countMax = 160;
+            count = 153;
+        }
+
+        if(this.state.message.length <= countMax){
+            smsCount = 1;
+        }else{
+            smsCount = Math.floor(this.state.message.length / count + (this.state.message.length % count > 0))
+        }
+
+        totalSmsCount = this.state.recipients * smsCount;
+
+        this.setState({
+            smsCount: smsCount,
+            totalSmsCount: totalSmsCount
+        })
+
     }
 }
 

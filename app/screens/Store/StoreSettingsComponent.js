@@ -4,10 +4,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, Modal,  Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const window = Dimensions.get('window');
 let Platform = require('react-native').Platform;
-let ImagePicker = require('react-native-image-picker');
+//let ImagePicker = require('react-native-image-picker');
+
 
 let imagePickerOptions = {
     storageOptions: {
@@ -253,62 +255,70 @@ export default class StoreSettingsComponent extends Component{
 
 
     choosePhotoCover(){
-        ImagePicker.launchImageLibrary(imagePickerOptions, (response) => {
-            if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else {
-                let source = { uri: response.uri };
-                this.setState({
-                    coverSource: source
-                });
-                this.setModalCoverVisible(false)
-            }
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true,
+            includeBase64: true,
+            cropperTintColor: '#011D2B'
+
+        }).then(image => {
+            this.setState({
+                coverSource: image
+            });
+            this.setModalCoverVisible(false)
         });
+
     }
 
     choosePhotoLogo(){
-        ImagePicker.launchImageLibrary(imagePickerOptions, (response) => {
-            if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else {
-                let source = { uri: response.uri };
-                this.setState({
-                    logoSource: source
-                });
-                this.setModalLogoVisible(false)
-            }
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true,
+            includeBase64: true,
+            cropperTintColor: '#011D2B'
+
+        }).then(image => {
+            this.setState({
+                logoSource: image
+            });
+            this.setModalCoverVisible(false)
         });
+
     }
 
     takePhotoCover(){
-        ImagePicker.launchCamera(imagePickerOptions, (response)  => {
-            if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else {
-                let source = { uri: response.uri };
-                this.setState({
-                    coverSource: source
-                });
-                this.setModalCoverVisible(false)
-            }
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+            includeBase64: true,
+            cropperTintColor: '#011D2B'
+
+        }).then(image => {
+            this.setState({
+                coverSource: image
+            });
+            this.setModalCoverVisible(false)
         });
+
     }
 
     takePhotoLogo(){
-        ImagePicker.launchCamera(imagePickerOptions, (response)  => {
-            if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else {
-                let source = { uri: response.uri };
-                this.setState({
-                    logoSource: source
-                });
-                this.setModalLogoVisible(false)
-            }
+        console.log('nice')
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+            includeBase64: true,
+            cropperTintColor: '#011D2B'
+
+        }).then(image => {
+            this.setState({
+                logoSource: image
+            });
+            this.setModalCoverVisible(false)
         });
     }
 

@@ -1,4 +1,4 @@
-/**
+4/**
  * Created by Petr on 2.2.2017.
  */
 import React, { Component } from 'react';
@@ -44,87 +44,90 @@ export default class CampaignSummary extends Component{
 
             <View style={styles.container}>
                 {stepper}
-                <ScrollView style={{padding: 15}}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={{fontSize: 16, marginBottom: 5}}>SMS count</Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Icon name="donut-large" size={35} style={{color: '#1565C0'}}/>
-                                <Text style={[styles.colorText, {color: '#1565C0'}]}>2</Text>
+                <ScrollView>
+                    <View style={[styles.b, {marginTop: 20}]}>
+                        <View style={styles.a}>
+                            <View style={{alignItems: 'center'}}>
+                                <Text style={{fontSize: 16, marginBottom: 5}}>SMS count</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Icon name="donut-large" size={35} style={{color: '#1565C0'}}/>
+                                    <Text style={[styles.colorText, {color: '#1565C0'}]}>2</Text>
+                                </View>
+                            </View>
+                            <View style={{alignItems: 'center'}}>
+                                <Text style={{fontSize: 16, marginBottom: 5}}>Recipients</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Icon name="person" size={35} style={{color: '#FF9800'}}/>
+                                    <Text style={[styles.colorText, {color: '#FF9800'}]}>2</Text>
+                                </View>
                             </View>
                         </View>
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={{fontSize: 16, marginBottom: 5}}>Recipients</Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Icon name="person" size={35} style={{color: '#FF9800'}}/>
-                                <Text style={[styles.colorText, {color: '#FF9800'}]}>2</Text>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 30, marginBottom: 20}}>
+                            <View style={{alignItems: 'center'}}>
+                                <Text style={{fontSize: 16, marginBottom: 5}}>Credit usage</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Icon name="data-usage" size={35} style={{color: '#48974C'}}/>
+                                    <Text style={[styles.colorText, {color: '#48974C'}]}>22 %</Text>
+                                </View>
                             </View>
-                        </View>
-                    </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 30, marginBottom: 20}}>
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={{fontSize: 16, marginBottom: 5}}>Credit usage</Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Icon name="data-usage" size={35} style={{color: '#48974C'}}/>
-                                <Text style={[styles.colorText, {color: '#48974C'}]}>22 %</Text>
-                            </View>
-                        </View>
-                        <View style={{alignItems: 'center'}}>
-                            <Text style={{fontSize: 16, marginBottom: 5}}>Cost</Text>
+                            <View style={{alignItems: 'center'}}>
+                                <Text style={{fontSize: 16, marginBottom: 5}}>Cost</Text>
 
-                            <View style={{flexDirection: 'row'}}>
-                                <Icon name="account-balance-wallet" size={35} style={{color: '#E53935'}}/>
-                                <Text style={[styles.colorText, {color: '#E53935'}]}>1.58</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Icon name="account-balance-wallet" size={35} style={{color: '#E53935'}}/>
+                                    <Text style={[styles.colorText, {color: '#E53935'}]}>1.58</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
-                    <View style={styles.separator}/>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingTop: 20, paddingBottom: 20}}>
-                        <Image source={require('../../images/cs.png')}/>
-                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                            <Text style={[styles.colorTextSmall, {color: '#1565C0'}]}>2</Text>
-                            <Text style={{fontSize: 16}}>SMS count</Text>
-                        </View>
-                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                            <Text style={[styles.colorTextSmall, {color: '#FF9800'}]}>2</Text>
-                            <Text style={{fontSize: 16}}>Recipients</Text>
-                        </View>
-                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                            <Text style={[styles.colorTextSmall, {color: '#E53935'}]}>2</Text>
-                            <Text style={{fontSize: 16}}>Price</Text>
-                        </View>
-                    </View>
-                    <View style={styles.separator}/>
-                    <View style={{paddingTop: 10}} elevation={2}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 10}}>
-                            <Text style={{fontSize: 16}}>Sender</Text>
-                            <Text style={{fontSize: 16}}>Short code</Text>
-                        </View>
-                        <View style={styles.separator}/>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 10}}>
-                            <Text style={{fontSize: 16}}>Unicode</Text>
-                            <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
-                        </View>
-                        <View style={styles.separator}/>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 10}}>
-                            <Text style={{fontSize: 16}}>Flash SMS</Text>
-                            <Icon name="cancel" size={25} />
-                        </View>
-                        <View style={styles.separator}/>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 10}}>
-                            <Text style={{fontSize: 16}}>Schedule sending time</Text>
-                            <Icon name="cancel" size={25} />
-                        </View>
-                        <View style={styles.separator}/>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 10}}>
-                            <Text style={{fontSize: 16}}>Restriction</Text>
-                            <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
+                    <View style={styles.b}>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingTop: 10, paddingBottom: 10}}>
+                            <Image source={require('../../images/cs.png')}/>
+                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={[styles.colorTextSmall, {color: '#1565C0'}]}>2</Text>
+                                <Text style={{fontSize: 16}}>SMS count</Text>
+                            </View>
+                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={[styles.colorTextSmall, {color: '#FF9800'}]}>2</Text>
+                                <Text style={{fontSize: 16}}>Recipients</Text>
+                            </View>
+                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Text style={[styles.colorTextSmall, {color: '#E53935'}]}>2</Text>
+                                <Text style={{fontSize: 16}}>Price</Text>
+                            </View>
                         </View>
                     </View>
-                    <View style={styles.separator}/>
-                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View style={styles.b}>
+                        <View>
+                            <View style={styles.c}>
+                                <Text style={{fontSize: 14}}>Sender</Text>
+                                <Text style={{fontSize: 14}}>Short code</Text>
+                            </View>
+                            <View style={styles.separator}/>
+                            <View style={styles.c}>
+                                <Text style={{fontSize: 14}}>Unicode</Text>
+                                <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
+                            </View>
+                            <View style={styles.separator}/>
+                            <View style={styles.c}>
+                                <Text style={{fontSize: 14}}>Flash SMS</Text>
+                                <Icon name="cancel" size={25} />
+                            </View>
+                            <View style={styles.separator}/>
+                            <View style={styles.c}>
+                                <Text style={{fontSize: 14}}>Schedule sending time</Text>
+                                <Icon name="cancel" size={25} />
+                            </View>
+                            <View style={styles.separator}/>
+                            <View style={styles.c}>
+                                <Text style={{fontSize: 14}}>Restriction</Text>
+                                <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{padding: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                         <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignText')}>
-                            <Text style={{marginBottom: 10, marginLeft: 10, color: 'black', fontSize: 15}}>BACK</Text>
+                            <Text style={{ marginLeft: 10, color: 'black', fontSize: 15}}>BACK</Text>
                         </TouchableNativeFeedback>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <TouchableNativeFeedback style={{marginRight: 15}} >
@@ -157,7 +160,7 @@ export default class CampaignSummary extends Component{
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#E7F0F6',
         flex: 1,
     },
     stepperContainer: {
@@ -170,14 +173,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     secondaryButton: {
-        marginRight: 10,
+        marginRight: 15,
         padding: 7,
         borderColor: '#BE2166',
         borderWidth: 1,
         borderRadius: 2,
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 2
+        backgroundColor: 'white'
 
     },
     line: {
@@ -203,13 +206,28 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     buttonWrap: {
-        marginTop: 10,
         width: 110,
-        paddingTop: 12,
         justifyContent: 'flex-end',
         alignSelf: 'flex-end',
-        marginBottom: 25,
     },
+    a: {
+        paddingTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        backgroundColor: 'white'
+    },
+    b: {
+        elevation: 1,
+        margin: 10,
+        backgroundColor: 'white',
+        borderRadius: 2,
+        padding: 5
+    },
+    c: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10
+    }
 
 
 

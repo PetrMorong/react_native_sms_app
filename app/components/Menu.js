@@ -196,19 +196,23 @@ export default class Menu extends Component {
 
         return (
             <ScrollView style={styles.menu}>
-                <View style={styles.avatarContainer}>
-                    <Image
-                        style={styles.avatar}
-                        source={{ uri, }}/>
-                    <Text style={styles.name}>{this.props.user.user.name}</Text>
-                    <Text style={styles.email}>moriandr73@gmail.com</Text>
-                </View>
-                <View scrollsToTop={false}>
-                    <View style={styles.menuRow} >
-                        <Icon name="home"  style={styles.menuRightIcon}/>
-                        <Text style={styles.menuLink} onPress={(event) => this.navigateToScreen('Dashboard')}>Dashboard</Text>
-                        <View style={{flex: 1}} />
+                <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('Profile')}>
+                    <View style={styles.avatarContainer}>
+                        <Image
+                            style={styles.avatar}
+                            source={{ uri, }}/>
+                        <Text style={styles.name}>{this.props.user.user.name}</Text>
+                        <Text style={styles.email}>moriandr73@gmail.com</Text>
                     </View>
+                </TouchableNativeFeedback>
+                <View scrollsToTop={false}>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('Dashboard')}>
+                        <View style={styles.menuRow} >
+                            <Icon name="home"  style={styles.menuRightIcon}/>
+                            <Text style={styles.menuLink} >Dashboard</Text>
+                            <View style={{flex: 1}} />
+                        </View>
+                    </TouchableNativeFeedback>
                     <View>
                         {smsItem}
                     </View>
@@ -218,14 +222,14 @@ export default class Menu extends Component {
                     <View>
                         {payments}
                     </View>
-
                     <View style={styles.separator} />
-                    <View style={styles.menuRow}>
-                        <Icon name="settings"   style={styles.menuRightIcon}/>
-                        <Text style={styles.menuLink}>Setting</Text>
-                        <View style={{flex: 1}} />
-                    </View>
-
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('Settings')}>
+                        <View style={styles.menuRow} >
+                            <Icon name="settings"  style={styles.menuRightIcon}/>
+                            <Text style={styles.menuLink} >Settings</Text>
+                            <View style={{flex: 1}} />
+                        </View>
+                    </TouchableNativeFeedback>
                     <View style={styles.menuRow}>
                         <Icon name="help"  style={styles.menuRightIcon}/>
                         <Text style={styles.menuLink}>Help & feedback</Text>

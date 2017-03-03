@@ -16,7 +16,7 @@ export default class Toolbar extends Component {
             </TouchableNativeFeedback>;
         }else{
             leftIcon = <TouchableNativeFeedback   onPress={(event) => this.openMenu()} >
-                <Icon style={styles.menuIcon} name="menu" size={25}/>
+                <Icon style={styles.menuIcon} name="menu" size={30}/>
             </TouchableNativeFeedback>;
 
         }
@@ -24,9 +24,11 @@ export default class Toolbar extends Component {
         return (
             <ElevatedView style={styles[this.props.background]} elevation={this.props.elevation}>
                 {leftIcon}
-                <View style={{flex: 1}}>
-                    <Text style={styles.screenName} >{this.props.title}</Text>
-                </View>
+                <TouchableNativeFeedback onPress={(event) => this.openMenu()}>
+                    <View style={{flex: 1}}>
+                        <Text style={styles.screenName} >{this.props.title}</Text>
+                    </View>
+                </TouchableNativeFeedback>
                 <Icon style={styles.creditIcon} name={this.props.icon} size={22}/>
                 <Text style={styles.creditNumber}> {this.props.credit}</Text>
             </ElevatedView>

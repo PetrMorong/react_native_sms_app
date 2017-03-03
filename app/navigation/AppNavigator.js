@@ -8,6 +8,7 @@ import { DrawerLayoutAndroid, View, Text } from 'react-native'
 import Toolbar from '../components/Toolbar'
 
 import Dashboard from '../screens/Dashboard/Dashboard';
+import DashboardNewUser from '../screens/Dashboard/DashboardNewUser'
 
 import CampaignCreate from '../screens/Campaign/CampaignCreate';
 import CampaignRecipients from '../screens/Campaign/CampaignRecipients'
@@ -53,6 +54,16 @@ import ChatDetail from '../components/ChatDetail'
 import BuyCredit from '../screens/Payments/BuyCredit'
 
 import Statistics from '../screens/Statistics/Statistics'
+
+import Settings from '../screens/Settings/Settings'
+
+import Sign from '../screens/Sign/Sign'
+
+import Profile from '../screens/Profile/Profile'
+import BaseInformations from '../screens/Profile/BaseInformations'
+import ChangePassword from '../screens/Profile/ChangePassword'
+import PaymentData from '../screens/Profile/PaymentData'
+import ContactVerification from '../screens/Profile/ContactVerification'
 
 export default class AppNavigator extends Component {
 
@@ -712,7 +723,154 @@ export default class AppNavigator extends Component {
                 </DrawerLayoutAndroid>
             );
         }
+        if(route.ident == 'Settings'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Settings"
+                        elevation={2}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <Settings navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'Sign'){
+            return(
+                <Sign navigator={navigator}/>
+            );
+        }
+        if(route.ident == 'DashboardNewUser'){
+            return(
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    icon="account-balance-wallet"
+                    background="container"
+                    title="Dashboard"
+                    elevation={2}
+                    credit={this.props.credit}
+                    navigator={navigator}/>
+                <DashboardNewUser navigator={navigator}/>
+            </DrawerLayoutAndroid>
 
+            );
+        }
+        if(route.ident == 'Profile'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="containerNoBg"
+                        title="Profile"
+                        elevation={0}
+                        credit={this.props.credit}
+                        navigator={navigator}/>
+                    <Profile navigator={navigator}/>
+                </DrawerLayoutAndroid>
+
+            );
+        }
+        if(route.ident == 'BaseInformations'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Base informations"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='Profile'
+                        navigator={navigator}/>
+                    <BaseInformations navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'ChangePassword'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Change password"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='Profile'
+                        navigator={navigator}/>
+                    <ChangePassword navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'PaymentData'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Payment data"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='Profile'
+                        navigator={navigator}/>
+                    <PaymentData navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
+        if(route.ident == 'ContactVerification'){
+            return(
+                <DrawerLayoutAndroid
+                    drawerWidth={300}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    ref={(_drawer) => this.drawer = _drawer}
+                    renderNavigationView={() => menu}>
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        icon="account-balance-wallet"
+                        background="container"
+                        title="Contact verification"
+                        elevation={2}
+                        credit={this.props.credit}
+                        back={true}
+                        backLink='Profile'
+                        navigator={navigator}/>
+                    <ContactVerification navigator={navigator}/>
+                </DrawerLayoutAndroid>
+            );
+        }
     }
 
     render() {

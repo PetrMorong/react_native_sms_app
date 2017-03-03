@@ -48,6 +48,11 @@ export default class StoreList extends Component{
                         <View style={styles.separator}/>
                     </View>
                 </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('StoreCreate')}>
+                    <View style={styles.bottomButton} elevation={3}>
+                        <Icon name="add" style={{color: 'white'}} size={30}/>
+                    </View>
+                </TouchableNativeFeedback>
             </View>
         )
     }
@@ -111,6 +116,17 @@ const styles = StyleSheet.create({
     iconGreen: {
         color: 'green',
         marginTop: 5
+    },
+    bottomButton: {
+        position: 'absolute',
+        bottom: 15,
+        right: 15,
+        borderRadius: 50,
+        backgroundColor: '#F44336',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 50,
+        height: 50
     }
 
 });

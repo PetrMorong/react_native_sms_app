@@ -10,60 +10,47 @@ export default class Notifications extends Component{
     constructor(props){
         super(props)
         this.state = {
-            type: 'smart',
-            message: '',
-            sender: '',
-            senderValue: '',
-            sendingTime: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
-            switchUnicode: false,
-            switchFlash: false,
-            switchTime: false,
-            switchRestriction: false,
-            switchVariables: false,
-            timeZone: 'Europe/Oslo',
-            smsPerDay: 0,
-            variables: [ ['< first_name >', '100%'],['< last_name >', '100%'], ['< email >', '100%'], ['< phone_number >', '100%'], ['< gender >', '100%']]
         }
     }
 
     render(){
         return(
             <View style={styles.container}>
-                <Text style={{color: '#011D2B', fontWeight: '500', fontSize: 16}}>Customer</Text>
+                <Text style={{color: '#011D2B', fontWeight: '500', fontSize: 18}}>Customer</Text>
                 <TouchableNativeFeedback onPress={() => this.navigateToScreen('CustomerSms')}>
                     <View style={styles.row}>
-                        <Icon name="textsms" size={30} style={{color: '#BE2166'}}/>
+                        <Icon name="textsms" size={25} style={{color: '#BE2166'}}/>
                         <View style={[styles.a, styles.border]}>
-                            <Text style={{color: 'black', fontSize: 20}}>SMS</Text>
+                            <Text style={{color: 'black', fontSize: 16}}>SMS</Text>
                             <Icon name="check-circle" size={25} style={styles.b}/>
                         </View>
                     </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={() => this.navigateToScreen('CustomerEmail')}>
                     <View style={styles.row}>
-                        <Icon name="mail-outline" size={30} style={{color: '#BE2166'}}/>
+                        <Icon name="mail-outline" size={25} style={{color: '#BE2166'}}/>
                         <View style={styles.a}>
-                            <Text style={{color: 'black', fontSize: 20}}>Email</Text>
+                            <Text style={{color: 'black', fontSize: 16}}>Email</Text>
                             <Icon name="check-circle" size={25} style={styles.b}/>
                         </View>
                     </View>
                 </TouchableNativeFeedback>
 
-                <Text style={{color: '#011D2B', fontWeight: '500', fontSize: 16, marginTop: 25}}>Shop owner</Text>
+                <Text style={{color: '#011D2B', fontWeight: '500', fontSize: 18, marginTop: 25}}>Shop owner</Text>
                 <TouchableNativeFeedback onPress={() => this.navigateToScreen('OwnerSms')}>
                     <View style={styles.row}>
-                        <Icon name="textsms" size={30} style={{color: '#BE2166'}}/>
+                        <Icon name="textsms" size={25} style={{color: '#BE2166'}}/>
                         <View style={[styles.a, styles.border]}>
-                            <Text style={{color: 'black', fontSize: 20}}>SMS</Text>
+                            <Text style={{color: 'black', fontSize: 16}}>SMS</Text>
                             <Icon name="check-circle" size={25} style={styles.b}/>
                         </View>
                     </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={() => this.navigateToScreen('OwnerEmail')}>
                     <View style={styles.row}>
-                        <Icon name="mail-outline" size={30} style={{color: '#BE2166'}}/>
+                        <Icon name="mail-outline" size={25} style={{color: '#BE2166'}}/>
                         <View style={styles.a}>
-                            <Text style={{color: 'black', fontSize: 20}}>Email</Text>
+                            <Text style={{color: 'black', fontSize: 16}}>Email</Text>
                             <Icon name="check-circle" size={25} style={styles.b}/>
                         </View>
                     </View>
@@ -77,10 +64,7 @@ export default class Notifications extends Component{
             ident: link
         })
     }
-
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -91,10 +75,10 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: 80
+        height: 70
     },
     a: {
-        height: 80,
+        height: 70,
         flexDirection: 'row',
         marginLeft: 25,
         flex: 1,

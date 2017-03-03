@@ -37,12 +37,14 @@ export default class CompanyData extends Component{
                         onChangeText={(callPrefix) => this.setState({callPrefix})}
                         value={this.state.callPrefix}
                         style={{width: window.width / 3, marginLeft: 10, marginRight: 10}}
-                        placeholder='Call prefix'/>
+                        placeholder='Call prefix'
+                        keyboardType='numeric'/>
                     <TextInput
                         onChangeText={(phoneNumber) => this.setState({phoneNumber})}
                         value={this.state.phoneNumber}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                        placeholder='Phone number'/>
+                        placeholder='Phone number'
+                        keyboardType='numeric'/>
                 </View>
                 <View style={{flexDirection: 'row'}}>
                     <TextInput
@@ -73,19 +75,22 @@ export default class CompanyData extends Component{
                         onChangeText={(zip) => this.setState({zip})}
                         value={this.state.zip}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                        placeholder='Zip'/>
+                        placeholder='Zip'
+                        keyboardType='numeric'/>
                     <TextInput
                         onChangeText={(country) => this.setState({country})}
                         value={this.state.country}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
                         placeholder='Country'/>
                 </View>
-                <View style={{width: 110, justifyContent: 'flex-end', alignSelf: 'flex-end', marginTop: 30}}>
-                    <Button
-                        elevation={2}
-                        color="#BE2166"
-                        title="save"
-                        onPress={() => this.navigateToScreen('StoreSettings')}/>
+                <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                    <View style={{width: 110}}>
+                        <Button
+                            elevation={2}
+                            color="#BE2166"
+                            title="save"
+                            onPress={() => this.navigateToScreen('StoreSettings')}/>
+                    </View>
                 </View>
             </View>
         )

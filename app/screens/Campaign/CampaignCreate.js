@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet,  Text,  View, Image, Dimensions, TextInput, TouchableNativeFeedback } from 'react-native';
+import { Button, StyleSheet,  Text,  View, Image, Dimensions, TextInput, TouchableNativeFeedback, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ElevatedView from 'react-native-elevated-view'
 
@@ -50,7 +50,7 @@ export default class Dashboard  extends Component {
         }
 
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <View>
                     <View style={styles.image}>
                         <Image style={{width: window.width/3+25, height: window.height/3 - 15}} resizeMode="stretch" source={require('../../images/campaignCreate.png')}/>
@@ -80,7 +80,7 @@ export default class Dashboard  extends Component {
                         title="Create"
                         onPress={() => this.navigateToScreen('CampaignRecipients')}/>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 

@@ -26,16 +26,16 @@ export default class Order extends Component{
                 <Image style={styles.coverImage} source={require('../../images/guitarCover.jpg')}/>
                 <View style={styles.orderMiddle}>
                     <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
-                        <Text style={{color: '#31A096', fontSize: 20}}>Old school guitar</Text>
+                        <Text style={{color: '#31A096', fontSize: 23}}>Old school guitar</Text>
                         <Text style={{color: '#31A096', fontSize: 14, paddingLeft: 10}}>2ks</Text>
                     </View>
                     <Text style={{color: 'white', fontSize: 20}}>1500 $</Text>
                 </View>
-                <ElevatedView style={styles.actionStatus} elavation={5}>
+                <View style={styles.actionStatus} elavation={2}>
                     <Icon name="done" size={35} style={{color: 'white'}}/>
-                </ElevatedView>
+                </View>
                 <View style={{padding: 15}}>
-                    <Text>Customer</Text>
+                    <Text style={{color: '#011D2B', fontWeight: '500'}}>Customer</Text>
                     <View style={styles.row}>
                         <Icon name="person" size={20} style={styles.customerIcon}/>
                         <Text style={styles.textHighlight}>Petr Morong</Text>
@@ -51,7 +51,7 @@ export default class Order extends Component{
                 </View>
                 <View style={styles.separator}/>
                 <View style={{padding: 15}}>
-                    <Text>Location</Text>
+                    <Text style={{color: '#011D2B', fontWeight: '500'}}>Location</Text>
                     <View style={styles.row}>
                         <Text style={styles.textHighlight}>Revoluční 34</Text>
                     </View>
@@ -64,7 +64,7 @@ export default class Order extends Component{
                 </View>
                 <View style={styles.separator}/>
                 <View style={{padding: 15}}>
-                    <Text>Company</Text>
+                    <Text style={{color: '#011D2B', fontWeight: '500'}}>Company</Text>
                     <View style={styles.row}>
                         <Text style={styles.textHighlight}>TOP efekt</Text>
                     </View>
@@ -75,7 +75,9 @@ export default class Order extends Component{
                         <Text style={styles.textHighlight}>VAT: 546546546</Text>
                     </View>
                 </View>
-
+                <View style={styles.gradient}>
+                    <Image style={styles.gradient} source={require('../../images/gradientBackground.png')} resizeMode='stretch' />
+                </View>
             </ScrollView>
         )
     }
@@ -144,14 +146,18 @@ const styles = StyleSheet.create({
     },
     customerIcon: {
         marginRight: 10,
-        color: '#4C4B4B'
     },
     textHighlight: {
-        color: '#4C4B4B',
         fontSize: 16
     },
     row: {
         flexDirection: 'row',
         marginTop: 10
+    },
+    gradient: {
+        position: 'absolute',
+        top: 0,
+        height: window.height/3 + 60,
+        width: window.width
     }
 });

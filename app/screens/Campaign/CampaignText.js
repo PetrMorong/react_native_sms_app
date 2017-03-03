@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Step from '../../components/StepperSingleStep';
 import ElevatedView from 'react-native-elevated-view';
 import DatePicker from 'react-native-datepicker';
-
 const window = Dimensions.get('window');
 
 export default class CampaignText extends Component {
@@ -26,13 +25,16 @@ export default class CampaignText extends Component {
             switchVariables: false,
             timeZone: 'Europe/Oslo',
             smsPerDay: 0,
+            smsCount: 0,
+            totalSmsCount: 0,
+            recipients: 10,
             variables: [ ['< first_name >', '100%'],['< last_name >', '100%'], ['< email >', '100%'], ['< phone_number >', '100%'], ['< gender >', '100%']]
         }
     }
     render(){
         let variables = this.state.variables.map((variable, i) => {
            return(
-                <TouchableNativeFeedback key={i}>
+                <TouchableNativeFeedback key={i} onPress={()=>this.setVariable(variable[0])}>
                     <View style={styles.variableStyle}>
                         <Text  style={{color: '#4CAF76'}}>{variable[0]}</Text>
                         <Text  style={{color: '#4CAF76'}}>{variable[1]}</Text>
@@ -143,22 +145,25 @@ export default class CampaignText extends Component {
                         <Icon name="save" size={30} style={{color: '#404040'}}/>
                         <Icon name="file-download" style={{marginLeft: 15, color: '#404040'}} size={30}/>
                     </View>
-                    <TextInput
-                        style={{height: 70}}
-                        placeholder='Campaign SMS text'
-                        ref="message"
-                        multiline={true}
-                        onChangeText={(message) => this.setState({message})}
-                        value={this.state.message}/>
-                    <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-                        <Text style={styles.fontSize10}>Total SMS:</Text>
-                        <Text style={styles.messageStats}>2</Text>
-                        <Text style={styles.fontSize10}>Recipients:</Text>
-                        <Text style={styles.messageStats}>3</Text>
-                        <Text style={styles.fontSize10}>SMS:</Text>
-                        <Text style={styles.messageStats}>5</Text>
-                        <Text style={styles.fontSize10}>Length:</Text>
-                        <Text style={styles.messageStats}>130/120</Text>
+                    <View style={{paddingLeft: 10, paddingRight: 10}}>
+                        <TextInput
+                            style={{height: 100}}
+                            placeholder='SMS text'
+                            ref="message"
+                            multiline={true}
+                            onChangeText={(message) => this.setState({message})}
+                            value={this.state.message}
+                            onChange={()=>this.countMessage(this.state.switchUnicode)}/>
+                        <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
+                            <Text style={styles.fontSize10}>Total SMS:</Text>
+                            <Text style={styles.messageStats}>{this.state.totalSmsCount}</Text>
+                            <Text style={styles.fontSize10}>Recipients:</Text>
+                            <Text style={styles.messageStats}>{this.state.recipients}</Text>
+                            <Text style={styles.fontSize10}>SMS:</Text>
+                            <Text style={styles.messageStats}>{this.state.smsCount}</Text>
+                            <Text style={styles.fontSize10}>Length:</Text>
+                            <Text style={styles.messageStats}>{this.state.message.length}</Text>
+                        </View>
                     </View>
                     <View style={{marginTop: 40}}>
                         <View style={styles.separator}/>
@@ -176,8 +181,8 @@ export default class CampaignText extends Component {
                     </View>
                     <View >
                         <View style={styles.separator}/>
-                        <View  style={styles.switchWrap}>
-                            <Text >Sender ID</Text>
+                        <View style={styles.switchWrap}>
+                            <Text>Sender ID</Text>
                             <Picker
                                 style={styles.picker}
                                 selectedValue={this.state.sender}
@@ -195,7 +200,7 @@ export default class CampaignText extends Component {
                         <View style={styles.switchWrap}>
                             <Text >Unicode</Text>
                             <Switch
-                                onValueChange={(value) => this.setState({switchUnicode: value})}
+                                onValueChange={(value) => { this.setState({switchUnicode: value}); this.countMessage(value) }}
                                 value={this.state.switchUnicode} />
                         </View>
                     </View>
@@ -252,6 +257,41 @@ export default class CampaignText extends Component {
             ident: link
         })
     }
+
+    setVariable(variable){
+        this.setState({message: this.state.message + " " + variable})
+        this.countMessage()
+    }
+
+    countMessage(unicodeValue){
+
+        let countMax;
+        let count;
+        let smsCount;
+        let totalSmsCount;
+
+        if(unicodeValue){
+            countMax = 70;
+            count = 67;
+        }else{
+            countMax = 160;
+            count = 153;
+        }
+
+        if(this.state.message.length <= countMax){
+            smsCount = 1;
+        }else{
+            smsCount = Math.floor(this.state.message.length / count + (this.state.message.length % count > 0))
+        }
+
+        totalSmsCount = this.state.recipients * smsCount;
+
+        this.setState({
+            smsCount: smsCount,
+            totalSmsCount: totalSmsCount
+        })
+
+    }
 }
 
 const styles = StyleSheet.create({
@@ -286,12 +326,12 @@ const styles = StyleSheet.create({
     messageStats: {
        fontWeight: '500',
        color: '#423D3C',
-        marginLeft: 3,
+       marginLeft: 3,
        marginRight: 10,
-       fontSize: 10
+       fontSize: 12
     },
     fontSize10: {
-        fontSize: 10
+        fontSize: 12
     },
     switchWrap: {
         height: 50,

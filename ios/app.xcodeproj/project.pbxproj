@@ -37,6 +37,8 @@
 		78EB1B63133D4C44B3837DF1 /* libRCTAddressBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA24CE913584E9F9325BAB6 /* libRCTAddressBook.a */; };
 		89336625F7C84AF0874B0564 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AD4F88670E4FC7894CCAF3 /* libRCTContacts.a */; };
 		F5410C86A34C4CCCA5D1A9D3 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D801288580E4CC2A154DD31 /* libRNImagePicker.a */; };
+		79A1FDD457C6405AB70D350C /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D92D38D6A9104EB1925DFF03 /* libRNBlur.a */; };
+		C8FF1AB01E7940279D190FE8 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8BBBB6E0B1455FB5AD230F /* libimageCropPicker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -265,6 +267,10 @@
 		E4AD4F88670E4FC7894CCAF3 /* libRCTContacts.a */ = {isa = PBXFileReference; name = "libRCTContacts.a"; path = "libRCTContacts.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		6F430AA4AC814DC1A0B37BC2 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; name = "RNImagePicker.xcodeproj"; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		0D801288580E4CC2A154DD31 /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1DFD6B5F6D0A4CF980240683 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; name = "RNBlur.xcodeproj"; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		D92D38D6A9104EB1925DFF03 /* libRNBlur.a */ = {isa = PBXFileReference; name = "libRNBlur.a"; path = "libRNBlur.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		42DD863FDD934A40A5608E9E /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; name = "imageCropPicker.xcodeproj"; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7F8BBBB6E0B1455FB5AD230F /* libimageCropPicker.a */ = {isa = PBXFileReference; name = "libimageCropPicker.a"; path = "libimageCropPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +301,8 @@
 				78EB1B63133D4C44B3837DF1 /* libRCTAddressBook.a in Frameworks */,
 				89336625F7C84AF0874B0564 /* libRCTContacts.a in Frameworks */,
 				F5410C86A34C4CCCA5D1A9D3 /* libRNImagePicker.a in Frameworks */,
+				79A1FDD457C6405AB70D350C /* libRNBlur.a in Frameworks */,
+				C8FF1AB01E7940279D190FE8 /* libimageCropPicker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +451,8 @@
 				4CB5F78EFE004142A7982BB6 /* RCTAddressBook.xcodeproj */,
 				505CBAEEB25445D19D9D1653 /* RCTContacts.xcodeproj */,
 				6F430AA4AC814DC1A0B37BC2 /* RNImagePicker.xcodeproj */,
+				1DFD6B5F6D0A4CF980240683 /* RNBlur.xcodeproj */,
+				42DD863FDD934A40A5608E9E /* imageCropPicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -899,6 +909,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -915,6 +927,8 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/app.app/app";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

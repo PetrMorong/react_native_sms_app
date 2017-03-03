@@ -34,7 +34,6 @@ export default class CampaignDeal extends Component{
             switchExpiration: false,
             timeZone: 'Europe/Oslo',
             expirationDate: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
-
             variables: [ ['< first_name >', '100%'],['< last_name >', '100%'], ['< email >', '100%'], ['< phone_number >', '100%'], ['< gender >', '100%']]
         }
     }
@@ -42,7 +41,7 @@ export default class CampaignDeal extends Component{
     render(){
         let variables = this.state.variables.map((variable, i) => {
             return(
-                <TouchableNativeFeedback key={i}>
+                <TouchableNativeFeedback key={i} onPress={()=>this.setVariable(variable[0])}>
                     <View style={styles.variableStyle}>
                         <Text  style={{color: '#4CAF76'}}>{variable[0]}</Text>
                         <Text  style={{color: '#4CAF76'}}>{variable[1]}</Text>
@@ -327,6 +326,10 @@ export default class CampaignDeal extends Component{
         this.props.navigator.push({
             ident: link
         })
+    }
+
+    setVariable(variable){
+        this.setState({description: this.state.description + " " + variable})
     }
 
     openImageLibrary(){
