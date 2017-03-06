@@ -3,11 +3,6 @@
  */
 
 export default function reducer(state={
-    user: {
-        id: null,
-        name: 'petsdsadasdar',
-        age: null
-    },
     fetching: false,
     fetched: false,
     error: null
@@ -27,9 +22,6 @@ export default function reducer(state={
                 fetched: true,
                 user: action.payload
             }
-        }
-        case 'SET_USER_NAME': {
-            return
         }
     }
     return state;

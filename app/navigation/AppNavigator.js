@@ -17,7 +17,7 @@ import KeypadRecipients from '../screens/Campaign/KeypadRecipients'
 import CampaignText from '../screens/Campaign/CampaignText'
 import CampaignSummary from '../screens/Campaign/CampaignSummary'
 import CampaignDashboard from '../screens/Campaign/CampaignDashboard'
-import CampaignList from '../screens/campaignList'
+import CampaignList from '../screens/Campaign/CampaignList'
 import CampaignDeal from '../screens/Campaign/CampaignDeal'
 
 import StoreCreate from '../screens/Store/StoreCreate'

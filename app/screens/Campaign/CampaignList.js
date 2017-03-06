@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image,  Button,  Text,  View, Dimensions, TouchableWithoutFeedback, TouchableNativeFeedback, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Toolbar from '../components/Toolbar'
+import Toolbar from '../../components/Toolbar'
 
 
 export default class campaignList extends Component{
@@ -120,13 +120,15 @@ export default class campaignList extends Component{
 
         let toolbar;
         if(this.state.selecting){
-            toolbar = <View style={styles.toolbarContainer} elevation={2}>
-                <Icon style={{color: 'white'}} name="arrow-back" size={30}/>
-                <View style={{flex: 1}}>
-                    <Text style={{color: 'white', marginLeft: 15, fontSize: 20}}>{this.state.selectCount}</Text>
+            toolbar = <TouchableNativeFeedback onPress={()=>this.cancelSelection()}>
+                <View style={styles.toolbarContainer} elevation={2}>
+                    <Icon style={{color: 'white'}} name="close" size={30}/>
+                    <View style={{flex: 1}}>
+                        <Text style={{color: 'white', marginLeft: 15, fontSize: 20}}>{this.state.selectCount}</Text>
+                    </View>
+                    <Icon style={{color: 'white'}} name="delete" size={22}/>
                 </View>
-                <Icon style={{color: 'white'}} name="delete" size={22}/>
-            </View>
+            </TouchableNativeFeedback>
         }else{
             toolbar = <Toolbar
                 openMenu={() => this.props.openMenu()}
@@ -172,6 +174,17 @@ export default class campaignList extends Component{
         }
 
         this.setState({data: selected, selecting: selecting, selectCount: selectCount})
+    }
+
+    cancelSelection(){
+        let selected = JSON.parse(JSON.stringify(this.state.data));
+
+        let newSelected = Object.keys(selected).map((key)=>{
+            selected[key].selected = false;
+            return selected[key];
+        });
+
+        this.setState({selecting: false, data: newSelected, selectCount: 0})
     }
 
     navigateToScreen(link){

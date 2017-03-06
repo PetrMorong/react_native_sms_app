@@ -18,6 +18,8 @@ import {
     ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
+import { fetchUser } from '../../actions/userActions'
 
 const window = Dimensions.get('window');
 
@@ -64,7 +66,7 @@ export default class SignIn extends Component {
                                 elevation={2}
                                 color="#BE2166"
                                 title="login"
-                                onPress={() => this.navigateToScreen('DashboardNewUser')}/>
+                                onPress={() => this.props.dispatch(fetchUser())}/>
                         </View>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
                             <TouchableNativeFeedback onPress={this.props.changeScreenLostPassword}>
@@ -158,3 +160,5 @@ const styles = StyleSheet.create({
 
     }
 });
+
+module.exports = connect()(SignIn);

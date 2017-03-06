@@ -42,7 +42,7 @@ export default class DashboardNewUser extends Component {
                         <Text style={styles.text}>Fill out your profile</Text>
                     </View>
                 </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=>this.navigateToScreen('StartCampaign')}>
+                <TouchableNativeFeedback onPress={()=>this.navigateToScreen('CampaignCreate')}>
                     <View style={[styles.item, {backgroundColor: '#06B7AB'}]}>
                         <View style={styles.iconOutline}>
                             <Icon name="email" size={30} style={styles.icon}/>
@@ -50,7 +50,7 @@ export default class DashboardNewUser extends Component {
                         <Text style={styles.text}>Start campaign</Text>
                     </View>
                 </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=>this.navigateToScreen('CreateStore')}>
+                <TouchableNativeFeedback onPress={()=>this.navigateToScreen('StoreCreate')}>
                     <View style={[styles.item, {backgroundColor: '#536D79'}]}>
                         <View style={styles.iconOutline}>
                             <Icon name="store" size={30} style={styles.icon}/>

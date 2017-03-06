@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { fetchUser } from './actions/userActions'
 import AppNavigator from './navigation/AppNavigator'
 
 const mapStateToProps = (store) => {
@@ -12,13 +11,9 @@ const mapStateToProps = (store) => {
 
 export default class Root extends Component {
 
-    componentWillMount(){
-        //this.props.dispatch(fetchUser())
-    }
-
     render() {
         return (
-           <AppNavigator user={this.props.user} credit={this.props.credit} initialRoute={{ident: "Dashboard"}}/>
+           <AppNavigator user={this.props.user} credit={this.props.credit} initialRoute={{ident: "Sign"}}/>
         )
     }
 

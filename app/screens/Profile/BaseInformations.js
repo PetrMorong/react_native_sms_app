@@ -84,7 +84,7 @@ export default class BaseInformations extends Component {
                             elevation={2}
                             color="#BE2166"
                             title="save"
-                            onPress={() => this.navigateToScreen('StoreSettings')}/>
+                            onPress={() => this.navigateToScreen('Profile')}/>
                     </View>
                 </View>
             </View>

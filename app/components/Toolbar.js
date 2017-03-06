@@ -2,7 +2,7 @@
  * Created by Petr on 25.1.2017.
  */
 import React, { Component } from 'react';
-import { StyleSheet,  Text,  View, TouchableNativeFeedback } from 'react-native';
+import { StyleSheet,  Text,  View, TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ElevatedView from 'react-native-elevated-view'
 
@@ -11,24 +11,24 @@ export default class Toolbar extends Component {
     render() {
         let leftIcon;
         if(this.props.back){
-            leftIcon = <TouchableNativeFeedback  onPress={(event) => this.navigateToScreen(this.props.backLink)} >
+            leftIcon = <TouchableWithoutFeedback  onPress={(event) => this.navigateToScreen(this.props.backLink)} >
                 <Icon style={styles.menuIcon} name="arrow-back" size={30}/>
-            </TouchableNativeFeedback>;
+            </TouchableWithoutFeedback>;
         }else{
-            leftIcon = <TouchableNativeFeedback   onPress={(event) => this.openMenu()} >
+            leftIcon = <TouchableWithoutFeedback   onPress={(event) => this.openMenu()} >
                 <Icon style={styles.menuIcon} name="menu" size={30}/>
-            </TouchableNativeFeedback>;
+            </TouchableWithoutFeedback>;
 
         }
 
         return (
             <ElevatedView style={styles[this.props.background]} elevation={this.props.elevation}>
                 {leftIcon}
-                <TouchableNativeFeedback onPress={(event) => this.openMenu()}>
+                <TouchableWithoutFeedback onPress={(event) => this.openMenu()}>
                     <View style={{flex: 1}}>
                         <Text style={styles.screenName} >{this.props.title}</Text>
                     </View>
-                </TouchableNativeFeedback>
+                </TouchableWithoutFeedback>
                 <Icon style={styles.creditIcon} name={this.props.icon} size={22}/>
                 <Text style={styles.creditNumber}> {this.props.credit}</Text>
             </ElevatedView>

@@ -49,14 +49,14 @@ export default class Dashboard  extends Component {
             <View style={styles.container}>
                 {stepper}
                 <View  scrollsToTop={false} style={styles.smallContainer}>
-                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('PhoneRecipients')}>
+                    <TouchableNativeFeedback >
                         <View style={styles.linkWrap}>
                             <Icon style={styles.blueIcon} name="phone" size={35}/>
                             <Text style={styles.blueText}>Recipients from phone</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <View style={styles.separator}/>
-                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('KeypadRecipients')}>
+                    <TouchableNativeFeedback>
                         <View style={styles.linkWrap}>
                             <Image style={styles.blueIcon} source={require('../../images/white-label/bulkgate/bulkgateIcon.png')}/>
                             <Text style={styles.blueText}>Recipients from Bulkgate </Text>
