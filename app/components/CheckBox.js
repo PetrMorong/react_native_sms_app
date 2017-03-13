@@ -4,7 +4,7 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { Component } from 'react';
 import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, ScrollView} from 'react-native';
-
+import Color from '../config/Variables'
 
 export default class Checkbox extends Component{
     render(){
@@ -12,7 +12,7 @@ export default class Checkbox extends Component{
         if(this.props.checked){
             CheckBox = <TouchableNativeFeedback onPress={() => this.props.onCheck()}>
                 <View style={styles.checkWrap}>
-                    <Icon name="done" size={20} style={{color: 'white'}}/>
+                    <Icon name="done" size={20} style={{color: Color.checkBoxColor}}/>
                 </View>
             </TouchableNativeFeedback>
         }else{
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     checkWrap: {
         width: 22,
         height: 22,
-        backgroundColor: '#BE2166',
+        backgroundColor: Color.checkBoxBackground,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 2

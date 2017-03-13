@@ -4,8 +4,11 @@
 import React, { Component } from 'react';
 import { Navigator } from 'react-native';
 import Menu from '../components/Menu'
-import { DrawerLayoutAndroid, View, Text } from 'react-native'
+import { DrawerLayoutAndroid, View, Text, BackAndroid } from 'react-native'
 import Toolbar from '../components/Toolbar'
+import {Scene, Router} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
+
 
 import Dashboard from '../screens/Dashboard/Dashboard';
 import DashboardNewUser from '../screens/Dashboard/DashboardNewUser'
@@ -65,11 +68,36 @@ import ChangePassword from '../screens/Profile/ChangePassword'
 import PaymentData from '../screens/Profile/PaymentData'
 import ContactVerification from '../screens/Profile/ContactVerification'
 
+BackAndroid.addEventListener("hardwareBackPress", () => {
+    Actions.pop();
+    return true;
+});
+
 export default class AppNavigator extends Component {
+
+    render() {
+        return (
+                <Router>
+                    <Scene key="root">
+                        <Scene key='Sign' component={Sign} initial={true} hideNavBar/>
+                        <Scene key='DashboardNewUser' component={DashboardNewUser} hideNavBar/>
+                        <Scene key='Profile' component={Profile} hideNavBar/>
+                        <Scene key='BaseInformations' component={BaseInformations} hideNavBar/>
+                        <Scene key='PaymentData' component={PaymentData} hideNavBar/>
+                        <Scene key='ContactVerification' component={ContactVerification} hideNavBar/>
+                        <Scene key='ChangePassword' component={ChangePassword} hideNavBar/>
+                        <Scene key='StoreCreate' component={StoreCreate} hideNavBar/>
+                        <Scene key='StoreSettings' component={StoreSettings} hideNavBar/>
+                    </Scene>
+                </Router>
+        );
+    }
+
+
 
     renderScene(route, navigator) {
         let menu  = <Menu user={this.props.user} navigator={navigator}/>
-        if(route.ident == 'Dashboard'){
+        if(route == 'Dashboard'){
             return(
                 <DrawerLayoutAndroid
                     drawerWidth={300}
@@ -871,18 +899,6 @@ export default class AppNavigator extends Component {
                 </DrawerLayoutAndroid>
             );
         }
-    }
-
-    render() {
-        return (
-            <Navigator
-                initialRoute={this.props.initialRoute}
-                ref="appNavigator"
-                renderScene={this.renderScene.bind(this)}
-                configureScene={(route) => {
-                      return Navigator.SceneConfigs.PushFromRight;
-                  }}/>
-        );
     }
 
 

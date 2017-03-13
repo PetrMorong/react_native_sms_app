@@ -1,7 +1,36 @@
-import React, { Component } from 'react';
-import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions'
+import { Actions } from 'react-native-router-flux';
+
 
 const window = Dimensions.get('window');
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations,
+        user: store.user.user
+    }
+}
 
 export default class StoreCreate extends Component{
     constructor(props){
@@ -11,37 +40,46 @@ export default class StoreCreate extends Component{
         }
     }
 
-    render(){
-        return(
-            <ScrollView >
-                <View style={styles.container}>
-                    <View style={styles.imageContainer}>
-                        <Image style={styles.image} resizeMode='stretch' source={require('../../images/CreateStore.png')}/>
-                    </View>
-                    <View style={{padding: 15, marginTop: 30}}>
-                        <TextInput
-                            onChangeText={(text) => this.setState({text})}
-                            value={this.state.text}
-                            placeholder='Store name'/>
-                    </View>
-                    <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                        <View style={{width: 110, paddingRight: 15, paddingBottom: 25}}>
-                            <Button
-                                elevation={2}
-                                color="#BE2166"
-                                title="save"
-                                onPress={() => this.navigateToScreen('Profile')}/>
+
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="containerNoBg"
+                    title={_.create_store}
+                    elevation={0}
+                    back={true}/>
+                <ScrollView >
+                    <View style={styles.container}>
+                        <View style={styles.imageContainer}>
+                            <Image style={styles.image} resizeMode='stretch' source={require('../../images/CreateStore.png')}/>
+                        </View>
+                        <View style={{padding: 15, marginTop: 30}}>
+                            <TextInput
+                                onChangeText={(text) => this.setState({text})}
+                                value={this.state.text}
+                                placeholder={_.store_name}/>
+                        </View>
+                        <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                            <View style={{width: 110, margin: 25}}>
+                                <TouchableNativeFeedback onPress={() => Actions.StoreSettings()}>
+                                    <View style={styles.buttonWrap}>
+                                        <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                    </View>
+                                </TouchableNativeFeedback>
+                            </View>
                         </View>
                     </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </DrawerLayoutAndroid>
         )
-    }
-
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
     }
 
 }
@@ -57,7 +95,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         height: window.height / 5 * 2,
-        backgroundColor: '#064464',
+        backgroundColor: Color.secondaryColor,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -66,7 +104,18 @@ const styles = StyleSheet.create({
         width: window.width / 5 *4
     },
     buttonWrap: {
-        width: 160,
-        marginRight: 15
+        width: 110,
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500'
     }
 });
+
+module.exports = connect(mapStateToProps)(StoreCreate);

@@ -1,4 +1,6 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
+import Color from '../config/Variables';
 const React = require('react');
 const {
     Dimensions,
@@ -15,6 +17,13 @@ const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
 
+const mapStateToProps = (store) => {
+    return{
+        user: store.user.user,
+        credit: 853.7
+    }
+}
+
 export default class Menu extends Component {
     constructor(props){
         super(props);
@@ -30,6 +39,10 @@ export default class Menu extends Component {
         this.props.navigator.push({
             ident: link
         })
+    }
+
+    componentWillMount(){
+        console.log(this.props)
     }
 
     toggleItem(type){
@@ -201,8 +214,8 @@ export default class Menu extends Component {
                         <Image
                             style={styles.avatar}
                             source={{ uri, }}/>
-                        <Text style={styles.name}>{this.props.user.user.name}</Text>
-                        <Text style={styles.email}>moriandr73@gmail.com</Text>
+                        <Text style={styles.name}>{this.props.user.first_name} {this.props.user.last_name}</Text>
+                        <Text style={styles.email}>{this.props.user.email}</Text>
                     </View>
                 </TouchableNativeFeedback>
                 <View scrollsToTop={false}>
@@ -253,7 +266,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#064464',
+        backgroundColor: Color.secondaryColor,
     },
     avatar: {
         width: 90,
@@ -261,13 +274,13 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     name: {
-        color: 'white',
+        color: Color.menuName,
         fontSize: 16,
         fontWeight: 'bold',
         marginTop: 5
     },
     email: {
-        color: 'white',
+        color: Color.menuName,
         fontSize: 14,
         marginTop: 5
     },
@@ -286,16 +299,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#BE2166'
+        backgroundColor: Color.menuPrimary
     },
     menuLink: {
-        color: '#777777',
+        color: Color.menuText,
         fontSize: 16,
         marginLeft: 20,
         fontWeight: '500'
     },
     menuChevronDown: {
-        marginRight: 10
+        marginRight: 10,
+        color: Color.menuText
     },
     menuRightIcon: {
         fontSize: 20
@@ -303,25 +317,28 @@ const styles = StyleSheet.create({
     menuLinkActive: {
         fontSize: 16,
         marginLeft: 20,
-        color: 'white',
+        color: Color.menuTextHighlight,
         fontWeight: '500'
     },
     menuChevronDownActive: {
         marginRight: 10,
-        color: 'white'
+        color: Color.menuTextHighlight
     },
     menuRightIconActive: {
         fontSize: 20,
-        color: 'white'
+        color: Color.menuTextHighlight
     },
     separator: {
         height: 1,
         backgroundColor: '#cccccc'
     },
     collapsableBody: {
-        backgroundColor: '#F2D3E0',
+        backgroundColor: Color.menuSecondary,
         padding: 10,
         paddingTop: 0,
         paddingBottom: 0
     }
 });
+
+
+module.exports = connect(mapStateToProps)(Menu);

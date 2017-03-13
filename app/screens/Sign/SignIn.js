@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { fetchUser } from '../../actions/userActions'
+import { fetchUser } from '../../actions/Actions'
 
 const window = Dimensions.get('window');
 

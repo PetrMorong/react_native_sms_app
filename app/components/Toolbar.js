@@ -5,13 +5,22 @@ import React, { Component } from 'react';
 import { StyleSheet,  Text,  View, TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ElevatedView from 'react-native-elevated-view'
+import { connect } from 'react-redux';
+import Color from '../config/Variables';
+import { Actions } from 'react-native-router-flux';
 
+
+const mapStateToProps = (store) => {
+    return{
+        credit: 853.7
+    }
+}
 
 export default class Toolbar extends Component {
     render() {
         let leftIcon;
         if(this.props.back){
-            leftIcon = <TouchableWithoutFeedback  onPress={(event) => this.navigateToScreen(this.props.backLink)} >
+            leftIcon = <TouchableWithoutFeedback  onPress={(event) => Actions.pop()} >
                 <Icon style={styles.menuIcon} name="arrow-back" size={30}/>
             </TouchableWithoutFeedback>;
         }else{
@@ -29,7 +38,7 @@ export default class Toolbar extends Component {
                         <Text style={styles.screenName} >{this.props.title}</Text>
                     </View>
                 </TouchableWithoutFeedback>
-                <Icon style={styles.creditIcon} name={this.props.icon} size={22}/>
+                <Icon style={styles.creditIcon} name='account-balance-wallet' size={22}/>
                 <Text style={styles.creditNumber}> {this.props.credit}</Text>
             </ElevatedView>
         );
@@ -52,33 +61,34 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 15,
-        backgroundColor: '#011D2B'
+        backgroundColor: Color.toolbar
     },
     containerNoBg: {
         height: 60,
         flexDirection: 'row',
         alignItems: 'center',
         padding: 15,
-        backgroundColor: '#064464'
+        backgroundColor: Color.secondaryColor
     },
     menuIcon: {
-        color: 'white',
+        color: Color.toolbarText,
     },
     screenName: {
-        color: 'white',
+        color: Color.toolbarText,
         marginLeft: 15,
         fontSize: 18
     },
     creditIcon: {
         marginRight: 5,
-        color: 'white',
+        color: Color.toolbarText,
     },
     creditNumber: {
-        color: 'white',
+        color: Color.toolbarText,
         fontSize: 16
     }
 
 });
 
+module.exports = connect(mapStateToProps)(Toolbar);
 
 

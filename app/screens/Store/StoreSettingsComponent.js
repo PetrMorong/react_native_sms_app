@@ -1,10 +1,33 @@
-/**
- * Created by Petr on 7.2.2017.
- */
-import React, { Component } from 'react';
-import { StyleSheet, Modal,  Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ImagePicker from 'react-native-image-crop-picker';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions'
+import { Actions } from 'react-native-router-flux';
+
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations,
+        user: store.user.user
+    }
+}
 
 const window = Dimensions.get('window');
 let Platform = require('react-native').Platform;
@@ -32,8 +55,7 @@ export default class StoreSettingsComponent extends Component{
     }
 
     render(){
-
-
+        const _=this.props._;
 
         let cover;
         if(this.state.coverSource){
@@ -56,7 +78,7 @@ export default class StoreSettingsComponent extends Component{
                     onChangeText={(storeName) => this.setState({storeName: storeName})}
                     value={this.state.storeName}
                     style={{width: window.width / 2}}
-                    placeholder='Store name'/>
+                    placeholder={_.store_name}/>
                 <TouchableNativeFeedback onPress={() => this.setState({editingStoreName: false})}>
                     <Icon name="done" size={30} style={{padding: 15, color: '#6CC2BA'}}/>
                 </TouchableNativeFeedback>
@@ -77,7 +99,7 @@ export default class StoreSettingsComponent extends Component{
                     <TouchableNativeFeedback onPress={(event) => this.setModalCoverVisible(true)}>
                         <View style={styles.changeCoverButton}>
                             <Icon name="photo-camera" size={20} style={{color: 'black', marginRight: 5}}/>
-                            <Text style={{color: 'black', fontSize: 14}}>CHANGE</Text>
+                            <Text style={{color: 'black', fontSize: 14}}>{_.change.toUpperCase()}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -87,7 +109,7 @@ export default class StoreSettingsComponent extends Component{
                         <TouchableNativeFeedback onPress={(event) => this.setModalLogoVisible(true)}>
                             <View style={styles.changeLogoButton}>
                                 <Icon name="photo-camera" size={20} style={{color: 'black', marginRight: 5}}/>
-                                <Text style={{color: 'black', fontSize: 14}}>CHANGE</Text>
+                                <Text style={{color: 'black', fontSize: 14}}>{_.change.toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                     </View>
@@ -116,7 +138,7 @@ export default class StoreSettingsComponent extends Component{
                         <Text>www.topefekt.com</Text>
                     </View>
                     <TouchableNativeFeedback onPress={() => this.navigateToScreen('CompanyData')}>
-                        <Text style={{marginLeft: 35, color: '#1580FD', marginTop: 5}} >EDIT COMPANY DATA</Text>
+                        <Text style={{marginLeft: 35, color: '#1580FD', marginTop: 5}} >{_.edit.toUpperCase()}</Text>
                     </TouchableNativeFeedback>
                 </View>
                 <View style={styles.separator}/>
@@ -124,7 +146,7 @@ export default class StoreSettingsComponent extends Component{
                     <TouchableNativeFeedback onPress={() => this.navigateToScreen('Language')}>
                         <View style={styles.actionSmallWrap}>
                             <Image source={require('../../images/cs.png')} resizeMode='stretch' style={{width: 30, height: 30, marginBottom: 3}}/>
-                            <Text style={{color: '#444444'}}>Language</Text>
+                            <Text style={{color: '#444444'}}>{_.language}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.navigateToScreen('ShortUrl')}>
@@ -141,14 +163,15 @@ export default class StoreSettingsComponent extends Component{
                     </TouchableNativeFeedback>
                 </View>
                 <View style={styles.separator}/>
-                <View style={styles.buttonWrap}>
-                    <Button
-                        style={styles.button}
-                        elevation={2}
-                        color="#BE2166"
-                        title="save"
-                        onPress={() => this.navigateToScreen('CampaignDeal')}/>
+
+                <View style={{margin: 15, alignItems: 'flex-end'}}>
+                    <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
+                        <View style={styles.buttonWrap}>
+                            <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                 </View>
+
 
                 <Modal
                     animationType={"slide"}
@@ -237,12 +260,6 @@ export default class StoreSettingsComponent extends Component{
     handleLogoColorPress(){
         this.setModalLogoVisible(false)
         this.navigateToScreen('ColorPickerComponent')
-    }
-
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
     }
 
     setModalCoverVisible(visible) {
@@ -400,15 +417,7 @@ const styles = StyleSheet.create({
     actionSmallWrap: {
         alignItems: 'center'
     },
-    buttonWrap: {
-        width: 110,
-        paddingTop: 12,
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
-        marginBottom: 15,
-        marginRight: 15,
-        marginTop: 5
-    },
+
     modalContainer: {
         alignItems: 'center',
         flex: 1,
@@ -442,6 +451,21 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 20,
         color: '#444444'
+    },
+    buttonWrap: {
+        width: 110,
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500'
     }
 
 });
+
+module.exports = connect(mapStateToProps)(StoreSettingsComponent);
