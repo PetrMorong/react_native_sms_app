@@ -1,8 +1,36 @@
 /**
  * Created by Petr on 10.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, ScrollView, } from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions'
+import { Actions } from 'react-native-router-flux';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations,
+    }
+}
 
 export default class OwnerSms extends Component{
     constructor(props){
@@ -20,6 +48,9 @@ export default class OwnerSms extends Component{
     }
 
     render(){
+        const _=this.props._;
+        let menu  = <Menu/>;
+
         let variables = this.state.variables.map((variable, i) => {
             return(
                 <TouchableNativeFeedback key={i}  onPress={()=>this.setVariable(variable[0])}>
@@ -53,7 +84,7 @@ export default class OwnerSms extends Component{
         }
         if(this.state.sender == 'own_number'){
             optionalSender = <View style={styles.switchSender}>
-                <Text >Verified numbers</Text>
+                <Text >{_.verified_numbers}</Text>
                 <Picker
                     disabled={true}
                     style={styles.picker}
@@ -73,7 +104,7 @@ export default class OwnerSms extends Component{
                 <View style={{paddingLeft: 10, paddingRight: 10}}>
                     <TextInput
                         style={{height: 100}}
-                        placeholder='SMS text'
+                        placeholder={_.sms_text}
                         ref="message"
                         multiline={true}
                         onChangeText={(message) => this.setState({message})}
@@ -82,14 +113,14 @@ export default class OwnerSms extends Component{
                     <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
                         <Text style={styles.fontSize10}>SMS:</Text>
                         <Text style={styles.messageStats}>{this.state.smsCount}</Text>
-                        <Text style={styles.fontSize10}>Length:</Text>
+                        <Text style={styles.fontSize10}>{_.length}:</Text>
                         <Text style={styles.messageStats}>{this.state.message.length}</Text>
                     </View>
                 </View>
                 <View style={{marginTop: 40}}>
                     <View style={styles.separator}/>
                     <View style={styles.switchWrap}>
-                        <Text >Variables</Text>
+                        <Text >{_.variables}</Text>
                         <Switch
                             onValueChange={(value) => this.setState({switchVariables: value})}
                             value={this.state.switchVariables} />
@@ -102,7 +133,7 @@ export default class OwnerSms extends Component{
                 <View>
                     <View style={styles.separator}/>
                     <View style={styles.switchWrap}>
-                        <Text >Unicode</Text>
+                        <Text >{_.unicode}</Text>
                         <Switch
                             onValueChange={(value) => { this.setState({switchUnicode: value}); this.countMessage(value) }}
                             value={this.state.switchUnicode} />
@@ -111,7 +142,7 @@ export default class OwnerSms extends Component{
                 <View>
                     <View style={styles.separator}/>
                     <View style={styles.switchWrap}>
-                        <Text >Sender ID</Text>
+                        <Text >{_.sender_id}</Text>
                         <Picker
                             style={styles.picker}
                             selectedValue={this.state.sender}
@@ -128,36 +159,39 @@ export default class OwnerSms extends Component{
             </View>
         }
 
-        return(
-            <View style={[styles.container, {padding: 15}]}>
-                <View>
-                    <View style={styles.switchWrap}>
-                        <Text>Activate</Text>
-                        <Switch
-                            onValueChange={(value) => this.setState({active: value})}
-                            value={this.state.active} />
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.owner_sms}
+                    elevation={2}
+                    back={true}/>
+                <View style={[styles.container, {padding: 15}]}>
+                    <View>
+                        <View style={styles.switchWrap}>
+                            <Text>{_.activate}</Text>
+                            <Switch
+                                onValueChange={(value) => this.setState({active: value})}
+                                value={this.state.active} />
+                        </View>
+                        <View style={styles.separator}/>
                     </View>
-                    <View style={styles.separator}/>
-                </View>
-                {view}
-                <View style={{flex: 1, padding: 15, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                    <View style={{width: 110}}>
-                        <Button
-                            elevation={2}
-                            color="#BE2166"
-                            title="save"
-                            onPress={() => this.navigateToScreen('StoreSettings')}/>
+                    {view}
+                    <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
+                            <View style={styles.buttonWrap}>
+                                <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                            </View>
+                        </TouchableNativeFeedback>
                     </View>
                 </View>
-            </View>
-
+            </DrawerLayoutAndroid>
         )
-    }
-
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
     }
 
     setVariable(variable){
@@ -250,8 +284,17 @@ const styles = StyleSheet.create({
     },
     buttonWrap: {
         width: 110,
-        paddingTop: 12,
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500'
     }
 });
+
+module.exports = connect(mapStateToProps)(OwnerSms);

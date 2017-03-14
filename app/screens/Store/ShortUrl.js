@@ -1,9 +1,37 @@
 /**
  * Created by Petr on 8.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Modal,  Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions'
+import { Actions } from 'react-native-router-flux';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations,
+    }
+}
 
 
 export default class ShortUrl extends Component{
@@ -15,7 +43,11 @@ export default class ShortUrl extends Component{
         }
     }
 
-    render(){
+
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+
         let help;
         if(this.state.showHelp){
             help = <View style={{paddingLeft: 30, paddingRight: 30}}>
@@ -37,35 +69,49 @@ export default class ShortUrl extends Component{
             </View>
         }
 
-        return(
-            <View style={styles.container}>
-                <View style={{padding: 15}}>
-                    <TextInput
-                        onChangeText={(url) => this.setState({url})}
-                        value={this.state.url}
-                        style={{marginLeft: 15, marginRight: 15, marginBottom: 15}}
-                        placeholder='Short url'/>
-                </View>
-                <View style={styles.separator}/>
-                <TouchableNativeFeedback onPress={() => this.setState({showHelp: !this.state.showHelp})}>
-                    <View style={{padding: 30, flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon name="help-outline" size={25} style={{marginRight: 5, color: '#1580FD'}}/>
-                        <Text style={{marginRight: 10, fontSize: 20, color: '#1580FD'}}>What is deal short url ?</Text>
+
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title='Short url'
+                    elevation={2}
+                    back={true}/>
+                <View style={styles.container}>
+                    <View style={{padding: 15}}>
+                        <TextInput
+                            onChangeText={(url) => this.setState({url})}
+                            value={this.state.url}
+                            style={{marginLeft: 15, marginRight: 15, marginBottom: 15}}
+                            placeholder='Short url'/>
                     </View>
-                </TouchableNativeFeedback>
-                {help}
-                <View style={{flex: 1, padding: 15, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                    <View style={{width: 110}}>
-                        <Button
-                            elevation={2}
-                            color="#BE2166"
-                            title="save"
-                            onPress={() => this.navigateToScreen('StoreSettings')}/>
+                    <View style={styles.separator}/>
+                    <TouchableNativeFeedback onPress={() => this.setState({showHelp: !this.state.showHelp})}>
+                        <View style={{padding: 30, flexDirection: 'row', alignItems: 'center'}}>
+                            <Icon name="help-outline" size={25} style={{marginRight: 5, color: '#1580FD'}}/>
+                            <Text style={{marginRight: 10, fontSize: 20, color: '#1580FD'}}>What is deal short url ?</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                    {help}
+                    <View style={{flex: 1, padding: 15, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <View style={{ alignItems: 'flex-end'}}>
+                            <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
+                                <View style={styles.buttonWrap}>
+                                    <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </DrawerLayoutAndroid>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
@@ -77,5 +123,20 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#E0E0E0'
     },
+    buttonWrap: {
+        width: 110,
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500'
+    }
 
 });
+
+module.exports = connect(mapStateToProps)(ShortUrl);

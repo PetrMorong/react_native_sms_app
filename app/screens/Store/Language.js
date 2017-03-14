@@ -1,10 +1,37 @@
 /**
  * Created by Petr on 10.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, ScrollView, } from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions'
+import { Actions } from 'react-native-router-flux';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
 
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations,
+    }
+}
 
 export default class Language extends Component{
     constructor(props){
@@ -20,7 +47,10 @@ export default class Language extends Component{
         }
     }
 
-    render(){
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+
         let languages;
         languages = Object.keys(this.state.languages).map((key) => {
             return(
@@ -37,19 +67,31 @@ export default class Language extends Component{
         });
 
 
-        return(
-            <View style={styles.container}>
-                {languages}
-                <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                    <View style={{width: 110}}>
-                        <Button
-                            elevation={2}
-                            color="#BE2166"
-                            title="save"
-                            onPress={() => this.navigateToScreen('StoreSettings')}/>
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.language}
+                    elevation={2}
+                    back={true}/>
+                <View style={styles.container}>
+                    {languages}
+                    <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <View style={{ alignItems: 'flex-end'}}>
+                            <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
+                                <View style={styles.buttonWrap}>
+                                    <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </DrawerLayoutAndroid>
         )
     }
 
@@ -99,5 +141,20 @@ const styles = StyleSheet.create({
     },
     b: {
         color: '#4CAF50'
+    },
+    buttonWrap: {
+        width: 110,
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500'
     }
 });
+
+module.exports = connect(mapStateToProps)(Language);

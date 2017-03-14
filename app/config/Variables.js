@@ -5,6 +5,7 @@ const color = {
 
     background: '#E7F0F6',
     secondaryColor: '#1F1E1E',
+    primaryColor: 'black',
     displayText: 'rgba(0,0,0,.87)',
     displayText2: 'rgba(0,0,0,.54)',
     caption: 'rgba(0,0,0,.54)',
@@ -30,6 +31,8 @@ const color = {
     checkBoxBackground: '#FFE100',
     checkBoxColor: 'rgba(0,0,0,.54)',
 
+    //order
+    orderName: '#FFE100',
 
     views: {
         campaign: {

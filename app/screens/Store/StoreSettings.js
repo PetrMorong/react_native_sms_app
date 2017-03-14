@@ -85,8 +85,7 @@ export default class StoreSettings extends Component{
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
                     title={this.props.translate.store}
-                    elevation={0}
-                    back={true}/>
+                    elevation={0}/>
                 <TabViewAnimated
                     style={styles.container}
                     navigationState={this.state}

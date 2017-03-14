@@ -10,7 +10,7 @@ export function fetchUser(){
     return function(dispatch) {
         dispatch({type: 'FETCH_USER'})
         request
-            .post('http://10.0.0.34:8080/fetch-user')
+            .post('http://10.0.0.12:8080/fetch-user')
             .end(function(err, res){
                 dispatch({type: 'FETCH_USER_FULFILLED', payload: JSON.parse(res.text)})
                 Actions.DashboardNewUser()
@@ -22,7 +22,7 @@ export function fetchUser(){
 export function getTranslations(){
     return function(dispatch) {
         request
-            .get('http://10.0.0.34:8080/translations')
+            .get('http://10.0.0.12:8080/translations')
             .end(function(err, res){
                 AsyncStorage.setItem('translations', res.text);
                 dispatch({type: 'GOT_TRANSLATIONS', payload: JSON.parse(res.text)})

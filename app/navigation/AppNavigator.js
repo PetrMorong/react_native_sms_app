@@ -80,14 +80,45 @@ export default class AppNavigator extends Component {
                 <Router>
                     <Scene key="root">
                         <Scene key='Sign' component={Sign} initial={true} hideNavBar/>
+                        <Scene key='Dashboard' component={Dashboard} hideNavBar/>
                         <Scene key='DashboardNewUser' component={DashboardNewUser} hideNavBar/>
                         <Scene key='Profile' component={Profile} hideNavBar/>
                         <Scene key='BaseInformations' component={BaseInformations} hideNavBar/>
                         <Scene key='PaymentData' component={PaymentData} hideNavBar/>
                         <Scene key='ContactVerification' component={ContactVerification} hideNavBar/>
                         <Scene key='ChangePassword' component={ChangePassword} hideNavBar/>
+                        <Scene key='StoreList' component={StoreList} hideNavBar/>
                         <Scene key='StoreCreate' component={StoreCreate} hideNavBar/>
                         <Scene key='StoreSettings' component={StoreSettings} hideNavBar/>
+                        <Scene key='Language' component={Language} hideNavBar/>
+                        <Scene key='ShortUrl' component={ShortUrl} hideNavBar/>
+                        <Scene key='Notifications' component={Notifications} hideNavBar/>
+                        <Scene key='CustomerSms' component={CustomerSms} hideNavBar/>
+                        <Scene key='CustomerEmail' component={CustomerEmail} hideNavBar/>
+                        <Scene key='OwnerEmail' component={OwnerEmail} hideNavBar/>
+                        <Scene key='OwnerSms' component={OwnerSms} hideNavBar/>
+                        <Scene key='CampaignCreate' component={CampaignCreate} hideNavBar/>
+                        <Scene key='CampaignList' component={CampaignList} hideNavBar/>
+                        <Scene key='HistoryList' component={HistoryList} hideNavBar/>
+                        <Scene key='ScheduledList' component={ScheduledList} hideNavBar/>
+                        <Scene key='InboxList' component={InboxList} hideNavBar/>
+                        <Scene key='Statistics' component={Statistics} hideNavBar/>
+                        <Scene key='Order' component={Order} hideNavBar/>
+                        <Scene key='OrderList' component={OrderList} hideNavBar/>
+                        <Scene key='HistoryList' component={HistoryList} hideNavBar/>
+                        <Scene key='CampaignDetail' component={CampaignDetail} hideNavBar/>
+                        <Scene key='InboxDetail' component={InboxDetail} hideNavBar/>
+                        <Scene key='InboxList' component={InboxList} hideNavBar/>
+                        <Scene key='OutboxList' component={OutboxList} hideNavBar/>
+                        <Scene key='BuyCredit' component={BuyCredit} hideNavBar/>
+                        <Scene key='ScheduledDetail' component={ScheduledDetail} hideNavBar/>
+                        <Scene key='ScheduledList' component={ScheduledList} hideNavBar/>
+                        <Scene key='Settings' component={Settings} hideNavBar/>
+                        <Scene key='ColorPicker' component={ColorPickerComponent} hideNavBar/>
+
+
+
+
                     </Scene>
                 </Router>
         );

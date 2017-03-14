@@ -143,19 +143,19 @@ export default class StoreSettingsComponent extends Component{
                 </View>
                 <View style={styles.separator}/>
                 <View style={styles.actionWrap}>
-                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('Language')}>
+                    <TouchableNativeFeedback onPress={() => Actions.Language()}>
                         <View style={styles.actionSmallWrap}>
                             <Image source={require('../../images/cs.png')} resizeMode='stretch' style={{width: 30, height: 30, marginBottom: 3}}/>
                             <Text style={{color: '#444444'}}>{_.language}</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('ShortUrl')}>
+                    <TouchableNativeFeedback onPress={() => Actions.ShortUrl()}>
                         <View style={styles.actionSmallWrap}>
                             <Icon name="language" size={25} style={{marginBottom: 5, color: '#444444'}}/>
                             <Text style={{color: '#444444'}}>Short url</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('Notifications')}>
+                    <TouchableNativeFeedback onPress={() => Actions.Notifications()}>
                         <View style={styles.actionSmallWrap}>
                             <Icon name="add-alert" size={25} style={{marginBottom: 5, color: '#444444'}}/>
                             <Text style={{color: '#444444'}}>Notifications</Text>
@@ -323,7 +323,6 @@ export default class StoreSettingsComponent extends Component{
     }
 
     takePhotoLogo(){
-        console.log('nice')
         ImagePicker.openCamera({
             width: 300,
             height: 400,

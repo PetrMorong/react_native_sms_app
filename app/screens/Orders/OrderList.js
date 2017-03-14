@@ -1,132 +1,166 @@
 /**
  * Created by Petr on 20.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Modal,  Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
 
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
 
 export default class OrderList extends Component{
-    render(){
-        return(
-            <View style={styles.container}>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Order')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarCover.jpg')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemText}>Kytara</Text>
-                                <Text style={styles.itemPrice}>1500 $</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text style={styles.itemDate}>16.1.</Text>
-                                <Icon name='new-releases' size={20} style={styles.iconOrange}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Order')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemTextRead}>BUM BUM CUP</Text>
-                                <Text style={styles.itemPriceRead}>1500 $</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                                <Icon name='new-releases' size={20} style={styles.iconOrange}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Order')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/campaignCreate.png')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemTextRead}>Ernesto hugain</Text>
-                                <Text style={styles.itemPriceRead}>1500 $</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                                <Icon name='done' size={20} style={styles.iconGreen}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Order')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/CreateStore.png')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemText}>StoreLife</Text>
-                                <Text style={styles.itemPrice}>1500 $</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text style={styles.itemDate}>16.1.</Text>
-                                <Icon name='new-releases' size={20} style={styles.iconOrange}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Order')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/BuyCredit.png')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemTextRead}>Kytara</Text>
-                                <Text style={styles.itemPriceRead}>1500 $</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                                <Icon name='new-releases' size={20} style={styles.iconOrange}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Order')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarCover.jpg')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemTextRead}>Kytara</Text>
-                                <Text style={styles.itemPriceRead}>1500 $</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                                <Icon name='done' size={20} style={styles.iconGreen}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
 
-            </View>
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.orders}
+                    elevation={0}/>
+                <View style={styles.container}>
+                    <TouchableNativeFeedback onPress={()=> Actions.Order()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarCover.jpg')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemText}>Kytara</Text>
+                                    <Text style={styles.itemPrice}>1500 $</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={styles.itemDate}>16.1.</Text>
+                                    <Icon name='new-releases' size={20} style={styles.iconOrange}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.Order()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemTextRead}>BUM BUM CUP</Text>
+                                    <Text style={styles.itemPriceRead}>1500 $</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                    <Icon name='new-releases' size={20} style={styles.iconOrange}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.Order()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/campaignCreate.png')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemTextRead}>Ernesto hugain</Text>
+                                    <Text style={styles.itemPriceRead}>1500 $</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                    <Icon name='done' size={20} style={styles.iconGreen}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.Order()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/CreateStore.png')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemText}>StoreLife</Text>
+                                    <Text style={styles.itemPrice}>1500 $</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={styles.itemDate}>16.1.</Text>
+                                    <Icon name='new-releases' size={20} style={styles.iconOrange}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.Order()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/BuyCredit.png')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemTextRead}>Kytara</Text>
+                                    <Text style={styles.itemPriceRead}>1500 $</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                    <Icon name='new-releases' size={20} style={styles.iconOrange}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.Order()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarCover.jpg')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemTextRead}>Kytara</Text>
+                                    <Text style={styles.itemPriceRead}>1500 $</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                    <Icon name='done' size={20} style={styles.iconGreen}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+
+                </View>
+            </DrawerLayoutAndroid>
         )
-    }
-
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
     }
 
 }
@@ -185,3 +219,5 @@ const styles = StyleSheet.create({
     }
 
 });
+
+module.exports = connect(mapStateToProps)(OrderList);

@@ -1,8 +1,36 @@
 /**
  * Created by Petr on 9.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, ScrollView, } from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions'
+import { Actions } from 'react-native-router-flux';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations,
+    }
+}
 
 export default class OwnerEmail extends Component{
     constructor(props){
@@ -14,54 +42,69 @@ export default class OwnerEmail extends Component{
     }
 
     render(){
+        const _=this.props._;
+        let menu  = <Menu/>;
+
         let view;
         if(this.state.active){
             view = <View>
                 <View style={{paddingLeft: 10, paddingRight: 10}}>
                     <TextInput
                         style={{height: 100}}
-                        placeholder='Email text'
+                        placeholder={_.email_text}
                         ref="message"
                         multiline={true}
                         onChangeText={(message) => this.setState({message})}
                         value={this.state.message}/>
                     <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-                        <Text style={styles.fontSize10}>Total SMS:</Text>
+                        <Text style={styles.fontSize10}>{_.total_sms}:</Text>
                         <Text style={styles.messageStats}>2</Text>
-                        <Text style={styles.fontSize10}>Recipients:</Text>
+                        <Text style={styles.fontSize10}>{_.recipients}:</Text>
                         <Text style={styles.messageStats}>3</Text>
                         <Text style={styles.fontSize10}>SMS:</Text>
                         <Text style={styles.messageStats}>5</Text>
-                        <Text style={styles.fontSize10}>Length:</Text>
+                        <Text style={styles.fontSize10}>{_.length}:</Text>
                         <Text style={styles.messageStats}>130/120</Text>
                     </View>
                 </View>
             </View>
         }
 
-        return(
-            <View style={[styles.container, {padding: 15}]}>
-                <View>
-                    <View style={styles.switchWrap}>
-                        <Text>Activate</Text>
-                        <Switch
-                            onValueChange={(value) => this.setState({active: value})}
-                            value={this.state.active} />
-                    </View>
-                    <View style={styles.separator}/>
-                </View>
-                {view}
-                <View style={{flex: 1, padding: 15, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                    <View style={{width: 110}}>
-                        <Button
-                            elevation={2}
-                            color="#BE2166"
-                            title="save"
-                            onPress={() => this.navigateToScreen('StoreSettings')}/>
-                    </View>
-                </View>
-            </View>
 
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title='Owner email'
+                    elevation={2}
+                    back={true}/>
+                <View style={[styles.container, {padding: 15}]}>
+                    <View>
+                        <View style={styles.switchWrap}>
+                            <Text>{_.activate}</Text>
+                            <Switch
+                                onValueChange={(value) => this.setState({active: value})}
+                                value={this.state.active} />
+                        </View>
+                        <View style={styles.separator}/>
+                    </View>
+                    {view}
+                    <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                        <View style={{alignItems: 'flex-end'}}>
+                            <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
+                                <View style={styles.buttonWrap}>
+                                    <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                        </View>
+                    </View>
+                </View>
+            </DrawerLayoutAndroid>
         )
     }
 }
@@ -106,8 +149,17 @@ const styles = StyleSheet.create({
     },
     buttonWrap: {
         width: 110,
-        paddingTop: 12,
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500'
     }
 });
+
+module.exports = connect(mapStateToProps)(OwnerEmail);
