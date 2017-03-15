@@ -1,13 +1,44 @@
-import React, { Component } from 'react';
-import { StyleSheet, Modal,  Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView} from 'react-native';
+
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
+
+
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import ElevatedView from 'react-native-elevated-view';
 
 import Sms from './Sms'
 import SmartSms from './SmartSms'
 
-const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
+const window = Dimensions.get('window');
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
 
 
 export default class Dashboard  extends Component {
@@ -44,42 +75,57 @@ export default class Dashboard  extends Component {
         }
     };
 
+
     render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
         return (
-            <ScrollView style={styles.container}>
-                <ElevatedView style={styles.cover}>
-                    <View style={styles.avatarContainer}>
-                        <Image
-                            style={styles.avatar}
-                            source={{ uri, }}/>
-                        <Text style={styles.name}>Petr Morong</Text>
-                        <Text style={styles.email}>moriandr73@gmail.com</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', marginTop: 25, justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15}}>
-                        <View style={styles.coverNumbersWrap}>
-                            <Text style={styles.highlightText}>254 896</Text>
-                            <Text style={{color: '#bdd6d2' }}>SMS SENT</Text>
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.dashboard}
+                    elevation={2}/>
+                <ScrollView style={styles.container}>
+                    <ElevatedView style={styles.cover}>
+                        <View style={styles.avatarContainer}>
+                            <Image
+                                style={styles.avatar}
+                                source={{ uri, }}/>
+                            <Text style={styles.name}>Petr Morong</Text>
+                            <Text style={styles.email}>moriandr73@gmail.com</Text>
                         </View>
-                        <View style={styles.coverNumbersWrap}>
-                            <Text style={styles.highlightText}>78 546</Text>
-                            <Text style={{color: '#bdd6d2' }}>CREDIT SPENT</Text>
+                        <View style={{flexDirection: 'row', marginTop: 25, justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15}}>
+                            <View style={styles.coverNumbersWrap}>
+                                <Text style={styles.highlightText}>254 896</Text>
+                                <Text style={{color: '#bdd6d2' }}>{_.sms}</Text>
+                            </View>
+                            <View style={styles.coverNumbersWrap}>
+                                <Text style={styles.highlightText}>78 546</Text>
+                                <Text style={{color: '#bdd6d2' }}>{_.credit}</Text>
+                            </View>
+                            <View style={styles.coverNumbersWrap}>
+                                <Text style={styles.highlightText}>January</Text>
+                                <Text style={{color: '#bdd6d2' }}>{_.month}</Text>
+                            </View>
                         </View>
-                        <View style={styles.coverNumbersWrap}>
-                            <Text style={styles.highlightText}>January</Text>
-                            <Text style={{color: '#bdd6d2' }}>MONTH</Text>
-                        </View>
-                    </View>
-                </ElevatedView>
-                <TabViewAnimated
-                    style={{height: 505}}
-                    navigationState={this.state}
-                    renderScene={this._renderScene}
-                    renderHeader={this._renderHeader}
-                    onRequestChangeTab={this._handleChangeTab}
-                />
-            </ScrollView>
-        );
+                    </ElevatedView>
+                    <TabViewAnimated
+                        style={{height: 505}}
+                        navigationState={this.state}
+                        renderScene={this._renderScene}
+                        renderHeader={this._renderHeader}
+                        onRequestChangeTab={this._handleChangeTab}
+                    />
+                </ScrollView>
+            </DrawerLayoutAndroid>
+        )
     }
+
 }
 
 const styles = StyleSheet.create({
@@ -90,14 +136,14 @@ const styles = StyleSheet.create({
     },
     cover: {
         height: window.height/3 + 30,
-        backgroundColor: '#011D2B',
+        backgroundColor: Color.dashboardBackground,
     },
     avatarContainer: {
         height: 140,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#011D2B',
+        backgroundColor: Color.dashboardBackground,
     },
     avatar: {
         width: 90,
@@ -120,9 +166,11 @@ const styles = StyleSheet.create({
     },
     highlightText: {
         fontWeight: '500',
-        color: '#37ab9c',
+        color: Color.dashboardStatsColor,
         fontSize: 18,
         lineHeight: 25
     }
 });
+
+module.exports = connect(mapStateToProps)(Dashboard);
 

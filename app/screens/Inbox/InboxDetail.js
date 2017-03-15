@@ -15,86 +15,104 @@ import {
     TextInput,
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
-    ScrollView
+    ScrollView,
+    DrawerLayoutAndroid
 } from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
+
+const window = Dimensions.get('window');
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
 
 export default class InboxDetail extends Component {
-    render(){
-        return(
-            <View style={styles.container}>
-                <View style={styles.toolbarContainer} elevation={2}>
-                    <TouchableNativeFeedback onPress={()=>this.navigateToScreen('ScheduledList')}>
-                        <Icon style={{color: 'white'}} name="arrow-back" size={25}/>
-                    </TouchableNativeFeedback>
-                    <View style={{flex: 1}}>
-                        <Text style={styles.toolbarNumber}>Campaign real deal boy</Text>
-                    </View>
-                    <Icon style={styles.creditIcon} name='account-balance-wallet' size={22}/>
-                    <Text style={styles.creditNumber}> 853.7</Text>
-                </View>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
-                            </View>
-                            <View style={{flex: 1}}>
-                                <Text style={styles.itemText}>+420 589 654 213</Text>
-                                <Text style={styles.itemTextRead}>I am exemple text..</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                                <Icon name="done" size={20} style={{color: 'green', marginTop: 5}}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
-                            </View>
-                            <View style={{flex: 1}}>
-                                <Text style={styles.itemText}>+420 589 654 213</Text>
-                                <Text style={styles.itemTextRead}>I am exemple text..</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                                <Icon name="error" size={20} style={{color: '#F44336', marginTop: 5}}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
-                            </View>
-                            <View style={{flex: 1}}>
-                                <Text style={styles.itemText}>+420 589 654 213</Text>
-                                <Text style={styles.itemTextRead}>I am exemple text..</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                                <Icon name="done" size={20} style={{color: 'green', marginTop: 5}}/>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-            </View>
-        )
-    }
 
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <View style={styles.container}>
+                    <View style={styles.toolbarContainer} elevation={2}>
+                        <TouchableNativeFeedback onPress={()=>Actions.pop()}>
+                            <Icon style={{color: 'white'}} name="arrow-back" size={25}/>
+                        </TouchableNativeFeedback>
+                        <View style={{flex: 1}}>
+                            <Text style={styles.toolbarNumber}>Campaign real deal boy</Text>
+                        </View>
+                        <Icon style={styles.creditIcon} name='account-balance-wallet' size={22}/>
+                        <Text style={styles.creditNumber}> 853.7</Text>
+                    </View>
+                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
+                                </View>
+                                <View style={{flex: 1}}>
+                                    <Text style={styles.itemText}>+420 589 654 213</Text>
+                                    <Text style={styles.itemTextRead}>I am exemple text..</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                    <Icon name="done" size={20} style={{color: 'green', marginTop: 5}}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
+                                </View>
+                                <View style={{flex: 1}}>
+                                    <Text style={styles.itemText}>+420 589 654 213</Text>
+                                    <Text style={styles.itemTextRead}>I am exemple text..</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                    <Icon name="error" size={20} style={{color: '#F44336', marginTop: 5}}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
+                                </View>
+                                <View style={{flex: 1}}>
+                                    <Text style={styles.itemText}>+420 589 654 213</Text>
+                                    <Text style={styles.itemTextRead}>I am exemple text..</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                    <Icon name="done" size={20} style={{color: 'green', marginTop: 5}}/>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
+            </DrawerLayoutAndroid>
+        )
     }
 
 }
@@ -107,7 +125,7 @@ const styles = StyleSheet.create({
     toolbarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#011D2B',
+        backgroundColor: Color.toolbar,
         height: 60,
         padding: 15,
     },
@@ -207,4 +225,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginRight: 15
     }
-})
+});
+
+module.exports = connect(mapStateToProps)(InboxDetail);

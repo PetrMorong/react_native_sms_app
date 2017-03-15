@@ -152,7 +152,7 @@ export default class Menu extends Component {
                     <TouchableNativeFeedback onPress={(event) => Actions.StoreList()}>
                         <View style={styles.menuRow}>
                             <Icon name="store" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.store}</Text>
+                            <Text style={styles.menuLink} >{_.stores}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.OrderList()}>

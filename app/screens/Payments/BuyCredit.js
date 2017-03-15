@@ -1,42 +1,81 @@
-/**
- * Created by Petr on 16.2.2017.
- */
-import React, { Component } from 'react';
-import { StyleSheet, Modal,  Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
 
 const window = Dimensions.get('window');
 
-export default class BuyCredit extends Component{
-    render(){
-        return(
-            <View style={styles.container}>
-                <View style={{alignItems: 'center', justifyContent: 'center', zIndex: 100}}>
-                    <Image resizeMode='stretch' source={require('../../images/BuyCredit.png')} style={{marginTop: -30, width: 430, height: 450}}/>
-                </View>
-                <View style={styles.backgroundCardImage}/>
-                <View style={styles.choosePayment}>
-                    <View style={styles.row}>
-                        <Image resizeMode='stretch' style={{width: 55, height: 50, marginRight: 20}} source={require('../../images/visa.png')}/>
-                        <Text style={styles.text}>Credit cards</Text>
-                    </View>
-                    <View style={styles.separator}/>
-                    <View style={styles.row}>
-                        <Image resizeMode='stretch' style={{width: 55, height: 40, marginRight: 20}} source={require('../../images/bank.jpg')}/>
-                        <Text style={styles.text}>Bank transfers</Text>
-                    </View>
-                    <View style={styles.separator}/>
-                    <View style={styles.row}>
-                        <Image resizeMode='stretch' style={{width: 55, height: 50, marginRight: 20}} source={require('../../images/paypal.jpg')}/>
-                        <Text style={styles.text}>PayPal</Text>
-                    </View>
-                    <View style={styles.separator}/>
-                    <View style={styles.row}>
-                        <Image resizeMode='stretch' style={{width: 55, height: 50, marginRight: 20}} source={require('../../images/skrill.jpg')}/>
-                        <Text style={styles.text}>Skrill</Text>
-                    </View>
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
 
+export default class BuyCredit extends Component{
+
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="containerNoBg"
+                    title={_.buy_credit}
+                    elevation={0}/>
+                <View style={styles.container}>
+                    <View style={{alignItems: 'center', justifyContent: 'center', zIndex: 100}}>
+                        <Image resizeMode='stretch' source={require('../../images/BuyCredit.png')} style={{marginTop: -30, width: 430, height: 450}}/>
+                    </View>
+                    <View style={styles.backgroundCardImage}/>
+                    <View style={styles.choosePayment}>
+                        <View style={styles.row}>
+                            <Image resizeMode='stretch' style={{width: 55, height: 50, marginRight: 20}} source={require('../../images/visa.png')}/>
+                            <Text style={styles.text}>{_.credit_cards}</Text>
+                        </View>
+                        <View style={styles.separator}/>
+                        <View style={styles.row}>
+                            <Image resizeMode='stretch' style={{width: 55, height: 40, marginRight: 20}} source={require('../../images/bank.jpg')}/>
+                            <Text style={styles.text}>{_.bank_transfer}</Text>
+                        </View>
+                        <View style={styles.separator}/>
+                        <View style={styles.row}>
+                            <Image resizeMode='stretch' style={{width: 55, height: 50, marginRight: 20}} source={require('../../images/paypal.jpg')}/>
+                            <Text style={styles.text}>PayPal</Text>
+                        </View>
+                        <View style={styles.separator}/>
+                        <View style={styles.row}>
+                            <Image resizeMode='stretch' style={{width: 55, height: 50, marginRight: 20}} source={require('../../images/skrill.jpg')}/>
+                            <Text style={styles.text}>Skrill</Text>
+                        </View>
+
+                    </View>
                 </View>
-            </View>
+            </DrawerLayoutAndroid>
         )
     }
 }
@@ -47,7 +86,7 @@ const styles = StyleSheet.create({
        backgroundColor: 'white'
    },
     backgroundCardImage: {
-       backgroundColor: '#064464',
+       backgroundColor: Color.secondaryColor,
         position: 'absolute',
         top: 0,
         height: window.height/3 + 20,
@@ -77,3 +116,5 @@ const styles = StyleSheet.create({
 
 
 });
+
+module.exports = connect(mapStateToProps)(BuyCredit);

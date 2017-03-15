@@ -1,24 +1,54 @@
 /**
  * Created by Petr on 20.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Modal,  Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from './/Menu';
+import Toolbar from './Toolbar';
+import Color from '../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
 
 const window = Dimensions.get('window');
 
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
+
 export default class Chat extends Component{
+
     constructor(props){
         super(props);
         this.state = {
             message: ''
         }
     }
-    render(){
-        return(
+
+    render() {
+        const _=this.props._;
+        return (
             <View style={styles.container}>
                 <View style={styles.toolbarContainer} elevation={2}>
-                    <TouchableNativeFeedback onPress={()=>this.navigateToScreen('HistoryList')}>
+                    <TouchableNativeFeedback onPress={()=> Actions.pop()}>
                         <Icon style={{color: 'white'}} name="arrow-back" size={30}/>
                     </TouchableNativeFeedback>
                     <View style={{flex: 1}}>
@@ -29,7 +59,7 @@ export default class Chat extends Component{
 
                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
 
-                    <TouchableNativeFeedback onPress={()=>this.navigateToScreen('ChatDetail')}>
+                    <TouchableNativeFeedback onPress={()=>Actions.ChatDetail()}>
                         <View>
                             <Text style={{textAlign: 'center', marginBottom: 5}}>2.8.2016</Text>
                             <View style={styles.receivedMessage}>
@@ -40,7 +70,7 @@ export default class Chat extends Component{
                             </View>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=>this.navigateToScreen('ChatDetail')}>
+                    <TouchableNativeFeedback onPress={()=>Actions.ChatDetail()}>
                         <View style={{alignItems: 'flex-end'}}>
                             <View style={{width: window.width}}>
                                 <Text style={{textAlign: 'center', marginBottom: 5}}>2.8.2016</Text>
@@ -65,7 +95,7 @@ export default class Chat extends Component{
                                 underlineColorAndroid="transparent"
                                 onChangeText={(message) => {this.setState({message})}}
                                 value={this.state.message}/>
-                            <Icon name="send" size={25} style={{color: '#BE2166'}}/>
+                            <Icon name="send" size={25} style={{color: Color.sendButton}}/>
                         </View>
                     </View>
                 </View>
@@ -73,11 +103,6 @@ export default class Chat extends Component{
         )
     }
 
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
-    }
 }
 
 const styles = StyleSheet.create({
@@ -92,7 +117,7 @@ const styles = StyleSheet.create({
     toolbarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#011D2B',
+        backgroundColor: Color.toolbar,
         height: 60,
         padding: 15,
     },
@@ -128,3 +153,5 @@ const styles = StyleSheet.create({
         borderRadius: 10
     }
 });
+
+module.exports = connect(mapStateToProps)(Chat);

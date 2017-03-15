@@ -110,14 +110,14 @@ export default class AppNavigator extends Component {
                         <Scene key='InboxDetail' component={InboxDetail} hideNavBar/>
                         <Scene key='InboxList' component={InboxList} hideNavBar/>
                         <Scene key='OutboxList' component={OutboxList} hideNavBar/>
+                        <Scene key='OutboxDetail' component={OutboxDetail} hideNavBar/>
                         <Scene key='BuyCredit' component={BuyCredit} hideNavBar/>
                         <Scene key='ScheduledDetail' component={ScheduledDetail} hideNavBar/>
                         <Scene key='ScheduledList' component={ScheduledList} hideNavBar/>
                         <Scene key='Settings' component={Settings} hideNavBar/>
                         <Scene key='ColorPicker' component={ColorPickerComponent} hideNavBar/>
-
-
-
+                        <Scene key='Chat' component={Chat} hideNavBar/>
+                        <Scene key='ChatDetail' component={ChatDetail} hideNavBar/>
 
                     </Scene>
                 </Router>

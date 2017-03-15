@@ -1,66 +1,103 @@
 /**
  * Created by Petr on 20.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Modal,  Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
+
+const window = Dimensions.get('window');
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
 
 export default class StoreList extends Component{
-    render(){
-        return(
-            <View style={styles.container}>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemText}>Kytara</Text>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemText}>My top mega store</Text>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemText}>Fun store</Text>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('StoreCreate')}>
-                    <View style={styles.bottomButton} elevation={3}>
-                        <Icon name="add" style={{color: 'white'}} size={30}/>
-                    </View>
-                </TouchableNativeFeedback>
-            </View>
-        )
-    }
 
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.stores}
+                    elevation={2}/>
+                <View style={styles.container}>
+                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemText}>Kytara</Text>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemText}>My top mega store</Text>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemText}>Fun store</Text>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('StoreCreate')}>
+                        <View style={styles.bottomButton} elevation={3}>
+                            <Icon name="add" style={{color: 'white'}} size={30}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
+            </DrawerLayoutAndroid>
+        )
     }
 
 }
@@ -130,3 +167,5 @@ const styles = StyleSheet.create({
     }
 
 });
+
+module.exports = connect(mapStateToProps)(StoreList);

@@ -54,8 +54,7 @@ export default class StoreCreate extends Component{
                     openMenu={() => this.drawer.openDrawer()}
                     background="containerNoBg"
                     title={_.create_store}
-                    elevation={0}
-                    back={true}/>
+                    elevation={0}/>
                 <ScrollView >
                     <View style={styles.container}>
                         <View style={styles.imageContainer}>
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 17,
-        fontWeight: '500'
+        fontWeight: '500',
     }
 });
 

@@ -15,30 +15,53 @@ import {
     TextInput,
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
-    ScrollView
+    ScrollView,
+    DrawerLayoutAndroid
 } from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
+
+const window = Dimensions.get('window');
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
 
 export default class Settings extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <TouchableNativeFeedback onPress={()=>this.navigateToScreen('Sign')}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={styles.circle}>
-                            <Icon name="power-settings-new" size={25} style={{color: 'white'}}/>
-                        </View>
-                        <Text style={{fontSize: 18}}>Logout</Text>
-                    </View>
-                </TouchableNativeFeedback>
-            </View>
-        )
-    }
 
-    navigateToScreen(link) {
-        this.props.navigator.push({
-            ident: link
-        })
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.settings}
+                    elevation={0}/>
+                <View style={styles.container}>
+                    <TouchableNativeFeedback onPress={()=>Actions.Sign()}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={styles.circle}>
+                                <Icon name="power-settings-new" size={25} style={{color: 'white'}}/>
+                            </View>
+                            <Text style={{fontSize: 18}}>Logout</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
+            </DrawerLayoutAndroid>
+        )
     }
 }
 
@@ -58,3 +81,5 @@ const styles = StyleSheet.create({
         marginRight: 10
     }
 });
+
+module.exports = connect(mapStateToProps)(Settings);

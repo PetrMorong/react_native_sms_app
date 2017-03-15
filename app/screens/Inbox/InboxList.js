@@ -15,113 +15,136 @@ import {
     TextInput,
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
-    ScrollView
+    ScrollView,
+    DrawerLayoutAndroid
 } from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
+
+const window = Dimensions.get('window');
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
 
 export default class InboxList extends Component {
-    render(){
-        return(
-            <View style={styles.container}>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('InboxDetail')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarCover.jpg')}/>
-                                <View style={styles.numberCircle}>
-                                    <Text style={{color: 'white', fontSize: 12}}>4</Text>
-                                </View>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemText}>[Campaign] Kytara</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('InboxDetail')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <View style={styles.itemIconBulkgate}><Icon name="content-cut" size={20} style={{color: 'white'}}/></View>
-                                <View style={styles.numberCircle}>
-                                    <Text style={{color: 'white', fontSize: 12}}>4</Text>
-                                </View>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemText}>[Campaign] Kytara</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('InboxDetail')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <View style={styles.itemIconSunsms}><Icon name="content-cut" size={20} style={{color: '#FFE100'}}/></View>
-                                <View style={styles.numberCircle}>
-                                    <Text style={{color: 'white', fontSize: 12}}>4</Text>
-                                </View>
-                            </View>
-                            <View style={{flexDirection: 'row', flex: 1}}>
-                                <Text style={styles.itemText}>[Campaign] Kytara</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
-                            </View>
-                            <View style={{flex: 1}}>
-                                <Text style={styles.itemText}>+420 589 654 213</Text>
-                                <Text style={styles.itemTextRead}>I am exemple text..</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
-                    <View>
-                        <View style={styles.itemWrap}>
-                            <View>
-                                <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
-                            </View>
-                            <View style={{flex: 1}}>
-                                <Text style={styles.itemText}>+420 589 654 213</Text>
-                                <Text style={styles.itemTextRead}>I am exemple text..</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text>16.1.</Text>
-                            </View>
-                        </View>
-                        <View style={styles.separator}/>
-                    </View>
-                </TouchableNativeFeedback>
-            </View>
-        )
-    }
 
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
+    render() {
+        const _=this.props._;
+        let menu  = <Menu/>;
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.inbox}
+                    elevation={2}/>
+                <View style={styles.container}>
+                    <TouchableNativeFeedback onPress={()=> Actions.InboxDetail()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarCover.jpg')}/>
+                                    <View style={styles.numberCircle}>
+                                        <Text style={{color: 'white', fontSize: 12}}>4</Text>
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemText}>[Campaign] Kytara</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.InboxDetail()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <View style={styles.itemIconBulkgate}><Icon name="content-cut" size={20} style={{color: 'white'}}/></View>
+                                    <View style={styles.numberCircle}>
+                                        <Text style={{color: 'white', fontSize: 12}}>4</Text>
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemText}>[Campaign] Kytara</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.InboxDetail()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <View style={styles.itemIconSunsms}><Icon name="content-cut" size={20} style={{color: '#FFE100'}}/></View>
+                                    <View style={styles.numberCircle}>
+                                        <Text style={{color: 'white', fontSize: 12}}>4</Text>
+                                    </View>
+                                </View>
+                                <View style={{flexDirection: 'row', flex: 1}}>
+                                    <Text style={styles.itemText}>[Campaign] Kytara</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.Chat()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
+                                </View>
+                                <View style={{flex: 1}}>
+                                    <Text style={styles.itemText}>+420 589 654 213</Text>
+                                    <Text style={styles.itemTextRead}>I am exemple text..</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={()=> Actions.Chat()}>
+                        <View>
+                            <View style={styles.itemWrap}>
+                                <View>
+                                    <View style={styles.itemIconPerson}><Icon name="person" size={25} style={{color: 'white'}}/></View>
+                                </View>
+                                <View style={{flex: 1}}>
+                                    <Text style={styles.itemText}>+420 589 654 213</Text>
+                                    <Text style={styles.itemTextRead}>I am exemple text..</Text>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text>16.1.</Text>
+                                </View>
+                            </View>
+                            <View style={styles.separator}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
+            </DrawerLayoutAndroid>
+        )
     }
 
 }
@@ -216,3 +239,5 @@ const styles = StyleSheet.create({
     }
 
 });
+
+module.exports = connect(mapStateToProps)(InboxList);

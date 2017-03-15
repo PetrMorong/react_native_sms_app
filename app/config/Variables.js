@@ -34,6 +34,20 @@ const color = {
     //order
     orderName: '#FFE100',
 
+    //chat
+    sendButton: '#0084FF',
+
+    //sign
+    bottomTab: 'rgba(0,0,0,.8)',
+    //signUP step two
+    personIcon: 'white',
+    personBackground: '#1F1E1E',
+
+    //dashboard
+    dashboardBackground: 'black',
+    dashboardStatsColor: '#FFE100',
+
+
     views: {
         campaign: {
             test: 'red'
