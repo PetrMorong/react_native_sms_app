@@ -2,13 +2,41 @@
  * Created by Petr on 1.2.2017.
  */
 
-import React, { Component } from 'react';
-import { StyleSheet, Button, Dimensions, Text,  View, Image, ActivityIndicator, TextInput, TouchableNativeFeedback,ScrollView } from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
+import Step from '../../components/StepperSingleStep';
 
 const window = Dimensions.get('window');
 
-export default class KeypadRecipient extends Component{
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
+
+export default class KeypadRecipients extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -19,47 +47,61 @@ export default class KeypadRecipient extends Component{
         }
     }
     render(){
-        return(
-            <ScrollView>
-                <View style={{height: window.height - 70, backgroundColor: 'white'}}>
-                    <View style={{backgroundColor: '#064464', height: window.height/3, alignItems: 'center' }}>
-                        <Icon name="person" size={200} style={{color: 'white'}}/>
-                    </View>
-                    <View style={{flex: 1, padding: 15}}>
-                        <View style={styles.recipientSmallWrap}>
-                            <TextInput
-                                style={styles.firstName}
-                                placeholder='First name'
-                                ref="firstName"
-                                onChangeText={(firstName) => this.setState({firstName})}
-                                value={this.state.firstName}/>
-                            <TextInput
-                                style={styles.lastName}
-                                placeholder='Last name'
-                                ref="lastName"
-                                onChangeText={(lastName) => this.setState({lastName})}
-                                value={this.state.lastName}/>
+        const _=this.props._;
+        let menu  = <Menu/>;
+
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="containerNoBg"
+                    title={_.campaign}
+                    elevation={2}
+                    back={true}/>
+                <ScrollView>
+                    <View style={{height: window.height - 70, backgroundColor: 'white'}}>
+                        <View style={{backgroundColor: Color.secondaryColor, height: window.height/3, alignItems: 'center' }}>
+                            <Icon name="person" size={200} style={{color: 'white'}}/>
                         </View>
-                        <TextInput
-                            style={styles.phoneNumber}
-                            keyboardType='numeric'
-                            placeholder='Phone number'
-                            ref="phoneNumber"
-                            onChangeText={(phoneNumber) => {this.setState({phoneNumber}); this.phoneNumberCheck(phoneNumber)}}
-                            value={this.state.phoneNumber}/>
-                        <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                            <View style={{width: 110, paddingRight: 15, paddingBottom: 15}}>
-                                <Button
-                                    elevation={2}
-                                    color="#BE2166"
-                                    title="save"
-                                    onPress={() => this.navigateToScreen('Profile')}/>
+                        <View style={{flex: 1, padding: 15}}>
+                            <View style={styles.recipientSmallWrap}>
+                                <TextInput
+                                    style={styles.firstName}
+                                    placeholder={_.first_name}
+                                    ref="firstName"
+                                    onChangeText={(firstName) => this.setState({firstName})}
+                                    value={this.state.firstName}/>
+                                <TextInput
+                                    style={styles.lastName}
+                                    placeholder={_.last_name}
+                                    ref="lastName"
+                                    onChangeText={(lastName) => this.setState({lastName})}
+                                    value={this.state.lastName}/>
+                            </View>
+                            <TextInput
+                                style={styles.phoneNumber}
+                                keyboardType='numeric'
+                                placeholder={_.phone_number}
+                                ref="phoneNumber"
+                                onChangeText={(phoneNumber) => {this.setState({phoneNumber}); this.phoneNumberCheck(phoneNumber)}}
+                                value={this.state.phoneNumber}/>
+                            <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
+                                <TouchableNativeFeedback onPress={() => Actions.pop()}>
+                                    <View style={styles.buttonWrap}>
+                                        <Text style={styles.buttonText}>{_.next.toUpperCase()}</Text>
+                                    </View>
+                                </TouchableNativeFeedback>
                             </View>
                         </View>
                     </View>
-                </View>
-            </ScrollView>
-        )
+                </ScrollView>
+            </DrawerLayoutAndroid>
+        );
+
     }
 
     saveRecipient(){
@@ -100,12 +142,22 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#E0E0E0'
     },
-
     buttonWrap: {
         width: 110,
-        paddingTop: 12,
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
-        flex: 1
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+        marginBottom: 15
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500',
+        color: Color.buttonText
     }
-})
+
+});
+
+module.exports = connect(mapStateToProps)(KeypadRecipients);

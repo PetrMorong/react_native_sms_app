@@ -1,11 +1,38 @@
-import React, { Component } from 'react';
-import { Button, StyleSheet,  Text,  View, Image, Dimensions, TextInput, TouchableNativeFeedback, ScrollView } from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ElevatedView from 'react-native-elevated-view'
+import { Actions } from 'react-native-router-flux';
 
 const window = Dimensions.get('window');
 
-export default class Dashboard  extends Component {
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
+
+
+export default class CampaignCreate  extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -14,14 +41,17 @@ export default class Dashboard  extends Component {
         }
     }
 
-    render() {
+    render(){
+        const _=this.props._;
+        let menu  = <Menu/>;
+
         let sms;
         if(this.state.campaignType == 'sms'){
             sms = <View style={styles.choiceWrapActive}>
                 <Icon style={styles.iconActive} name="textsms" size={35}/>
                 <Text style={styles.textActive}>SMS</Text>
             </View>;
-        }else{
+        } else{
             sms= <View style={styles.choiceWrap}>
                 <Icon style={styles.icon} name="textsms" size={35}/>
                 <Text style={styles.icon}>SMS</Text>
@@ -50,44 +80,49 @@ export default class Dashboard  extends Component {
         }
 
         return (
-            <ScrollView style={styles.container}>
-                <View>
-                    <View style={styles.image}>
-                        <Image style={{width: window.width/3+25, height: window.height/3 - 15}} resizeMode="stretch" source={require('../../images/campaignCreate.png')}/>
-                    </View>
-                    <View style={styles.padding}>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={(text) => this.setState({text})}
-                            value={this.state.text}
-                            placeholder='Campaign name'
-                        />
-                        <View style={styles.wrap}>
-                            <TouchableNativeFeedback onPress={(event) => this.chooseType('sms')} >
-                                {sms}
-                            </TouchableNativeFeedback>
-                            <TouchableNativeFeedback onPress={(event) => this.chooseType('smartSms')} >
-                                {smartSms}
-                            </TouchableNativeFeedback>
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="containerNoBg"
+                    title={_.create_campaign}
+                    elevation={0}/>
+                <ScrollView style={styles.container}>
+                    <View style={{ height: window.height - 140}}>
+                        <View style={styles.image}>
+                            <Image style={{width: window.width/3+25, height: window.height/3 - 15}} resizeMode="stretch" source={require('../../images/campaignCreate.png')}/>
+                        </View>
+                        <View style={styles.padding}>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={(text) => this.setState({text})}
+                                value={this.state.text}
+                                placeholder={_.campaign_name}
+                            />
+                            <View style={styles.wrap}>
+                                <TouchableNativeFeedback onPress={(event) => this.chooseType('sms')} >
+                                    {sms}
+                                </TouchableNativeFeedback>
+                                <TouchableNativeFeedback onPress={(event) => this.chooseType('smartSms')} >
+                                    {smartSms}
+                                </TouchableNativeFeedback>
+                            </View>
                         </View>
                     </View>
-                </View>
-                <View style={styles.buttonWrap}>
-                    <Button
-                        style={styles.button}
-                        elevation={2}
-                        color="#BE2166"
-                        title="Create"
-                        onPress={() => this.navigateToScreen('CampaignRecipients')}/>
-                </View>
-            </ScrollView>
-        );
-    }
+                    <View style={{alignItems: 'flex-end'}}>
+                        <TouchableNativeFeedback onPress={() => Actions.CampaignRecipients()}>
+                            <View style={styles.buttonWrap}>
+                                <Text style={styles.buttonText}>{_.create}</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    </View>
+                </ScrollView>
+            </DrawerLayoutAndroid>
+        )
 
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
     }
 
     chooseType(type){
@@ -106,7 +141,7 @@ const styles = StyleSheet.create({
         padding: 30
     },
     image: {
-        backgroundColor: '#064464',
+        backgroundColor: Color.secondaryColor,
         height: window.height/3,
         alignItems: 'center',
         justifyContent: 'center'
@@ -187,12 +222,22 @@ const styles = StyleSheet.create({
         color: '#26A69A'
     },
     buttonWrap: {
-        width: 160,
-        paddingTop: 12,
-        marginRight: 15,
-        marginBottom: 15,
-        alignSelf: 'flex-end',
+        width: 110,
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+        marginRight: 15
+    },
+    buttonText: {
+        fontSize: 17,
+        fontWeight: '500',
+        color: Color.buttonText
     }
 
 });
+
+module.exports = connect(mapStateToProps)(CampaignCreate);
 

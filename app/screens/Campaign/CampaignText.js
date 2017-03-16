@@ -1,12 +1,39 @@
 /**
  * Created by Petr on 1.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, DatePickerAndroid, Picker, Button,  Text,  View, Switch, Dimensions, TextInput, TouchableNativeFeedback, ScrollView} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Step from '../../components/StepperSingleStep';
-import ElevatedView from 'react-native-elevated-view';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
+import Step from '../../components/StepperSingleStep';
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+};
+
 const window = Dimensions.get('window');
 
 export default class CampaignText extends Component {
@@ -32,6 +59,9 @@ export default class CampaignText extends Component {
         }
     }
     render(){
+        const _=this.props._;
+        let menu  = <Menu/>;
+
         let variables = this.state.variables.map((variable, i) => {
            return(
                 <TouchableNativeFeedback key={i} onPress={()=>this.setVariable(variable[0])}>
@@ -42,6 +72,7 @@ export default class CampaignText extends Component {
                 </TouchableNativeFeedback>
            )
         });
+
         let variablesView;
         let variablesSeparator;
         if(this.state.switchVariables){
@@ -53,7 +84,7 @@ export default class CampaignText extends Component {
         if(this.state.sender == 'text_sender'){
             optionalSender = <View style={{marginBottom: 15, paddingLeft: 15, paddingRight: 15}}>
                 <TextInput
-                    placeholder='Text sender value'
+                    placeholder={_.text_sender_value}
                     ref="senderValue"
                     onChangeText={(senderValueSender) => this.setState({senderValueSender})}
                     value={this.state.senderValueSender}/>
@@ -64,7 +95,7 @@ export default class CampaignText extends Component {
         }
         if(this.state.sender == 'own_number'){
             optionalSender = <View style={styles.switchSender}>
-                <Text >Verified numbers</Text>
+                <Text>{_.verified_numbers}</Text>
                 <Picker
                     style={styles.picker}
                     selectedValue={this.state.senderValue}
@@ -84,7 +115,7 @@ export default class CampaignText extends Component {
                     style={{width: 150}}
                     date={this.state.sendingTime}
                     mode="datetime"
-                    placeholder="select date"
+                    placeholder={_.select_date}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     showIcon={false}
@@ -106,7 +137,7 @@ export default class CampaignText extends Component {
         if(this.state.switchRestriction){
             restriction = <View style={{paddingLeft: 15, paddingRight: 15, marginBottom: 10, marginTop: -10}}>
                 <TextInput
-                    placeholder='SMS per day'
+                    placeholder={_.sms_per_day}
                     ref="smsPerDay"
                     onChangeText={(smsPerDay) => this.setState({smsPerDay})}
                     value={this.state.smsPerDay}
@@ -116,147 +147,151 @@ export default class CampaignText extends Component {
 
         let stepper;
         if(this.state.type == 'classic'){
-            stepper =  <ElevatedView style={styles.stepperContainer} elevation={2}>
-                <Step type="active" number="1" title="Recipients"/>
+            stepper =  <View style={styles.stepperContainer} >
+                <Step type="active" number="1" title={_.recipients}/>
                 <View style={styles.line}/>
-                <Step type="done" number="2" title="Sms text"/>
+                <Step type="done" number="2" title={_.sms_text}/>
                 <View style={styles.line}/>
-                <Step type="disabled" number="3" title="Summary"/>
-            </ElevatedView>
+                <Step type="disabled" number="3" title={_.summary}/>
+            </View>
         }
 
         if(this.state.type == 'smart'){
-            stepper =  <ElevatedView style={styles.stepperContainer} elevation={2}>
-                <Step type="active" number="1" title="Recipients"/>
+            stepper =  <View style={styles.stepperContainer} >
+                <Step type="active" number="1" title={_.recipients}/>
                 <View style={styles.line}/>
-                <Step type="done" number="2" title="Deal"/>
+                <Step type="done" number="2" title={_.deal}/>
                 <View style={styles.line}/>
-                <Step type="done" number="3" title="Sms text"/>
+                <Step type="done" number="3" title={_.sms_text}/>
                 <View style={styles.line}/>
-                <Step type="disabled" number="4" title="Summary"/>
-            </ElevatedView>
+                <Step type="disabled" number="4" title={_.summary}/>
+            </View>
         }
 
-        return(
-            <View style={styles.container}>
-                {stepper}
-                <ScrollView style={{padding: 15}}>
-                    <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                        <Icon name="save" size={30} style={{color: '#404040'}}/>
-                        <Icon name="file-download" style={{marginLeft: 15, color: '#404040'}} size={30}/>
-                    </View>
-                    <View style={{paddingLeft: 10, paddingRight: 10}}>
-                        <TextInput
-                            style={{height: 100}}
-                            placeholder='SMS text'
-                            ref="message"
-                            multiline={true}
-                            onChangeText={(message) => this.setState({message})}
-                            value={this.state.message}
-                            onChange={()=>this.countMessage(this.state.switchUnicode)}/>
-                        <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-                            <Text style={styles.fontSize10}>Total SMS:</Text>
-                            <Text style={styles.messageStats}>{this.state.totalSmsCount}</Text>
-                            <Text style={styles.fontSize10}>Recipients:</Text>
-                            <Text style={styles.messageStats}>{this.state.recipients}</Text>
-                            <Text style={styles.fontSize10}>SMS:</Text>
-                            <Text style={styles.messageStats}>{this.state.smsCount}</Text>
-                            <Text style={styles.fontSize10}>Length:</Text>
-                            <Text style={styles.messageStats}>{this.state.message.length}</Text>
+
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.campaign}
+                    elevation={2}/>
+                <View style={styles.container}>
+                    {stepper}
+                    <ScrollView style={{padding: 15}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                            <Icon name="save" size={30} style={{color: '#404040'}}/>
+                            <Icon name="file-download" style={{marginLeft: 15, color: '#404040'}} size={30}/>
                         </View>
-                    </View>
-                    <View style={{marginTop: 40}}>
-                        <View style={styles.separator}/>
-                        <View style={styles.switchWrap}>
-                            <Text >Variables</Text>
-                            <Switch
-                                onValueChange={(value) => this.setState({switchVariables: value})}
-                                value={this.state.switchVariables} />
+                        <View style={{paddingLeft: 10, paddingRight: 10}}>
+                            <TextInput
+                                style={{height: 100}}
+                                placeholder={_.sms_text}
+                                ref="message"
+                                multiline={true}
+                                onChangeText={(message) => this.setState({message})}
+                                value={this.state.message}
+                                onChange={()=>this.countMessage(this.state.switchUnicode)}/>
+                            <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
+                                <Text style={styles.fontSize10}>{_.total_sms}:</Text>
+                                <Text style={styles.messageStats}>{this.state.totalSmsCount}</Text>
+                                <Text style={styles.fontSize10}>{_.recipients}:</Text>
+                                <Text style={styles.messageStats}>{this.state.recipients}</Text>
+                                <Text style={styles.fontSize10}>SMS:</Text>
+                                <Text style={styles.messageStats}>{this.state.smsCount}</Text>
+                                <Text style={styles.fontSize10}>{_.length}:</Text>
+                                <Text style={styles.messageStats}>{this.state.message.length}</Text>
+                            </View>
+                        </View>
+                        <View style={{marginTop: 40}}>
+                            <View style={styles.separator}/>
+                            <View style={styles.switchWrap}>
+                                <Text>{_.variables}</Text>
+                                <Switch
+                                    onValueChange={(value) => this.setState({switchVariables: value})}
+                                    value={this.state.switchVariables} />
+                            </View>
+                            <View>
+                                {variablesView}
+                                {variablesSeparator}
+                            </View>
+
+                        </View>
+                        <View >
+                            <View style={styles.separator}/>
+                            <View style={styles.switchWrap}>
+                                <Text>{_.sender_id}</Text>
+                                <Picker
+                                    style={styles.picker}
+                                    selectedValue={this.state.sender}
+                                    onValueChange={(sender) => this.setState({sender: sender})}>
+                                    <Picker.Item label="System number" value="system_number" />
+                                    <Picker.Item label="Short code" value="short_code" />
+                                    <Picker.Item label="Text sender" value="text_sender" />
+                                    <Picker.Item label="Own number" value="own_number" />
+                                </Picker>
+                            </View>
+                            {optionalSender}
                         </View>
                         <View>
-                            {variablesView}
-                            {variablesSeparator}
+                            <View style={styles.separator}/>
+                            <View style={styles.switchWrap}>
+                                <Text>{_.unicode}</Text>
+                                <Switch
+                                    onValueChange={(value) => { this.setState({switchUnicode: value}); this.countMessage(value) }}
+                                    value={this.state.switchUnicode} />
+                            </View>
                         </View>
-
-                    </View>
-                    <View >
+                        <View>
+                            <View style={styles.separator}/>
+                            <View style={styles.switchWrap}>
+                                <Text>{_.flash_sms}</Text>
+                                <Switch
+                                    onValueChange={(value) => this.setState({switchFlash: value})}
+                                    value={this.state.switchFlash} />
+                            </View>
+                        </View>
+                        <View>
+                            <View style={styles.separator}/>
+                            <View style={styles.switchWrap}>
+                                <Text>{_.sending_time}</Text>
+                                <Switch
+                                    onValueChange={(value) => this.setState({switchTime: value})}
+                                    value={this.state.switchTime} />
+                            </View>
+                            {date}
+                        </View>
+                        <View>
+                            <View style={styles.separator}/>
+                            <View style={styles.switchWrap}>
+                                <Text>{_.restriction}</Text>
+                                <Switch
+                                    onValueChange={(value) => this.setState({switchRestriction: value})}
+                                    value={this.state.switchRestriction} />
+                            </View>
+                            {restriction}
+                        </View>
                         <View style={styles.separator}/>
-                        <View style={styles.switchWrap}>
-                            <Text>Sender ID</Text>
-                            <Picker
-                                style={styles.picker}
-                                selectedValue={this.state.sender}
-                                onValueChange={(sender) => this.setState({sender: sender})}>
-                                <Picker.Item label="System number" value="system_number" />
-                                <Picker.Item label="Short code" value="short_code" />
-                                <Picker.Item label="Text sender" value="text_sender" />
-                                <Picker.Item label="Own number" value="own_number" />
-                            </Picker>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30}}>
+                            <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignDeal')}>
+                                <Text style={{marginTop: 10, marginLeft: 10, color: 'black', fontSize: 15}}>BACK</Text>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={() => Actions.CampaignSummary()}>
+                                <View style={styles.buttonWrap}>
+                                    <Text style={styles.buttonText}>{_.next.toUpperCase()}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
                         </View>
-                        {optionalSender}
-                    </View>
-                    <View>
-                        <View style={styles.separator}/>
-                        <View style={styles.switchWrap}>
-                            <Text >Unicode</Text>
-                            <Switch
-                                onValueChange={(value) => { this.setState({switchUnicode: value}); this.countMessage(value) }}
-                                value={this.state.switchUnicode} />
-                        </View>
-                    </View>
-                    <View>
-                        <View style={styles.separator}/>
-                        <View style={styles.switchWrap}>
-                            <Text >Flash SMS</Text>
-                            <Switch
-                                onValueChange={(value) => this.setState({switchFlash: value})}
-                                value={this.state.switchFlash} />
-                        </View>
-                    </View>
-                    <View>
-                        <View style={styles.separator}/>
-                        <View style={styles.switchWrap}>
-                            <Text >Sending time</Text>
-                            <Switch
-                                onValueChange={(value) => this.setState({switchTime: value})}
-                                value={this.state.switchTime} />
-                        </View>
-                        {date}
-                    </View>
-                    <View>
-                        <View style={styles.separator}/>
-                        <View style={styles.switchWrap}>
-                            <Text>Restriction</Text>
-                            <Switch
-                                onValueChange={(value) => this.setState({switchRestriction: value})}
-                                value={this.state.switchRestriction} />
-                        </View>
-                        {restriction}
-                    </View>
-                    <View style={styles.separator}/>
-                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30}}>
-                        <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignDeal')}>
-                            <Text style={{marginTop: 10, marginLeft: 10, color: 'black', fontSize: 15}}>BACK</Text>
-                        </TouchableNativeFeedback>
-                        <View style={styles.buttonWrap}>
-                            <Button
-                                style={styles.button}
-                                elevation={2}
-                                color="#BE2166"
-                                title="next"
-                                onPress={() => this.navigateToScreen('CampaignSummary')}/>
-                        </View>
-                    </View>
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </DrawerLayoutAndroid>
         )
     }
 
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
-    }
 
     setVariable(variable){
         this.setState({message: this.state.message + " " + variable})
@@ -357,10 +392,20 @@ const styles = StyleSheet.create({
     },
     buttonWrap: {
         width: 110,
-        paddingTop: 12,
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
-
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+        marginTop: 15
+    },
+    buttonText: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: Color.buttonText
     }
 
 });
+
+module.exports = connect(mapStateToProps)(CampaignText);

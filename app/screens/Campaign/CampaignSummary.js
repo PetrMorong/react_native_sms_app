@@ -1,11 +1,40 @@
 4/**
  * Created by Petr on 2.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Image,  Button,  Text,  View, Dimensions, TouchableNativeFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import DatePicker from 'react-native-datepicker';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ElevatedView from 'react-native-elevated-view';
+import { Actions } from 'react-native-router-flux';
 import Step from '../../components/StepperSingleStep';
+
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+};
+
+const window = Dimensions.get('window');
 
 
 export default class CampaignSummary extends Component{
@@ -17,145 +46,151 @@ export default class CampaignSummary extends Component{
     }
 
     render(){
+        const _=this.props._;
+        let menu  = <Menu/>;
+
         let stepper;
         if(this.state.type == 'classic'){
-            stepper =  <ElevatedView style={styles.stepperContainer} elevation={2}>
-                <Step type="active" number="1" title="Recipients"/>
+            stepper =  <View style={styles.stepperContainer} >
+                <Step type="active" number="1" title={_.recipients}/>
                 <View style={styles.line}/>
-                <Step type="done" number="2" title="Sms text"/>
+                <Step type="done" number="2" title={_.sms_text}/>
                 <View style={styles.line}/>
-                <Step type="disabled" number="3" title="Summary"/>
-            </ElevatedView>
+                <Step type="disabled" number="3" title={_.summary}/>
+            </View>
         }
 
         if(this.state.type == 'smart'){
-            stepper =  <ElevatedView style={styles.stepperContainer} elevation={2}>
-                <Step type="active" number="1" title="Recipients"/>
+            stepper =  <View style={styles.stepperContainer} >
+                <Step type="active" number="1" title={_.recipients}/>
                 <View style={styles.line}/>
-                <Step type="done" number="2" title="Deal"/>
+                <Step type="done" number="2" title={_.deal}/>
                 <View style={styles.line}/>
-                <Step type="done" number="3" title="Sms text"/>
+                <Step type="done" number="3" title={_.sms_text}/>
                 <View style={styles.line}/>
-                <Step type="disabled" number="4" title="Summary"/>
-            </ElevatedView>
+                <Step type="disabled" number="4" title={_.summary}/>
+            </View>
         }
 
-        return(
 
-            <View style={styles.container}>
-                {stepper}
-                <ScrollView>
-                    <View style={[styles.b, {marginTop: 20}]}>
-                        <View style={styles.a}>
-                            <View style={{alignItems: 'center'}}>
-                                <Text style={{fontSize: 16, marginBottom: 5}}>SMS count</Text>
-                                <View style={{flexDirection: 'row'}}>
-                                    <Icon name="donut-large" size={35} style={{color: '#1565C0'}}/>
-                                    <Text style={[styles.colorText, {color: '#1565C0'}]}>2</Text>
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.campaign}
+                    elevation={2}/>
+                <View style={styles.container}>
+                    {stepper}
+                    <ScrollView>
+                        <View style={[styles.b, {marginTop: 20}]}>
+                            <View style={styles.a}>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_.sms_count}</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Icon name="donut-large" size={35} style={{color: '#1565C0'}}/>
+                                        <Text style={[styles.colorText, {color: '#1565C0'}]}>2</Text>
+                                    </View>
+                                </View>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_.recipients}</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Icon name="person" size={35} style={{color: '#FF9800'}}/>
+                                        <Text style={[styles.colorText, {color: '#FF9800'}]}>2</Text>
+                                    </View>
                                 </View>
                             </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text style={{fontSize: 16, marginBottom: 5}}>Recipients</Text>
-                                <View style={{flexDirection: 'row'}}>
-                                    <Icon name="person" size={35} style={{color: '#FF9800'}}/>
-                                    <Text style={[styles.colorText, {color: '#FF9800'}]}>2</Text>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 30, marginBottom: 20}}>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_.credit_usage}</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Icon name="data-usage" size={35} style={{color: '#48974C'}}/>
+                                        <Text style={[styles.colorText, {color: '#48974C'}]}>22 %</Text>
+                                    </View>
                                 </View>
-                            </View>
-                        </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 30, marginBottom: 20}}>
-                            <View style={{alignItems: 'center'}}>
-                                <Text style={{fontSize: 16, marginBottom: 5}}>Credit usage</Text>
-                                <View style={{flexDirection: 'row'}}>
-                                    <Icon name="data-usage" size={35} style={{color: '#48974C'}}/>
-                                    <Text style={[styles.colorText, {color: '#48974C'}]}>22 %</Text>
-                                </View>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                                <Text style={{fontSize: 16, marginBottom: 5}}>Cost</Text>
+                                <View style={{alignItems: 'center'}}>
+                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_.cost}</Text>
 
-                                <View style={{flexDirection: 'row'}}>
-                                    <Icon name="account-balance-wallet" size={35} style={{color: '#E53935'}}/>
-                                    <Text style={[styles.colorText, {color: '#E53935'}]}>1.58</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Icon name="account-balance-wallet" size={35} style={{color: '#E53935'}}/>
+                                        <Text style={[styles.colorText, {color: '#E53935'}]}>1.58</Text>
+                                    </View>
                                 </View>
                             </View>
                         </View>
-                    </View>
-                    <View style={styles.b}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingTop: 10, paddingBottom: 10}}>
-                            <Image source={require('../../images/cs.png')}/>
-                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={[styles.colorTextSmall, {color: '#1565C0'}]}>2</Text>
-                                <Text style={{fontSize: 16}}>SMS count</Text>
-                            </View>
-                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={[styles.colorTextSmall, {color: '#FF9800'}]}>2</Text>
-                                <Text style={{fontSize: 16}}>Recipients</Text>
-                            </View>
-                            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                <Text style={[styles.colorTextSmall, {color: '#E53935'}]}>2</Text>
-                                <Text style={{fontSize: 16}}>Price</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.b}>
-                        <View>
-                            <View style={styles.c}>
-                                <Text style={{fontSize: 14}}>Sender</Text>
-                                <Text style={{fontSize: 14}}>Short code</Text>
-                            </View>
-                            <View style={styles.separator}/>
-                            <View style={styles.c}>
-                                <Text style={{fontSize: 14}}>Unicode</Text>
-                                <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
-                            </View>
-                            <View style={styles.separator}/>
-                            <View style={styles.c}>
-                                <Text style={{fontSize: 14}}>Flash SMS</Text>
-                                <Icon name="cancel" size={25} />
-                            </View>
-                            <View style={styles.separator}/>
-                            <View style={styles.c}>
-                                <Text style={{fontSize: 14}}>Schedule sending time</Text>
-                                <Icon name="cancel" size={25} />
-                            </View>
-                            <View style={styles.separator}/>
-                            <View style={styles.c}>
-                                <Text style={{fontSize: 14}}>Restriction</Text>
-                                <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
+                        <View style={styles.b}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-around', paddingTop: 10, paddingBottom: 10}}>
+                                <Image source={require('../../images/cs.png')}/>
+                                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text style={[styles.colorTextSmall, {color: '#1565C0'}]}>2</Text>
+                                    <Text style={{fontSize: 16}}>{_.sms_count}</Text>
+                                </View>
+                                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text style={[styles.colorTextSmall, {color: '#FF9800'}]}>2</Text>
+                                    <Text style={{fontSize: 16}}>{_.recipients}</Text>
+                                </View>
+                                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text style={[styles.colorTextSmall, {color: '#E53935'}]}>2</Text>
+                                    <Text style={{fontSize: 16}}>{_.credit}</Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    <View style={{padding: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignText')}>
-                            <Text style={{ marginLeft: 10, color: 'black', fontSize: 15}}>BACK</Text>
-                        </TouchableNativeFeedback>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <TouchableNativeFeedback style={{marginRight: 15}} >
-                                <ElevatedView elevation={1} style={styles.secondaryButton}>
-                                    <Icon style={{marginRight: 10, color: '#BE2166'}} size={16} name="search"/>
-                                    <Text style={{color: '#BE2166'}}>PREVIEW</Text>
-                                </ElevatedView>
+                        <View style={styles.b}>
+                            <View>
+                                <View style={styles.c}>
+                                    <Text style={{fontSize: 14}}>{_.sender}</Text>
+                                    <Text style={{fontSize: 14}}>{_.short_code}</Text>
+                                </View>
+                                <View style={styles.separator}/>
+                                <View style={styles.c}>
+                                    <Text style={{fontSize: 14}}>{_.unicode}</Text>
+                                    <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
+                                </View>
+                                <View style={styles.separator}/>
+                                <View style={styles.c}>
+                                    <Text style={{fontSize: 14}}>{_.flash_sms}</Text>
+                                    <Icon name="cancel" size={25} />
+                                </View>
+                                <View style={styles.separator}/>
+                                <View style={styles.c}>
+                                    <Text style={{fontSize: 14}}>{_.sending_time}</Text>
+                                    <Icon name="cancel" size={25} />
+                                </View>
+                                <View style={styles.separator}/>
+                                <View style={styles.c}>
+                                    <Text style={{fontSize: 14}}>{_.restriction}</Text>
+                                    <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{padding: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignText')}>
+                                <Text style={{ marginLeft: 10, color: 'black', fontSize: 15}}>{_.back.toUpperCase()}</Text>
                             </TouchableNativeFeedback>
-                            <View style={styles.buttonWrap}>
-                                <Button
-                                    style={styles.button}
-                                    elevation={2}
-                                    color="#BE2166"
-                                    title="send"
-                                    onPress={() => this.navigateToScreen('CampaignDashboard')}/>
+                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                <TouchableNativeFeedback style={{marginRight: 15}} >
+                                    <View style={styles.secondaryButton}>
+                                        <Icon style={{marginRight: 10, color: Color.secondaryButtonText}} size={16} name="search"/>
+                                        <Text style={{color: Color.secondaryButtonText}}>{_.preview.toUpperCase()}</Text>
+                                    </View>
+                                </TouchableNativeFeedback>
+                                <TouchableNativeFeedback onPress={() => Actions.CampaignDashboard()}>
+                                    <View style={styles.buttonWrap}>
+                                        <Text style={styles.buttonText}>{_.send.toUpperCase()}</Text>
+                                    </View>
+                                </TouchableNativeFeedback>
                             </View>
                         </View>
-                    </View>
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </DrawerLayoutAndroid>
         )
     }
 
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
-    }
 }
 
 const styles = StyleSheet.create({
@@ -170,17 +205,19 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingLeft: 15,
         paddingRight: 15,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        elevation: 2
     },
     secondaryButton: {
         marginRight: 15,
-        padding: 7,
-        borderColor: '#BE2166',
+        padding: 10,
+        borderColor: Color.secondaryButton,
         borderWidth: 1,
         borderRadius: 2,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        elevation: 1
 
     },
     line: {
@@ -207,8 +244,18 @@ const styles = StyleSheet.create({
     },
     buttonWrap: {
         width: 110,
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+        marginTop: 1
+    },
+    buttonText: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: Color.buttonText
     },
     a: {
         paddingTop: 10,
@@ -228,7 +275,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 10
     }
-
-
-
 });
+
+module.exports = connect(mapStateToProps)(CampaignSummary);

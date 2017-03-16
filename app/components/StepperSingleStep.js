@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import { StyleSheet,  Text,  View, TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Color from '../config/Variables';
 
 export default class Step extends Component{
 
@@ -27,7 +28,7 @@ export default class Step extends Component{
                         <Text style={styles.disabled}>{this.props.number}</Text>
                     </View>
                 </TouchableNativeFeedback>
-                <Text style={styles.disabled}>{this.props.title}</Text>
+                <Text style={styles.disabledText}>{this.props.title}</Text>
             </View>;
         }
 
@@ -53,7 +54,7 @@ export default class Step extends Component{
 
 const styles = StyleSheet.create({
     stepDone: {
-        backgroundColor: '#A1D4D2',
+        backgroundColor: Color.stepDone,
         width: 42,
         height: 42,
         borderRadius: 50,
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     stepActive: {
-        backgroundColor: '#37AB9C',
+        backgroundColor: Color.stepActive,
         width: 42,
         height: 42,
         borderRadius: 50,
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     step: {
-        backgroundColor: '#D0DFE8',
+        backgroundColor: Color.stepDisabled,
         width: 42,
         height: 42,
         borderRadius: 50,
@@ -77,22 +78,26 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     disabled: {
-        color: '#93B1C2',
+        color: Color.stepDisabledIcon,
+        fontWeight: '500'
+    },
+    disabledText: {
+        color: Color.stepDisabledText,
         fontWeight: '500'
     },
     activeNumber: {
-        color: 'white',
+        color: Color.stepActiveIcon,
         fontWeight: '500'
     },
     activeText: {
-        color: '#37AB9C',
+        color: Color.stepActiveText,
         fontWeight: '500'
     },
     iconDone: {
-        color: 'white'
+        color: Color.stepDoneIcon
     },
     textDone: {
-        color: '#A1D4D2',
+        color: Color.stepDoneText,
         fontWeight: '500',
     }
 });

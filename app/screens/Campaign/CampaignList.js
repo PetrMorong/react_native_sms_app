@@ -1,13 +1,40 @@
 /**
  * Created by Petr on 4.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Image,  Button,  Text,  View, Dimensions, TouchableWithoutFeedback, TouchableNativeFeedback, ScrollView} from 'react-native';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Toolbar from '../../components/Toolbar'
+import { Actions } from 'react-native-router-flux';
 
+const window = Dimensions.get('window');
 
-export default class campaignList extends Component{
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
+
+export default class CampaignList extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -40,6 +67,8 @@ export default class campaignList extends Component{
     }
 
     render(){
+        const _=this.props._;
+        let menu  = <Menu/>;
         let status;
         let list = Object.keys(this.state.data).map((key) => {
             if(this.state.data[key].status == 'text'){
@@ -63,7 +92,7 @@ export default class campaignList extends Component{
 
             if(this.state.data[key].selected){
                 return(
-                    <TouchableWithoutFeedback key={key} onPress={(event) => this.select(key)}>
+                    <TouchableWithoutFeedback key={key}  onLongPress={(event) => this.select(key)}>
                         <View>
                             <View style={styles.h} >
                                 <View style={styles.g}>
@@ -81,7 +110,7 @@ export default class campaignList extends Component{
             }else{
                 if(this.state.data[key].type == 'smart'){
                     return(
-                        <TouchableWithoutFeedback key={key} onPress={(event) => this.select(key)}>
+                        <TouchableWithoutFeedback key={key} onPress={(event) => Actions.CampaignRecipients()} onLongPress={(event) => this.select(key)}>
                            <View>
                                <View style={styles.a} >
                                    <View style={styles.b}>
@@ -99,7 +128,7 @@ export default class campaignList extends Component{
                 }
                 if(this.state.data[key].type == 'classic'){
                     return(
-                        <TouchableWithoutFeedback key={key} onPress={(event) => this.select(key)}>
+                        <TouchableWithoutFeedback key={key} onPress={(event) => Actions.CampaignRecipients()} onLongPress={(event) => this.select(key)}>
                             <View>
                                 <View style={styles.a}  >
                                     <View style={styles.f}>
@@ -131,28 +160,32 @@ export default class campaignList extends Component{
             </TouchableNativeFeedback>
         }else{
             toolbar = <Toolbar
-                openMenu={() => this.props.openMenu()}
-                icon="account-balance-wallet"
+                openMenu={() => this.drawer.openDrawer()}
                 background="container"
-                title="Campaigns"
-                elevation={2}
-                credit={this.props.credit}
-                navigator={navigator}/>
+                title={_.campaigns}
+                elevation={2}/>
         }
 
-        return(
-            <View style={styles.container}>
-                {toolbar}
-                <ScrollView >
-                    {list}
-                </ScrollView>
-                <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('CampaignCreate')}>
-                    <View style={styles.bottomButton} elevation={3}>
-                        <Icon name="add" style={{color: 'white'}} size={30}/>
-                    </View>
-                </TouchableNativeFeedback>
-            </View>
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <View style={styles.container}>
+                    {toolbar}
+                    <ScrollView >
+                        {list}
+                    </ScrollView>
+                    <TouchableNativeFeedback onPress={(event) => Actions.CampaignCreate()}>
+                        <View style={styles.bottomButton} elevation={2}>
+                            <Icon name="add" style={{color: Color.addButtonColor}} size={30}/>
+                        </View>
+                    </TouchableNativeFeedback>
+                </View>
+            </DrawerLayoutAndroid>
         )
+
     }
 
     select(key){
@@ -186,13 +219,6 @@ export default class campaignList extends Component{
 
         this.setState({selecting: false, data: newSelected, selectCount: 0})
     }
-
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
-    }
-
 
 }
 
@@ -269,10 +295,12 @@ const styles = StyleSheet.create({
         bottom: 15,
         right: 15,
         borderRadius: 50,
-        backgroundColor: '#F44336',
+        backgroundColor: Color.addButtonBackground,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 50,
-        height: 50
+        width: 60,
+        height: 60
     }
 });
+
+module.exports = connect(mapStateToProps)(CampaignList);

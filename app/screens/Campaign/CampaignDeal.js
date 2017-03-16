@@ -1,14 +1,41 @@
 /**
  * Created by Petr on 5.2.2017.
  */
-import React, { Component } from 'react';
-import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, ScrollView} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Step from '../../components/StepperSingleStep';
-import ElevatedView from 'react-native-elevated-view';
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Modal,
+    Button,
+    Text,
+    Picker,
+    View,
+    Image,
+    Switch,
+    Dimensions,
+    TextInput,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    ScrollView,
+    DrawerLayoutAndroid
+} from 'react-native';
 import DatePicker from 'react-native-datepicker';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import Color from '../../config/Variables';
+import { connect } from 'react-redux';
+import { save } from '../../actions/Actions';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Actions } from 'react-native-router-flux';
+import Step from '../../components/StepperSingleStep';
 
 
+const mapStateToProps = (store) => {
+    return{
+        _: store.translator.translations
+    }
+}
+
+const window = Dimensions.get('window');
 let Platform = require('react-native').Platform;
 let ImagePicker = require('react-native-image-picker');
 
@@ -39,6 +66,9 @@ export default class CampaignDeal extends Component{
     }
 
     render(){
+        const _=this.props._;
+        let menu  = <Menu/>;
+
         let variables = this.state.variables.map((variable, i) => {
             return(
                 <TouchableNativeFeedback key={i} onPress={()=>this.setVariable(variable[0])}>
@@ -62,7 +92,7 @@ export default class CampaignDeal extends Component{
                 <View style={styles.b}>
                     <Icon name="add-a-photo" size={25} style={{color: 'white'}}/>
                 </View>
-                <Text style={{color: '#011D2B'}}>Add photos</Text>
+                <Text style={{color: '#011D2B'}}>{_.add_photo}</Text>
             </View>
         }else{
             imageDeal = <View>
@@ -76,14 +106,14 @@ export default class CampaignDeal extends Component{
                 <View style={{flexDirection: 'row'}}>
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                        placeholder='Old price'
+                        placeholder={_.old_price}
                         keyboardType='numeric'
                         ref="priceOld"
                         onChangeText={(priceOld) => {this.setState({priceOld})}}
                         value={this.state.priceOld}/>
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                        placeholder='New price'
+                        placeholder={_.new_price}
                         keyboardType='numeric'
                         ref="priceNew"
                         onChangeText={(priceNew) => {this.setState({priceNew})}}
@@ -92,14 +122,14 @@ export default class CampaignDeal extends Component{
                 <View style={{flexDirection: 'row', marginBottom: 10}}>
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                        placeholder='Discount'
+                        placeholder={_.discount}
                         keyboardType='numeric'
                         ref="discount"
                         onChangeText={(discount) => {this.setState({discount})}}
                         value={this.state.discount}/>
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                        placeholder='Currency'
+                        placeholder={_.currency}
                         keyboardType='numeric'
                         ref="currency"
                         onChangeText={(currency) => {this.setState({currency})}}
@@ -113,14 +143,14 @@ export default class CampaignDeal extends Component{
             quantity = <View style={{flexDirection: 'row'}}>
                 <TextInput
                     style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                    placeholder='Quantity'
+                    placeholder={_.quantity}
                     keyboardType='numeric'
                     ref="quantity"
                     onChangeText={(quantity) => {this.setState({quantity: quantity})}}
                     value={this.state.quantity}/>
                 <TextInput
                     style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                    placeholder='Units'
+                    placeholder={_.units}
                     keyboardType='numeric'
                     ref="units"
                     onChangeText={(units) => {this.setState({units})}}
@@ -136,7 +166,7 @@ export default class CampaignDeal extends Component{
                         style={{width: 150}}
                         date={this.state.expirationDate}
                         mode="datetime"
-                        placeholder="select date"
+                        placeholder={_.select_date}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         showIcon={false}
@@ -153,7 +183,7 @@ export default class CampaignDeal extends Component{
                     </Picker>
                 </View>
                 <View  style={[styles.switchWrap, {paddingLeft: 15, paddingRight: 15}]}>
-                    <Text>Show expiration</Text>
+                    <Text>{_.show_expiration}</Text>
                     <Picker
                         style={{width: 140}}
                         selectedValue={this.state.store}
@@ -166,152 +196,162 @@ export default class CampaignDeal extends Component{
             </View>;
         }
 
-        return(
-            <View style={styles.container}>
-                <ElevatedView style={styles.stepperContainer} elevation={2}>
-                    <Step type="done" number="1" title="Recipients"/>
-                    <View style={styles.line}/>
-                    <Step type="active" number="2" title="Deal"/>
-                    <View style={styles.line}/>
-                    <Step type="disabled" number="3" title="Sms text"/>
-                    <View style={styles.line}/>
-                    <Step type="disabled" number="4" title="Summary"/>
-                </ElevatedView>
-                <ScrollView style={{padding: 15}}>
-                    <View>
-                        <TextInput
-                            placeholder='Headline'
-                            ref="headline"
-                            onChangeText={(headline) => {this.setState({headline})}}
-                            value={this.state.headline}/>
-                        <TextInput
-                            style={{height: 75}}
-                            multiline={true}
-                            placeholder='Description'
-                            ref="description"
-                            onChangeText={(description) => {this.setState({description})}}
-                            value={this.state.description}/>
-                        <View style={{marginTop: 15}}>
-                            <View style={styles.switchWrap}>
-                                <Text >Variables</Text>
-                                <Switch
-                                    onValueChange={(value) => this.setState({switchVariables: value})}
-                                    value={this.state.switchVariables} />
+
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_.campaign}
+                    elevation={2}/>
+                <View style={styles.container}>
+                    <View style={styles.stepperContainer} >
+                        <Step type="active" number="1" title={_.recipients}/>
+                        <View style={styles.line}/>
+                        <Step type="done" number="2" title={_.deal}/>
+                        <View style={styles.line}/>
+                        <Step type="done" number="3" title={_.sms_text}/>
+                        <View style={styles.line}/>
+                        <Step type="disabled" number="4" title={_.summary}/>
+                    </View>
+                    <ScrollView style={{padding: 15}}>
+                        <View>
+                            <TextInput
+                                placeholder={_.headline}
+                                ref="headline"
+                                onChangeText={(headline) => {this.setState({headline})}}
+                                value={this.state.headline}/>
+                            <TextInput
+                                style={{height: 75}}
+                                multiline={true}
+                                placeholder={_.description}
+                                ref="description"
+                                onChangeText={(description) => {this.setState({description})}}
+                                value={this.state.description}/>
+                            <View style={{marginTop: 15}}>
+                                <View style={styles.switchWrap}>
+                                    <Text>{_.variables}</Text>
+                                    <Switch
+                                        onValueChange={(value) => this.setState({switchVariables: value})}
+                                        value={this.state.switchVariables} />
+                                </View>
+                                <View>
+                                    {variablesView}
+                                    {variablesSeparator}
+                                </View>
+                                <View style={styles.separator}/>
+                            </View>
+                            <TouchableNativeFeedback  onPress={(event) => this.openImageLibrary()}>
+                                {imageDeal}
+                            </TouchableNativeFeedback>
+                            <Text style={{marginTop: 15, marginBottom: 10}}>{_.template}</Text>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                                <TouchableNativeFeedback onPress={(event) => this.selectTemplate(1)}>
+                                    <View style={(this.state.template == 1 ? styles.activeTemplate : styles.template)}>
+                                        <Image style={{width: 90, height: 70}} resizeMode="stretch" source={require('../../images/deal/template1.png')}/>
+                                    </View>
+                                </TouchableNativeFeedback>
+                                <TouchableNativeFeedback onPress={(event) => this.selectTemplate(2)}>
+                                    <View style={[(this.state.template == 2 ? styles.activeTemplate : styles.template), {marginLeft: 10, marginRight: 10}]}>
+                                        <Image style={{width: 90, height: 70}} source={require('../../images/deal/template2.png')}/>
+                                    </View>
+                                </TouchableNativeFeedback>
+                                <TouchableNativeFeedback onPress={(event) => this.selectTemplate(3)}>
+                                    <View style={(this.state.template == 3 ? styles.activeTemplate : styles.template)}>
+                                        <Image style={{width: 90, height: 70}} source={require('../../images/deal/template3.png')}/>
+                                    </View>
+                                </TouchableNativeFeedback>
+                            </View>
+                            <Text style={{marginTop: 15, marginBottom: 10}}>{_.color_scheme}</Text>
+                            <View style={{flexDirection: 'row', marginBottom: 15, justifyContent: 'space-around'}}>
+                                <TouchableNativeFeedback onPress={(event) => this.selectColorTemplate(1)}>
+                                    <View style={(this.state.colorTemplate == 1 ? styles.activeTemplate : styles.template)}>
+                                        <Image style={{width: 90, height: 70}} resizeMode="stretch" source={require('../../images/deal/color1.png')}/>
+                                    </View>
+                                </TouchableNativeFeedback>
+                                <TouchableNativeFeedback onPress={(event) => this.selectColorTemplate(2)}>
+                                    <View style={[(this.state.colorTemplate == 2 ? styles.activeTemplate : styles.template), {marginLeft: 10, marginRight: 10}]}>
+                                        <Image style={{width: 90, height: 70}} source={require('../../images/deal/color2.png')}/>
+                                    </View>
+                                </TouchableNativeFeedback>
+                                <TouchableNativeFeedback onPress={(event) => this.selectColorTemplate(3)}>
+                                    <View style={(this.state.colorTemplate == 3 ? styles.activeTemplate : styles.template)}>
+                                        <Image style={{width: 90, height: 70}} source={require('../../images/deal/color3.png')}/>
+                                    </View>
+                                </TouchableNativeFeedback>
                             </View>
                             <View>
-                                {variablesView}
-                                {variablesSeparator}
+                                <View style={styles.separator}/>
+                                <View  style={styles.switchWrap}>
+                                    <Text>{_.store}</Text>
+                                    <Picker
+                                        style={styles.picker}
+                                        selectedValue={this.state.store}
+                                        onValueChange={(store) => this.setState({store: store})}>
+                                        <Picker.Item label="Guitar shop" value="guitar_shop" />
+                                        <Picker.Item label="Short code" value="short_code" />
+                                        <Picker.Item label="Text sender" value="text_sender" />
+                                        <Picker.Item label="Own number" value="own_number" />
+                                    </Picker>
+                                </View>
+                            </View>
+                            <View>
+                                <View style={styles.separator}/>
+                                <View style={styles.switchWrap}>
+                                    <Text>{_.price}</Text>
+                                    <Switch
+                                        onValueChange={(value) => this.setState({switchPrice: value})}
+                                        value={this.state.switchPrice} />
+                                </View>
+                                {price}
+                            </View>
+                            <View>
+                                <View style={styles.separator}/>
+                                <View style={styles.switchWrap}>
+                                    <Text>{_.quantity}</Text>
+                                    <Switch
+                                        onValueChange={(value) => this.setState({switchQuantity: value})}
+                                        value={this.state.switchQuantity} />
+                                </View>
+                                {quantity}
+                            </View>
+                            <View>
+                                <View style={styles.separator}/>
+                                <View style={styles.switchWrap}>
+                                    <Text>{_.expiration}</Text>
+                                    <Switch
+                                        onValueChange={(value) => this.setState({switchExpiration: value})}
+                                        value={this.state.switchExpiration} />
+                                </View>
+                                {expiration}
                             </View>
                             <View style={styles.separator}/>
-                        </View>
-                        <TouchableNativeFeedback  onPress={(event) => this.openImageLibrary()}>
-                            {imageDeal}
-                        </TouchableNativeFeedback>
-                        <Text style={{marginTop: 15, marginBottom: 10}}>Template</Text>
-                        <View style={{flexDirection: 'row'}}>
-                            <TouchableNativeFeedback onPress={(event) => this.selectTemplate(1)}>
-                                <View style={(this.state.template == 1 ? styles.activeTemplate : styles.template)}>
-                                    <Image style={{width: 90, height: 70}} resizeMode="stretch" source={require('../../images/deal/template1.png')}/>
-                                </View>
-                            </TouchableNativeFeedback>
-                            <TouchableNativeFeedback onPress={(event) => this.selectTemplate(2)}>
-                                <View style={[(this.state.template == 2 ? styles.activeTemplate : styles.template), {marginLeft: 10, marginRight: 10}]}>
-                                    <Image style={{width: 90, height: 70}} source={require('../../images/deal/template2.png')}/>
-                                </View>
-                            </TouchableNativeFeedback>
-                            <TouchableNativeFeedback onPress={(event) => this.selectTemplate(3)}>
-                                <View style={(this.state.template == 3 ? styles.activeTemplate : styles.template)}>
-                                    <Image style={{width: 90, height: 70}} source={require('../../images/deal/template3.png')}/>
-                                </View>
-                            </TouchableNativeFeedback>
-                        </View>
-                        <Text style={{marginTop: 15, marginBottom: 10}}>Color scheme</Text>
-                        <View style={{flexDirection: 'row', marginBottom: 15}}>
-                            <TouchableNativeFeedback onPress={(event) => this.selectColorTemplate(1)}>
-                                <View style={(this.state.colorTemplate == 1 ? styles.activeTemplate : styles.template)}>
-                                    <Image style={{width: 90, height: 70}} resizeMode="stretch" source={require('../../images/deal/color1.png')}/>
-                                </View>
-                            </TouchableNativeFeedback>
-                            <TouchableNativeFeedback onPress={(event) => this.selectColorTemplate(2)}>
-                                <View style={[(this.state.colorTemplate == 2 ? styles.activeTemplate : styles.template), {marginLeft: 10, marginRight: 10}]}>
-                                    <Image style={{width: 90, height: 70}} source={require('../../images/deal/color2.png')}/>
-                                </View>
-                            </TouchableNativeFeedback>
-                            <TouchableNativeFeedback onPress={(event) => this.selectColorTemplate(3)}>
-                                <View style={(this.state.colorTemplate == 3 ? styles.activeTemplate : styles.template)}>
-                                    <Image style={{width: 90, height: 70}} source={require('../../images/deal/color3.png')}/>
-                                </View>
-                            </TouchableNativeFeedback>
-                        </View>
-                        <View>
-                            <View style={styles.separator}/>
-                            <View  style={styles.switchWrap}>
-                                <Text >Store</Text>
-                                <Picker
-                                    style={styles.picker}
-                                    selectedValue={this.state.store}
-                                    onValueChange={(store) => this.setState({store: store})}>
-                                    <Picker.Item label="Guitar shop" value="guitar_shop" />
-                                    <Picker.Item label="Short code" value="short_code" />
-                                    <Picker.Item label="Text sender" value="text_sender" />
-                                    <Picker.Item label="Own number" value="own_number" />
-                                </Picker>
-                            </View>
-                        </View>
-                        <View>
-                            <View style={styles.separator}/>
-                            <View style={styles.switchWrap}>
-                                <Text>Price</Text>
-                                <Switch
-                                    onValueChange={(value) => this.setState({switchPrice: value})}
-                                    value={this.state.switchPrice} />
-                            </View>
-                            {price}
-                        </View>
-                        <View>
-                            <View style={styles.separator}/>
-                            <View style={styles.switchWrap}>
-                                <Text>Quantity</Text>
-                                <Switch
-                                    onValueChange={(value) => this.setState({switchQuantity: value})}
-                                    value={this.state.switchQuantity} />
-                            </View>
-                            {quantity}
-                        </View>
-                        <View>
-                            <View style={styles.separator}/>
-                            <View style={styles.switchWrap}>
-                                <Text>Expiration</Text>
-                                <Switch
-                                    onValueChange={(value) => this.setState({switchExpiration: value})}
-                                    value={this.state.switchExpiration} />
-                            </View>
-                            {expiration}
-                        </View>
-                        <View style={styles.separator}/>
-                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 25}}>
-                            <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignRecipients')}>
-                                <Text style={{color: 'black', fontSize: 15}}>BACK</Text>
-                            </TouchableNativeFeedback>
-                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <TouchableNativeFeedback >
-                                    <ElevatedView elevation={1} style={styles.secondaryButton}>
-                                        <Icon style={{marginRight: 10, color: '#BE2166'}} size={16} name="search"/>
-                                        <Text style={{color: '#BE2166'}}>PREVIEW</Text>
-                                    </ElevatedView>
+                            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 25}}>
+                                <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignRecipients')}>
+                                    <Text style={{color: 'black', fontSize: 15}}>{_.back.toUpperCase()}</Text>
                                 </TouchableNativeFeedback>
-                                <View style={styles.buttonWrap}>
-                                    <Button
-                                        elevation={2}
-                                        color="#BE2166"
-                                        title="next"
-                                        onPress={() => this.navigateToScreen('CampaignText')}/>
+                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                    <TouchableNativeFeedback >
+                                        <View style={styles.secondaryButton}>
+                                            <Icon style={{marginRight: 10, color: Color.secondaryButtonText}} size={16} name="search"/>
+                                            <Text style={{color: Color.secondaryButtonText}}>{_.preview.toUpperCase()}</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
+                                    <TouchableNativeFeedback onPress={() => Actions.CampaignText()}>
+                                        <View style={styles.buttonWrap}>
+                                            <Text style={styles.buttonText}>{_.next.toUpperCase()}</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
                                 </View>
                             </View>
                         </View>
-                    </View>
-                </ScrollView>
-            </View>
+                    </ScrollView>
+                </View>
+            </DrawerLayoutAndroid>
         )
     }
     selectTemplate(number){
@@ -320,12 +360,6 @@ export default class CampaignDeal extends Component{
 
     selectColorTemplate(number){
         this.setState({colorTemplate: number})
-    }
-
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
     }
 
     setVariable(variable){
@@ -388,7 +422,8 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingLeft: 15,
         paddingRight: 15,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        elevation: 2
     },
     line: {
         marginLeft: 5,
@@ -451,19 +486,31 @@ const styles = StyleSheet.create({
     },
     secondaryButton: {
         marginRight: 10,
-        padding: 7,
-        borderColor: '#BE2166',
+        padding: 10,
+        borderColor: Color.secondaryButton,
         borderWidth: 1,
         borderRadius: 2,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        elevation: 2
     },
     buttonWrap: {
         width: 110,
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end'
+        borderRadius: 2,
+        backgroundColor: Color.button,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 2,
+    },
+    buttonText: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: Color.buttonText
     },
     picker: {
         width: 170
     }
 });
+
+module.exports = connect(mapStateToProps)(CampaignDeal);

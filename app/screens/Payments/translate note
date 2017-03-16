@@ -15,3 +15,13 @@ sign_up
 sign
 sms_sent
 credit_spent
+recipients_from_phone
+recipients_from_bulkgate
+add_recipient
+variables
+add_photo
+old_price
+new_price
+discount
+currency
+campaign_dashboard

@@ -118,6 +118,13 @@ export default class AppNavigator extends Component {
                         <Scene key='ColorPicker' component={ColorPickerComponent} hideNavBar/>
                         <Scene key='Chat' component={Chat} hideNavBar/>
                         <Scene key='ChatDetail' component={ChatDetail} hideNavBar/>
+                        <Scene key='CampaignDashboard' component={CampaignDashboard} hideNavBar/>
+                        <Scene key='CampaignDeal' component={CampaignDeal} hideNavBar/>
+                        <Scene key='CampaignRecipients' component={CampaignRecipients} hideNavBar/>
+                        <Scene key='CampaignSummary' component={CampaignSummary} hideNavBar/>
+                        <Scene key='CampaignText' component={CampaignText} hideNavBar/>
+                        <Scene key='KeypadRecipients' component={KeypadRecipients} hideNavBar/>
+                        <Scene key='PhoneRecipients' component={PhoneRecipients} hideNavBar/>
 
                     </Scene>
                 </Router>

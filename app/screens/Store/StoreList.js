@@ -51,7 +51,7 @@ export default class StoreList extends Component{
                     title={_.stores}
                     elevation={2}/>
                 <View style={styles.container}>
-                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
+                    <TouchableNativeFeedback onPress={()=> Actions.StoreSettings()}>
                         <View>
                             <View style={styles.itemWrap}>
                                 <View>
@@ -64,7 +64,7 @@ export default class StoreList extends Component{
                             <View style={styles.separator}/>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
+                    <TouchableNativeFeedback onPress={()=> Actions.StoreSettings()}>
                         <View>
                             <View style={styles.itemWrap}>
                                 <View>
@@ -77,7 +77,7 @@ export default class StoreList extends Component{
                             <View style={styles.separator}/>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('StoreSettings')}>
+                    <TouchableNativeFeedback onPress={()=> Actions.StoreSettings()}>
                         <View>
                             <View style={styles.itemWrap}>
                                 <View>
@@ -90,7 +90,7 @@ export default class StoreList extends Component{
                             <View style={styles.separator}/>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('StoreCreate')}>
+                    <TouchableNativeFeedback onPress={() => Actions.StoreCreate()}>
                         <View style={styles.bottomButton} elevation={3}>
                             <Icon name="add" style={{color: 'white'}} size={30}/>
                         </View>
