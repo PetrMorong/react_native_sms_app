@@ -47,14 +47,13 @@ export default class ContactVerification extends Component{
     }
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let verifyPhoneButton;
         if(!this.state.verifyPhone){
-            verifyPhoneButton =     <TouchableNativeFeedback onPress={() => this.setStateVerifyPhone()}>
+            verifyPhoneButton = <TouchableNativeFeedback onPress={() => this.setStateVerifyPhone()}>
                 <View style={styles.buttonWrap}>
-                    <Text style={styles.buttonText}>VERIFY</Text>
+                    <Text style={styles.buttonText}>{_('verify').toUpperCase()}</Text>
                 </View>
             </TouchableNativeFeedback>
         }
@@ -63,12 +62,12 @@ export default class ContactVerification extends Component{
         if(this.state.verifyPhone && !this.state.typeCodePhone){
             sendCodePhone = <View style={{marginLeft: 50, flexDirection: 'row', marginTop: 10, marginBottom: 15}}>
                 <View style={{flex: 1}}>
-                    <Text>Verification code will be</Text>
-                    <Text>sent to your number</Text>
+                    <Text>{_('Verification code will be')}</Text>
+                    <Text>{_('sent to your number')}</Text>
                 </View>
                 <TouchableNativeFeedback onPress={() => this.setStateTypeCodePhone() }>
                     <View style={styles.buttonWrap}>
-                        <Text style={styles.buttonText}>{_.send.toUpperCase()}</Text>
+                        <Text style={styles.buttonText}>{_('send').toUpperCase()}</Text>
                     </View>
                 </TouchableNativeFeedback>
             </View>
@@ -83,7 +82,7 @@ export default class ContactVerification extends Component{
                         value={this.state.password}
                         keyboardType='numeric'
                         style={{flex: 1, marginRight: 10, }}
-                        placeholder='Code'
+                        placeholder={_('code')}
                     />
                 </View>
                 <View style={{width: 80}}>
@@ -105,7 +104,7 @@ export default class ContactVerification extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.contact_verification}
+                    title={_('Contact verification')}
                     elevation={0}
                     back={true}/>
                 <View style={styles.container}>
@@ -116,7 +115,7 @@ export default class ContactVerification extends Component{
                                 <View style={{flex: 1}}>
                                     <View style={styles.a}>
                                         <View>
-                                            <Text>{_.phone_number}</Text>
+                                            <Text>{_('Phone number')}</Text>
                                             <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>+420 589 654 478</Text>
                                         </View>
                                         <View style={{width: 80}}>
@@ -190,8 +189,8 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     buttonText: {
-        fontSize: 17,
-        fontWeight: '500'
+        fontWeight: '500',
+        color: Color.buttonText
     }
 
 }) ;

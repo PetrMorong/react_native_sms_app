@@ -37,7 +37,6 @@ const mapStateToProps = (store) => {
 export default class HistoryList extends Component{
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -48,7 +47,7 @@ export default class HistoryList extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.history}
+                    title={_('History')}
                     elevation={2}/>
                 <View style={styles.container}>
                     <TouchableNativeFeedback onPress={()=> Actions.CampaignDetail()}>

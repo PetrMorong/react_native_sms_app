@@ -55,7 +55,6 @@ export default class StoreSettingsComponent extends Component{
     }
 
     render(){
-        const _=this.props._;
 
         let cover;
         if(this.state.coverSource){
@@ -78,7 +77,7 @@ export default class StoreSettingsComponent extends Component{
                     onChangeText={(storeName) => this.setState({storeName: storeName})}
                     value={this.state.storeName}
                     style={{width: window.width / 2}}
-                    placeholder={_.store_name}/>
+                    placeholder={_('Store name')}/>
                 <TouchableNativeFeedback onPress={() => this.setState({editingStoreName: false})}>
                     <Icon name="done" size={30} style={{padding: 15, color: '#6CC2BA'}}/>
                 </TouchableNativeFeedback>
@@ -99,7 +98,7 @@ export default class StoreSettingsComponent extends Component{
                     <TouchableNativeFeedback onPress={(event) => this.setModalCoverVisible(true)}>
                         <View style={styles.changeCoverButton}>
                             <Icon name="photo-camera" size={20} style={{color: 'black', marginRight: 5}}/>
-                            <Text style={{color: 'black', fontSize: 14}}>{_.change.toUpperCase()}</Text>
+                            <Text style={{color: 'black', fontSize: 14}}>{_('change').toUpperCase()}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -109,7 +108,7 @@ export default class StoreSettingsComponent extends Component{
                         <TouchableNativeFeedback onPress={(event) => this.setModalLogoVisible(true)}>
                             <View style={styles.changeLogoButton}>
                                 <Icon name="photo-camera" size={20} style={{color: 'black', marginRight: 5}}/>
-                                <Text style={{color: 'black', fontSize: 14}}>{_.change.toUpperCase()}</Text>
+                                <Text style={{color: 'black', fontSize: 14}}>{_('change').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                     </View>
@@ -137,8 +136,8 @@ export default class StoreSettingsComponent extends Component{
                         <Icon name="language" size={20} style={{marginRight: 15}}/>
                         <Text>www.topefekt.com</Text>
                     </View>
-                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('CompanyData')}>
-                        <Text style={{marginLeft: 35, color: '#1580FD', marginTop: 5}} >{_.edit.toUpperCase()}</Text>
+                    <TouchableNativeFeedback onPress={() => Actions.CompanyData()}>
+                        <Text style={{marginLeft: 35, color: '#1580FD', marginTop: 5}} >{_('edit company data').toUpperCase()}</Text>
                     </TouchableNativeFeedback>
                 </View>
                 <View style={styles.separator}/>
@@ -146,19 +145,19 @@ export default class StoreSettingsComponent extends Component{
                     <TouchableNativeFeedback onPress={() => Actions.Language()}>
                         <View style={styles.actionSmallWrap}>
                             <Image source={require('../../images/cs.png')} resizeMode='stretch' style={{width: 30, height: 30, marginBottom: 3}}/>
-                            <Text style={{color: '#444444'}}>{_.language}</Text>
+                            <Text style={{color: '#444444'}}>{_('Language')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => Actions.ShortUrl()}>
                         <View style={styles.actionSmallWrap}>
                             <Icon name="language" size={25} style={{marginBottom: 5, color: '#444444'}}/>
-                            <Text style={{color: '#444444'}}>Short url</Text>
+                            <Text style={{color: '#444444'}}>{_('Short url')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => Actions.Notifications()}>
                         <View style={styles.actionSmallWrap}>
                             <Icon name="add-alert" size={25} style={{marginBottom: 5, color: '#444444'}}/>
-                            <Text style={{color: '#444444'}}>Notifications</Text>
+                            <Text style={{color: '#444444'}}>{_('Notifications')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -167,7 +166,7 @@ export default class StoreSettingsComponent extends Component{
                 <View style={{margin: 15, alignItems: 'flex-end'}}>
                     <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                         <View style={styles.buttonWrap}>
-                            <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                            <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -253,13 +252,13 @@ export default class StoreSettingsComponent extends Component{
     }
 
     handleCoverColorPress(){
-        this.setModalCoverVisible(false)
-        this.navigateToScreen('ColorPickerComponent')
+        this.setModalCoverVisible(false);
+        Actions.ColorPicker();
     }
 
     handleLogoColorPress(){
-        this.setModalLogoVisible(false)
-        this.navigateToScreen('ColorPickerComponent')
+        this.setModalLogoVisible(false);
+        Actions.ColorPicker();
     }
 
     setModalCoverVisible(visible) {
@@ -461,7 +460,7 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     buttonText: {
-        fontSize: 17,
+        color: Color.buttonText,
         fontWeight: '500'
     }
 

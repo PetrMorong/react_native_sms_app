@@ -49,7 +49,7 @@ export default class ScheduledList extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.scheduled}
+                    title={_('Scheduled')}
                     elevation={2}/>
                 <View style={styles.container}>
                     <TouchableNativeFeedback onPress={()=> Actions.ScheduledDetail()}>

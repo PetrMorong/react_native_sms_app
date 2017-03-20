@@ -47,7 +47,6 @@ export default class KeypadRecipients extends Component{
         }
     }
     render(){
-        const _=this.props._;
         let menu  = <Menu/>;
 
         return (
@@ -59,7 +58,7 @@ export default class KeypadRecipients extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="containerNoBg"
-                    title={_.campaign}
+                    title={_('Add recipients')}
                     elevation={2}
                     back={true}/>
                 <ScrollView>
@@ -71,13 +70,13 @@ export default class KeypadRecipients extends Component{
                             <View style={styles.recipientSmallWrap}>
                                 <TextInput
                                     style={styles.firstName}
-                                    placeholder={_.first_name}
+                                    placeholder={_('First name')}
                                     ref="firstName"
                                     onChangeText={(firstName) => this.setState({firstName})}
                                     value={this.state.firstName}/>
                                 <TextInput
                                     style={styles.lastName}
-                                    placeholder={_.last_name}
+                                    placeholder={_('Last name')}
                                     ref="lastName"
                                     onChangeText={(lastName) => this.setState({lastName})}
                                     value={this.state.lastName}/>
@@ -85,14 +84,14 @@ export default class KeypadRecipients extends Component{
                             <TextInput
                                 style={styles.phoneNumber}
                                 keyboardType='numeric'
-                                placeholder={_.phone_number}
+                                placeholder={_('Phone number')}
                                 ref="phoneNumber"
                                 onChangeText={(phoneNumber) => {this.setState({phoneNumber}); this.phoneNumberCheck(phoneNumber)}}
                                 value={this.state.phoneNumber}/>
                             <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                                 <TouchableNativeFeedback onPress={() => Actions.pop()}>
                                     <View style={styles.buttonWrap}>
-                                        <Text style={styles.buttonText}>{_.next.toUpperCase()}</Text>
+                                        <Text style={styles.buttonText}>{_('next').toUpperCase()}</Text>
                                     </View>
                                 </TouchableNativeFeedback>
                             </View>
@@ -153,7 +152,6 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     buttonText: {
-        fontSize: 17,
         fontWeight: '500',
         color: Color.buttonText
     }

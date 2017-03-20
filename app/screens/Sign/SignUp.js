@@ -45,7 +45,6 @@ export default class SignUp extends Component {
         }
     }
     render() {
-        const _=this.props._;
         return (
             <View style={styles.container}>
                 <View style={styles.loginWrap}>
@@ -58,7 +57,7 @@ export default class SignUp extends Component {
                                     onChangeText={(email) => this.setState({email})}
                                     value={this.state.email}
                                     style={styles.input}
-                                    placeholder='Email'
+                                    placeholder={_('Email')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"/>
                             </View>
@@ -68,7 +67,7 @@ export default class SignUp extends Component {
                                     onChangeText={(password) => this.setState({password})}
                                     value={this.state.password}
                                     style={styles.input}
-                                    placeholder='Password'
+                                    placeholder={_('Password')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"
                                     secureTextEntry={true}/>
@@ -79,7 +78,7 @@ export default class SignUp extends Component {
                                     onChangeText={(passwordAgain) => this.setState({passwordAgain})}
                                     value={this.state.passwordAgain}
                                     style={styles.input}
-                                    placeholder='Password again'
+                                    placeholder={_('Password again')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"
                                     secureTextEntry={true}/>
@@ -87,14 +86,14 @@ export default class SignUp extends Component {
                         </View>
                         <TouchableNativeFeedback onPress={this.props.changeScreenSignUpStepTwo}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.continue}</Text>
+                                <Text style={styles.buttonText}>{_('continue').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
                             <TouchableNativeFeedback>
                                 <View style={{flexDirection: 'row'}}>
                                     <TouchableNativeFeedback onPress={this.props.changeScreenSignIn}>
-                                        <Text style={{color: 'white', fontSize: 18}}>BACK</Text>
+                                        <Text style={{color: 'white', fontSize: 18}}>{_('back').toUpperCase()}</Text>
                                     </TouchableNativeFeedback>
                                 </View>
                             </TouchableNativeFeedback>

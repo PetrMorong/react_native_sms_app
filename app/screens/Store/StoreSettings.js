@@ -43,8 +43,8 @@ export default class StoreSettings extends Component{
         this.state = {
             index: 0,
             routes: [
-                { key: '1', title: this.props.translate.store_settings},
-                { key: '2', title: this.props.translate.order_form },
+                { key: '1', title: _('Store settings')},
+                { key: '2', title: _('Order form')},
             ],
         }
     }
@@ -73,7 +73,6 @@ export default class StoreSettings extends Component{
 
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -84,7 +83,7 @@ export default class StoreSettings extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={this.props.translate.store}
+                    title={_('Store')}
                     elevation={0}/>
                 <TabViewAnimated
                     style={styles.container}

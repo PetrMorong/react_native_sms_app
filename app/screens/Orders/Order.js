@@ -37,7 +37,6 @@ const mapStateToProps = (store) => {
 export default class Order extends Component{
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -51,7 +50,7 @@ export default class Order extends Component{
                             <Icon style={{color: 'white'}} name="arrow-back" size={25}/>
                         </TouchableNativeFeedback>
                         <View style={{flex: 1}}>
-                            <Text style={styles.orderIdText}>{_.order_id}: 99</Text>
+                            <Text style={styles.orderIdText}>{_('Order id')}: 99</Text>
                         </View>
                         <Icon style={styles.actionIcon} name="mail-outline" size={25} />
                         <Icon style={styles.actionIcon} name="textsms" size={25} />
@@ -69,7 +68,7 @@ export default class Order extends Component{
                         <Icon name="done" size={35} style={{color: Color.buttonText}}/>
                     </View>
                     <View style={{padding: 15}}>
-                        <Text style={{color: '#011D2B', fontWeight: '500'}}>{_.customer}</Text>
+                        <Text style={{color: '#011D2B', fontWeight: '500'}}>{_('Customer')}</Text>
                         <View style={styles.row}>
                             <Icon name="person" size={20} style={styles.customerIcon}/>
                             <Text style={styles.textHighlight}>Petr Morong</Text>
@@ -85,7 +84,7 @@ export default class Order extends Component{
                     </View>
                     <View style={styles.separator}/>
                     <View style={{padding: 15}}>
-                        <Text style={{color: '#011D2B', fontWeight: '500'}}>{_.location}</Text>
+                        <Text style={{color: '#011D2B', fontWeight: '500'}}>{_('Location')}</Text>
                         <View style={styles.row}>
                             <Text style={styles.textHighlight}>Revoluční 34</Text>
                         </View>
@@ -98,7 +97,7 @@ export default class Order extends Component{
                     </View>
                     <View style={styles.separator}/>
                     <View style={{padding: 15}}>
-                        <Text style={{color: '#011D2B', fontWeight: '500'}}>{_.company}</Text>
+                        <Text style={{color: '#011D2B', fontWeight: '500'}}>{_('Company')}</Text>
                         <View style={styles.row}>
                             <Text style={styles.textHighlight}>TOP efekt</Text>
                         </View>

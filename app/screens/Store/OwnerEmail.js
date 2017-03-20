@@ -42,7 +42,6 @@ export default class OwnerEmail extends Component{
     }
 
     render(){
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let view;
@@ -51,19 +50,19 @@ export default class OwnerEmail extends Component{
                 <View style={{paddingLeft: 10, paddingRight: 10}}>
                     <TextInput
                         style={{height: 100}}
-                        placeholder={_.email_text}
+                        placeholder={_('Email text')}
                         ref="message"
                         multiline={true}
                         onChangeText={(message) => this.setState({message})}
                         value={this.state.message}/>
                     <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-                        <Text style={styles.fontSize10}>{_.total_sms}:</Text>
+                        <Text style={styles.fontSize10}>{_('Total sms')}:</Text>
                         <Text style={styles.messageStats}>2</Text>
-                        <Text style={styles.fontSize10}>{_.recipients}:</Text>
+                        <Text style={styles.fontSize10}>{_('Recipients')}:</Text>
                         <Text style={styles.messageStats}>3</Text>
                         <Text style={styles.fontSize10}>SMS:</Text>
                         <Text style={styles.messageStats}>5</Text>
-                        <Text style={styles.fontSize10}>{_.length}:</Text>
+                        <Text style={styles.fontSize10}>{_('Length')}:</Text>
                         <Text style={styles.messageStats}>130/120</Text>
                     </View>
                 </View>
@@ -80,13 +79,13 @@ export default class OwnerEmail extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title='Owner email'
+                    title={_('Owner email')}
                     elevation={2}
                     back={true}/>
                 <View style={[styles.container, {padding: 15}]}>
                     <View>
                         <View style={styles.switchWrap}>
-                            <Text>{_.activate}</Text>
+                            <Text>{_('Activate')}</Text>
                             <Switch
                                 onValueChange={(value) => this.setState({active: value})}
                                 value={this.state.active} />
@@ -98,7 +97,7 @@ export default class OwnerEmail extends Component{
                         <View style={{alignItems: 'flex-end'}}>
                             <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                                 <View style={styles.buttonWrap}>
-                                    <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                    <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                                 </View>
                             </TouchableNativeFeedback>
                         </View>
@@ -157,7 +156,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     buttonText: {
-        fontSize: 17,
+        color: Color.buttonText,
         fontWeight: '500'
     }
 });

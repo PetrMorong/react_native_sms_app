@@ -22,7 +22,7 @@ export function fetchUser(){
 export function getTranslations(){
     return function(dispatch) {
         request
-            .get('http://10.0.0.12:8080/translations')
+            .get('http://10.0.0.12:8080/translations/en')
             .end(function(err, res){
                 AsyncStorage.setItem('translations', res.text);
                 dispatch({type: 'GOT_TRANSLATIONS', payload: JSON.parse(res.text)})

@@ -45,7 +45,6 @@ export default class ShortUrl extends Component{
 
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let help;
@@ -53,13 +52,13 @@ export default class ShortUrl extends Component{
             help = <View style={{paddingLeft: 30, paddingRight: 30}}>
                 <Text style={{color: 'black'}}>It is URL displayed to your clients in SMS. You can choose which one do you like the best.</Text>
                 <View style={{paddingTop: 15}}>
-                    <Text>Example message:</Text>
+                    <Text>{_('Example message')}:</Text>
                     <View style={{backgroundColor: '#F1F0F0', borderRadius: 5, padding: 15}}>
                         <Text>
                             Hello Martin, we have old guitars for sale. 40 % off until the end of the week. Hope you like it.
                         </Text>
                         <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
-                            <Text>Check it out here:</Text>
+                            <Text>{_('Check it out here')}:</Text>
                             <View style={{ padding: 5, borderWidth: 2, borderColor: 'red', marginLeft: 15}}>
                                 <Text style={{color: '#1580FD'}}>www.url7.com/x1</Text>
                             </View>
@@ -79,7 +78,7 @@ export default class ShortUrl extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title='Short url'
+                    title={_('Short url')}
                     elevation={2}
                     back={true}/>
                 <View style={styles.container}>
@@ -88,13 +87,13 @@ export default class ShortUrl extends Component{
                             onChangeText={(url) => this.setState({url})}
                             value={this.state.url}
                             style={{marginLeft: 15, marginRight: 15, marginBottom: 15}}
-                            placeholder='Short url'/>
+                            placeholder={_('Short url')}/>
                     </View>
                     <View style={styles.separator}/>
                     <TouchableNativeFeedback onPress={() => this.setState({showHelp: !this.state.showHelp})}>
                         <View style={{padding: 30, flexDirection: 'row', alignItems: 'center'}}>
                             <Icon name="help-outline" size={25} style={{marginRight: 5, color: '#1580FD'}}/>
-                            <Text style={{marginRight: 10, fontSize: 20, color: '#1580FD'}}>What is deal short url ?</Text>
+                            <Text style={{marginRight: 10, fontSize: 20, color: '#1580FD'}}>{_('What is deal short url')} ?</Text>
                         </View>
                     </TouchableNativeFeedback>
                     {help}
@@ -102,7 +101,7 @@ export default class ShortUrl extends Component{
                         <View style={{ alignItems: 'flex-end'}}>
                             <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                                 <View style={styles.buttonWrap}>
-                                    <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                    <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                                 </View>
                             </TouchableNativeFeedback>
                         </View>
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     buttonText: {
-        fontSize: 17,
+        color: Color.buttonText,
         fontWeight: '500'
     }
 

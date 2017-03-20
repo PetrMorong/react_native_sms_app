@@ -38,7 +38,6 @@ const mapStateToProps = (store) => {
 export default class ChatDetail extends Component{
 
     render() {
-        const _=this.props._;
         return (
             <View style={styles.container}>
                 <View style={styles.toolbarContainer} elevation={2}>
@@ -54,12 +53,12 @@ export default class ChatDetail extends Component{
                     <Text style={styles.message}>I reall loved the guitar no kidding matea sdkj ska static d constructors async</Text>
                     <View style={{flexDirection: 'row'}}>
                         <View style={{marginRight: 15}}>
-                            <Text>{_.operator}</Text>
-                            <Text>{_.credit}</Text>
-                            <Text>{_.country}</Text>
-                            <Text>{_.sender_id}</Text>
-                            <Text>{_.username}</Text>
-                            <Text>{_.status}</Text>
+                            <Text>{_('Operator')}</Text>
+                            <Text>{_('Credit')}</Text>
+                            <Text>{_('Country')}</Text>
+                            <Text>{_('Sender id')}</Text>
+                            <Text>{_('Username')}</Text>
+                            <Text>{_('Status')}</Text>
                         </View>
                         <View>
                             <Text>T-mobile CZ</Text>
@@ -77,19 +76,19 @@ export default class ChatDetail extends Component{
                 <View style={styles.bottomToolbar} elevation={2}>
                     <View style={styles.bottomToolbarItem}>
                         <Icon name="call-made" style={styles.bottomToolbarIcon}/>
-                        <Text style={styles.bottomToolbarText}>{_.redirect}</Text>
+                        <Text style={styles.bottomToolbarText}>{_('Redirect')}</Text>
                     </View>
                     <View style={styles.bottomToolbarItem}>
                         <Icon name="content-copy" style={styles.bottomToolbarIcon}/>
-                        <Text style={styles.bottomToolbarText}>{_.copy}</Text>
+                        <Text style={styles.bottomToolbarText}>{_('Copy')}</Text>
                     </View>
                     <View style={styles.bottomToolbarItem}>
                         <Icon name="delete" style={styles.bottomToolbarIcon}/>
-                        <Text style={styles.bottomToolbarText}>{_.delete}</Text>
+                        <Text style={styles.bottomToolbarText}>{_('Delete')}</Text>
                     </View>
                     <View style={styles.bottomToolbarItem}>
                         <Icon name="textsms" style={styles.bottomToolbarIcon}/>
-                        <Text style={styles.bottomToolbarText}>{_.answer}</Text>
+                        <Text style={styles.bottomToolbarText}>{_('Answer')}</Text>
                     </View>
                 </View>
             </View>

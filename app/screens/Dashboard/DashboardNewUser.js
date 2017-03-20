@@ -22,6 +22,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
 import { Actions } from 'react-native-router-flux';
+import Color from '../../config/Variables';
+
+
+const window = Dimensions.get('window');
+
 
 export default class DashboardNewUser extends Component {
 
@@ -36,42 +41,46 @@ export default class DashboardNewUser extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title="Dashboard"
+                    title={_('Dashboard')}
                     elevation={2}/>
                 <View style={styles.container}>
-                    <View style={{backgroundColor: '#312F31', height: 120, alignItems: 'center', justifyContent: 'center'}}>
-                        <Text style={{color: 'white', fontSize: 23}}>Welcome to bulkgate</Text>
+                    <View style={{height: 180, marginBottom: 10}}>
+                        <Image style={{height: 180, width: window.width}} source={require('../../images/wall.png')} resizeMode='cover'/>
+                        <View style={{position: 'absolute', top: 0, width: window.width, height: 180, alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={{fontSize: 25, color: 'white', marginRight: 15}}>{('welcome to').toUpperCase()}</Text>
+                            <Image style={{width: 100, height: 90}} resizeMode='contain' source={require('../../images/white-label/sunsms/logo/logo.png')}/>
+                        </View>
                     </View>
                     <TouchableNativeFeedback onPress={()=>Actions.BuyCredit()}>
-                        <View style={[styles.item, {backgroundColor: '#A35485'}]}>
+                        <View style={[styles.item, {backgroundColor: Color.button}]}>
                             <View style={styles.iconOutline}>
                                 <Icon name="account-balance-wallet" size={30} style={styles.icon}/>
                             </View>
-                            <Text style={styles.text}>Buy credit</Text>
+                            <Text style={styles.text}>{_('Buy credit')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={()=>Actions.Profile()}>
-                        <View style={[styles.item, {backgroundColor: '#FD7552'}]}>
+                        <View style={[styles.item, {backgroundColor: Color.button}]}>
                             <View style={styles.iconOutline}>
                                 <Icon name="person" size={30} style={styles.icon}/>
                             </View>
-                            <Text style={styles.text}>Fill out your profile</Text>
+                            <Text style={styles.text}>{_('Fill out your profile')}</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=>Actions.CreateCampaign}>
-                        <View style={[styles.item, {backgroundColor: '#06B7AB'}]}>
+                    <TouchableNativeFeedback onPress={()=>Actions.CreateCampaign()}>
+                        <View style={[styles.item, {backgroundColor: Color.button}]}>
                             <View style={styles.iconOutline}>
                                 <Icon name="email" size={30} style={styles.icon}/>
                             </View>
-                            <Text style={styles.text}>Start campaign</Text>
+                            <Text style={styles.text}>{_('Start campaign')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={()=>Actions.StoreCreate()}>
-                        <View style={[styles.item, {backgroundColor: '#536D79'}]}>
+                        <View style={[styles.item, {backgroundColor: Color.button}]}>
                             <View style={styles.iconOutline}>
                                 <Icon name="store" size={30} style={styles.icon}/>
                             </View>
-                            <Text style={styles.text}>Create store</Text>
+                            <Text style={styles.text}>{_('Create store')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -104,18 +113,18 @@ const styles = StyleSheet.create({
         paddingLeft: 25
     },
     icon: {
-        color: 'white'
+        color: Color.buttonText
     },
     iconOutline: {
         width: 50,
         height: 50,
-        backgroundColor: 'rgba(255,255,255,.3)',
+        backgroundColor: 'rgba(255,255,255,.7)',
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center'
     },
     text: {
-        color: 'white',
+        color: Color.buttonText,
         fontSize: 18,
         marginLeft: 15
     }

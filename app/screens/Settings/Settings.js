@@ -37,7 +37,6 @@ const mapStateToProps = (store) => {
 export default class Settings extends Component {
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -48,7 +47,7 @@ export default class Settings extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.settings}
+                    title={_('Settings')}
                     elevation={0}/>
                 <View style={styles.container}>
                     <TouchableNativeFeedback onPress={()=>Actions.Sign()}>
@@ -56,7 +55,7 @@ export default class Settings extends Component {
                             <View style={styles.circle}>
                                 <Icon name="power-settings-new" size={25} style={{color: 'white'}}/>
                             </View>
-                            <Text style={{fontSize: 18}}>Logout</Text>
+                            <Text style={{fontSize: 18}}>{_('Logout')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>

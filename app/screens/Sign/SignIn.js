@@ -44,7 +44,6 @@ export default class SignIn extends Component {
         }
     }
     render() {
-        const _=this.props._;
         return (
             <View style={styles.container}>
                 <View style={styles.loginWrap}>
@@ -57,7 +56,7 @@ export default class SignIn extends Component {
                                     onChangeText={(email) => this.setState({email})}
                                     value={this.state.email}
                                     style={styles.input}
-                                    placeholder='Email'
+                                    placeholder={_('Email')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"/>
                             </View>
@@ -67,7 +66,7 @@ export default class SignIn extends Component {
                                     onChangeText={(password) => this.setState({password})}
                                     value={this.state.password}
                                     style={styles.input}
-                                    placeholder={_.password}
+                                    placeholder={_('Password')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"
                                     secureTextEntry={true}/>
@@ -75,14 +74,14 @@ export default class SignIn extends Component {
                         </View>
                         <TouchableNativeFeedback onPress={() => this.props.dispatch(fetchUser())}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.login}</Text>
+                                <Text style={styles.buttonText}>{_('Login').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
                             <TouchableNativeFeedback onPress={this.props.changeScreenLostPassword}>
                                 <View style={{flexDirection: 'row'}}>
-                                    <Text style={{color: 'white'}}>Forgot password ? </Text>
-                                    <Text style={{color: 'white', fontWeight: '500'}}>Get help signing in.</Text>
+                                    <Text style={{color: 'white'}}>{_('Forgot password')} ? </Text>
+                                    <Text style={{color: 'white', fontWeight: '500'}}>{_('Get help signing in')}.</Text>
                                 </View>
                             </TouchableNativeFeedback>
                         </View>
@@ -93,15 +92,15 @@ export default class SignIn extends Component {
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
                             <Image style={{width: 40, height: 40}} source={require('../../images/facebook-logo-png-white-facebook-logo-png-white-facebook-icon-png--32.png')}/>
-                            <Text style={{color: 'white', marginLeft: 5, fontWeight: '500'}}>Log in with facebook</Text>
+                            <Text style={{color: 'white', marginLeft: 5, fontWeight: '500'}}>{_('Log in with facebook')}</Text>
                         </View>
                     </View>
                 </View>
                 <View style={styles.bottomTab}>
                     <TouchableNativeFeedback onPress={this.props.changeScreenSignUp}>
                         <View style={{flexDirection: 'row'}}>
-                            <Text style={{color: 'white'}}>Don''t have an account ? </Text>
-                            <Text style={{color: 'white', fontWeight: '500'}} >Sign up </Text>
+                            <Text style={{color: 'white'}}>{_('Do not have an account')} ? </Text>
+                            <Text style={{color: 'white', fontWeight: '500'}} >{_('Sign up')} </Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>

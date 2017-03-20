@@ -36,7 +36,6 @@ const mapStateToProps = (store) => {
 export default class Notifications extends Component{
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
 
         return (
@@ -48,11 +47,11 @@ export default class Notifications extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title='Notifications'
+                    title={_('Notifications')}
                     elevation={2}
                     back={true}/>
                 <View style={styles.container}>
-                    <Text style={{color: Color.primaryColor, fontWeight: '500', fontSize: 18}}>Customer</Text>
+                    <Text style={{color: Color.primaryColor, fontWeight: '500', fontSize: 18}}>{_('Customer')}</Text>
                     <TouchableNativeFeedback onPress={() => Actions.CustomerSms()}>
                         <View style={styles.row}>
                             <Icon name="textsms" size={25} style={{color: '#BE2166'}}/>
@@ -72,7 +71,7 @@ export default class Notifications extends Component{
                         </View>
                     </TouchableNativeFeedback>
 
-                    <Text style={{color: Color.primaryColor, fontWeight: '500', fontSize: 18, marginTop: 25}}>Shop owner</Text>
+                    <Text style={{color: Color.primaryColor, fontWeight: '500', fontSize: 18, marginTop: 25}}>{_('Shop owner')}</Text>
                     <TouchableNativeFeedback onPress={() => Actions.OwnerSms()}>
                         <View style={styles.row}>
                             <Icon name="textsms" size={25} style={{color: '#BE2166'}}/>

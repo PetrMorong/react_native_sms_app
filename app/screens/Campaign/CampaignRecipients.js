@@ -42,33 +42,32 @@ export default class CampaignRecipients extends Component {
         this.state = {
             recipients: [],
             type: 'smart'
-        }
+        };
     }
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let stepper;
         if(this.state.type == 'classic'){
            stepper =  <View style={styles.stepperContainer} >
-               <Step type="active" number="1" title={_.recipients}/>
+               <Step type="active" number="1" title={_('Recipients')}/>
                <View style={styles.line}/>
-               <Step type="done" number="2" title={_.sms_text}/>
+               <Step type="done" number="2" title={_('Sms text')}/>
                <View style={styles.line}/>
-               <Step type="disabled" number="3" title={_.summary}/>
+               <Step type="disabled" number="3" title={_('Summary')}/>
            </View>
         }
 
         if(this.state.type == 'smart'){
            stepper =  <View style={styles.stepperContainer} >
-               <Step type="active" number="1" title={_.recipients}/>
+               <Step type="active" number="1" title={_('Recipients')}/>
                <View style={styles.line}/>
-               <Step type="done" number="2" title={_.deal}/>
+               <Step type="done" number="2" title={_('Deal')}/>
                <View style={styles.line}/>
-               <Step type="done" number="3" title={_.sms_text}/>
+               <Step type="done" number="3" title={_('Sms text')}/>
                <View style={styles.line}/>
-               <Step type="disabled" number="4" title={_.summary}/>
+               <Step type="disabled" number="4" title={_('Summary')}/>
            </View>
         }
 
@@ -82,7 +81,7 @@ export default class CampaignRecipients extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.campaign}
+                    title={_('Campaign recipients')}
                     elevation={2}/>
                 <View style={styles.container}>
                     {stepper}
@@ -90,21 +89,21 @@ export default class CampaignRecipients extends Component {
                         <TouchableNativeFeedback >
                             <View style={styles.linkWrap}>
                                 <Icon style={styles.blueIcon} name="phone" size={35}/>
-                                <Text style={styles.blueText}>{_.recipients_from_phone}</Text>
+                                <Text style={styles.blueText}>{_('Recipients from phone')}</Text>
                             </View>
                         </TouchableNativeFeedback>
                         <View style={styles.separator}/>
                         <TouchableNativeFeedback>
                             <View style={styles.linkWrap}>
                                 <Image style={styles.blueIcon} source={require('../../images/white-label/bulkgate/bulkgateIcon.png')}/>
-                                <Text style={styles.blueText}>{_.recipients_from_bulkgate}</Text>
+                                <Text style={styles.blueText}>{_('Recipients from bulkgate')}</Text>
                             </View>
                         </TouchableNativeFeedback>
                         <View style={styles.separator}/>
                         <TouchableNativeFeedback onPress={() => Actions.KeypadRecipients()}>
                             <View style={styles.linkWrap}>
                                 <Icon style={styles.blueIcon} name="dialpad" size={35}/>
-                                <Text style={styles.blueText}>{_.add_recipients}</Text>
+                                <Text style={styles.blueText}>{_('Add recipients')}</Text>
                             </View>
                         </TouchableNativeFeedback>
                     </View>
@@ -127,7 +126,7 @@ export default class CampaignRecipients extends Component {
                         </View>
                         <View style={{flex: 1}}/>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text>{_.total.toUpperCase()}</Text>
+                            <Text>{_('total').toUpperCase()}</Text>
                             <Text style={{marginLeft: 10, backgroundColor: '#4CAF50', padding: 5, color: 'white', borderRadius: 2}}>14</Text>
                         </View>
                         <View style={styles.separator}/>
@@ -136,7 +135,7 @@ export default class CampaignRecipients extends Component {
                     <View style={{alignItems: 'flex-end', padding: 15}}>
                         <TouchableNativeFeedback onPress={() => Actions.CampaignDeal()}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.next.toUpperCase()}</Text>
+                                <Text style={styles.buttonText}>{_('next').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                     </View>
@@ -205,7 +204,6 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     buttonText: {
-        fontSize: 17,
         fontWeight: '500',
         color: Color.buttonText
     }

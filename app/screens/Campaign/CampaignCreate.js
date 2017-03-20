@@ -42,7 +42,6 @@ export default class CampaignCreate  extends Component {
     }
 
     render(){
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let sms;
@@ -88,7 +87,7 @@ export default class CampaignCreate  extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="containerNoBg"
-                    title={_.create_campaign}
+                    title={_('Create campaign')}
                     elevation={0}/>
                 <ScrollView style={styles.container}>
                     <View style={{ height: window.height - 140}}>
@@ -100,7 +99,7 @@ export default class CampaignCreate  extends Component {
                                 style={styles.input}
                                 onChangeText={(text) => this.setState({text})}
                                 value={this.state.text}
-                                placeholder={_.campaign_name}
+                                placeholder={_('Campaign name')}
                             />
                             <View style={styles.wrap}>
                                 <TouchableNativeFeedback onPress={(event) => this.chooseType('sms')} >
@@ -115,7 +114,7 @@ export default class CampaignCreate  extends Component {
                     <View style={{alignItems: 'flex-end'}}>
                         <TouchableNativeFeedback onPress={() => Actions.CampaignRecipients()}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.create}</Text>
+                                <Text style={styles.buttonText}>{_('Create').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                     </View>
@@ -232,7 +231,6 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     buttonText: {
-        fontSize: 17,
         fontWeight: '500',
         color: Color.buttonText
     }

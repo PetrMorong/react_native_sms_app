@@ -49,7 +49,6 @@ export default class BaseInformations extends Component {
     }
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -60,7 +59,7 @@ export default class BaseInformations extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.base_informations}
+                    title={_('Base informations')}
                     elevation={0}
                     back={true}/>
                 <View style={[{padding: 15}, styles.container]}>
@@ -69,14 +68,14 @@ export default class BaseInformations extends Component {
                             onChangeText={(firstName) => this.setState({firstName})}
                             value={this.state.firstName}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
-                            placeholder={_.first_name}
+                            placeholder={_('First name')}
                             placeholderTextColor={Color.displayText}
                             underlineColorAndroid={Color.displayText}/>
                         <TextInput
                             onChangeText={(lastName) => this.setState({lastName})}
                             value={this.state.lastName}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
-                            placeholder={_.last_name}
+                            placeholder={_('Last name')}
                             keyboardType='numeric'
                             placeholderTextColor={Color.displayText}
                             underlineColorAndroid={Color.displayText}/>
@@ -86,7 +85,7 @@ export default class BaseInformations extends Component {
                             onChangeText={(callPrefix) => this.setState({callPrefix})}
                             value={this.state.callPrefix}
                             style={{width: window.width / 4, marginLeft: 10, marginRight: 10}}
-                            placeholder={_.call_prefix}
+                            placeholder={_('Call prefix')}
                             keyboardType='numeric'
                             placeholderTextColor={Color.displayText}
                             underlineColorAndroid={Color.displayText}/>
@@ -94,7 +93,7 @@ export default class BaseInformations extends Component {
                             onChangeText={(phoneNumber) => this.setState({phoneNumber})}
                             value={this.state.phoneNumber}
                             style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                            placeholder={_.phone_number}
+                            placeholder={_('Phone number')}
                             placeholderTextColor={Color.displayText}
                             underlineColorAndroid={Color.displayText}/>
                     </View>
@@ -123,7 +122,7 @@ export default class BaseInformations extends Component {
                     <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                         <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                <Text style={styles.buttonText}>{_('Save').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                     </View>
@@ -149,8 +148,8 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     buttonText: {
-        fontSize: 17,
-        fontWeight: '500'
+        fontWeight: '500',
+        color: Color.buttonText
     }
 });
 

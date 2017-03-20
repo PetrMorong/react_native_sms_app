@@ -46,29 +46,28 @@ export default class CampaignSummary extends Component{
     }
 
     render(){
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let stepper;
         if(this.state.type == 'classic'){
             stepper =  <View style={styles.stepperContainer} >
-                <Step type="active" number="1" title={_.recipients}/>
+                <Step type="active" number="1" title={_('Recipients')}/>
                 <View style={styles.line}/>
-                <Step type="done" number="2" title={_.sms_text}/>
+                <Step type="done" number="2" title={_('Sms text')}/>
                 <View style={styles.line}/>
-                <Step type="disabled" number="3" title={_.summary}/>
+                <Step type="disabled" number="3" title={_('Summary')}/>
             </View>
         }
 
         if(this.state.type == 'smart'){
             stepper =  <View style={styles.stepperContainer} >
-                <Step type="active" number="1" title={_.recipients}/>
+                <Step type="active" number="1" title={_('Recipients')}/>
                 <View style={styles.line}/>
-                <Step type="done" number="2" title={_.deal}/>
+                <Step type="done" number="2" title={_('Deal')}/>
                 <View style={styles.line}/>
-                <Step type="done" number="3" title={_.sms_text}/>
+                <Step type="done" number="3" title={_('Sms text')}/>
                 <View style={styles.line}/>
-                <Step type="disabled" number="4" title={_.summary}/>
+                <Step type="disabled" number="4" title={_('Summary')}/>
             </View>
         }
 
@@ -82,7 +81,7 @@ export default class CampaignSummary extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.campaign}
+                    title={_('Campaign summary')}
                     elevation={2}/>
                 <View style={styles.container}>
                     {stepper}
@@ -90,14 +89,14 @@ export default class CampaignSummary extends Component{
                         <View style={[styles.b, {marginTop: 20}]}>
                             <View style={styles.a}>
                                 <View style={{alignItems: 'center'}}>
-                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_.sms_count}</Text>
+                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_('Sms count')}</Text>
                                     <View style={{flexDirection: 'row'}}>
                                         <Icon name="donut-large" size={35} style={{color: '#1565C0'}}/>
                                         <Text style={[styles.colorText, {color: '#1565C0'}]}>2</Text>
                                     </View>
                                 </View>
                                 <View style={{alignItems: 'center'}}>
-                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_.recipients}</Text>
+                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_('Recipients')}</Text>
                                     <View style={{flexDirection: 'row'}}>
                                         <Icon name="person" size={35} style={{color: '#FF9800'}}/>
                                         <Text style={[styles.colorText, {color: '#FF9800'}]}>2</Text>
@@ -106,14 +105,14 @@ export default class CampaignSummary extends Component{
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 30, marginBottom: 20}}>
                                 <View style={{alignItems: 'center'}}>
-                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_.credit_usage}</Text>
+                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_('Credit usage')}</Text>
                                     <View style={{flexDirection: 'row'}}>
                                         <Icon name="data-usage" size={35} style={{color: '#48974C'}}/>
                                         <Text style={[styles.colorText, {color: '#48974C'}]}>22 %</Text>
                                     </View>
                                 </View>
                                 <View style={{alignItems: 'center'}}>
-                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_.cost}</Text>
+                                    <Text style={{fontSize: 16, marginBottom: 5}}>{_('Cost')}</Text>
 
                                     <View style={{flexDirection: 'row'}}>
                                         <Icon name="account-balance-wallet" size={35} style={{color: '#E53935'}}/>
@@ -127,60 +126,60 @@ export default class CampaignSummary extends Component{
                                 <Image source={require('../../images/cs.png')}/>
                                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                     <Text style={[styles.colorTextSmall, {color: '#1565C0'}]}>2</Text>
-                                    <Text style={{fontSize: 16}}>{_.sms_count}</Text>
+                                    <Text style={{fontSize: 16}}>{_('Sms count')}</Text>
                                 </View>
                                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                     <Text style={[styles.colorTextSmall, {color: '#FF9800'}]}>2</Text>
-                                    <Text style={{fontSize: 16}}>{_.recipients}</Text>
+                                    <Text style={{fontSize: 16}}>{_('Recipients')}</Text>
                                 </View>
                                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                     <Text style={[styles.colorTextSmall, {color: '#E53935'}]}>2</Text>
-                                    <Text style={{fontSize: 16}}>{_.credit}</Text>
+                                    <Text style={{fontSize: 16}}>{_('Credit')}</Text>
                                 </View>
                             </View>
                         </View>
                         <View style={styles.b}>
                             <View>
                                 <View style={styles.c}>
-                                    <Text style={{fontSize: 14}}>{_.sender}</Text>
-                                    <Text style={{fontSize: 14}}>{_.short_code}</Text>
+                                    <Text style={{fontSize: 14}}>{_('Sender')}</Text>
+                                    <Text style={{fontSize: 14}}>Short code</Text>
                                 </View>
                                 <View style={styles.separator}/>
                                 <View style={styles.c}>
-                                    <Text style={{fontSize: 14}}>{_.unicode}</Text>
+                                    <Text style={{fontSize: 14}}>{_('Unicode')}</Text>
                                     <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
                                 </View>
                                 <View style={styles.separator}/>
                                 <View style={styles.c}>
-                                    <Text style={{fontSize: 14}}>{_.flash_sms}</Text>
+                                    <Text style={{fontSize: 14}}>{_('Flash sms')}</Text>
                                     <Icon name="cancel" size={25} />
                                 </View>
                                 <View style={styles.separator}/>
                                 <View style={styles.c}>
-                                    <Text style={{fontSize: 14}}>{_.sending_time}</Text>
+                                    <Text style={{fontSize: 14}}>{_('Sending time')}</Text>
                                     <Icon name="cancel" size={25} />
                                 </View>
                                 <View style={styles.separator}/>
                                 <View style={styles.c}>
-                                    <Text style={{fontSize: 14}}>{_.restriction}</Text>
+                                    <Text style={{fontSize: 14}}>{_('Restriction')}</Text>
                                     <Icon name="check-circle" size={25} style={{color: '#4caf50'}}/>
                                 </View>
                             </View>
                         </View>
                         <View style={{padding: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                            <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignText')}>
-                                <Text style={{ marginLeft: 10, color: 'black', fontSize: 15}}>{_.back.toUpperCase()}</Text>
+                            <TouchableNativeFeedback onPress={() => Actions.pop()}>
+                                <Text style={{ marginLeft: 10, color: 'black', fontSize: 15}}>{_('back').toUpperCase()}</Text>
                             </TouchableNativeFeedback>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <TouchableNativeFeedback style={{marginRight: 15}} >
                                     <View style={styles.secondaryButton}>
                                         <Icon style={{marginRight: 10, color: Color.secondaryButtonText}} size={16} name="search"/>
-                                        <Text style={{color: Color.secondaryButtonText}}>{_.preview.toUpperCase()}</Text>
+                                        <Text style={{color: Color.secondaryButtonText}}>{_('Preview').toUpperCase()}</Text>
                                     </View>
                                 </TouchableNativeFeedback>
                                 <TouchableNativeFeedback onPress={() => Actions.CampaignDashboard()}>
                                     <View style={styles.buttonWrap}>
-                                        <Text style={styles.buttonText}>{_.send.toUpperCase()}</Text>
+                                        <Text style={styles.buttonText}>{_('Send').toUpperCase()}</Text>
                                     </View>
                                 </TouchableNativeFeedback>
                             </View>
@@ -253,8 +252,7 @@ const styles = StyleSheet.create({
         marginTop: 1
     },
     buttonText: {
-        fontSize: 15,
-        fontWeight: '500',
+       fontWeight: '500',
         color: Color.buttonText
     },
     a: {

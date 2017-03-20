@@ -43,7 +43,6 @@ export default class Profile extends Component {
     }
 
     render() {
-        let _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -54,7 +53,7 @@ export default class Profile extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="containerNoBg"
-                    title={_.profile}
+                    title={_('Profile')}
                     elevation={0}/>
                 <ScrollView style={styles.container}>
                     <TouchableNativeFeedback onPress={()=>Actions.BaseInformations()}>
@@ -71,10 +70,10 @@ export default class Profile extends Component {
                         </View>
                         <View style={styles.infoWrap}>
                             <View style={{padding: 15}}>
-                                <Text style={styles.textHighlight}>{_.name}</Text>
-                                <Text style={styles.textHighlight}>{_.phone_number}</Text>
-                                <Text style={styles.textHighlight}>{_.timezone}</Text>
-                                <Text style={styles.textHighlight}>{_.country}</Text>
+                                <Text style={styles.textHighlight}>{_('Name')}</Text>
+                                <Text style={styles.textHighlight}>{_('Phone number')}</Text>
+                                <Text style={styles.textHighlight}>{_('Timezone')}</Text>
+                                <Text style={styles.textHighlight}>{_('Country')}</Text>
                             </View>
                             <View style={{padding: 15}}>
                                 <Text style={styles.marginTop}>{this.props.user.first_name} {this.props.user.last_name}</Text>
@@ -89,19 +88,19 @@ export default class Profile extends Component {
                             <TouchableNativeFeedback onPress={()=>Actions.ChangePassword()}>
                                 <View style={{alignItems: 'center', width: 100}}>
                                     <Icon name="lock-outline" size={30} style={styles.actionIcon}/>
-                                    <Text style={styles.colorAndMargin}>{_.change_password}</Text>
+                                    <Text style={styles.colorAndMargin}>{_('Change password')}</Text>
                                 </View>
                             </TouchableNativeFeedback>
                             <TouchableNativeFeedback onPress={()=>Actions.PaymentData()}>
                                 <View style={{alignItems: 'center', width: 80}}>
                                     <Icon name="location-on" size={30} style={styles.actionIcon}/>
-                                    <Text style={styles.colorAndMargin}>{_.payment_data}</Text>
+                                    <Text style={styles.colorAndMargin}>{_('Payment data')}</Text>
                                 </View>
                             </TouchableNativeFeedback>
                             <TouchableNativeFeedback onPress={()=>Actions.ContactVerification()}>
                                 <View style={{alignItems: 'center', width: 80}}>
                                     <Icon name="phone-android" size={30} style={styles.actionIcon}/>
-                                    <Text style={styles.colorAndMargin}>{_.contact_verification}</Text>
+                                    <Text style={styles.colorAndMargin}>{_('Contact verification')}</Text>
                                 </View>
                             </TouchableNativeFeedback>
                         </View>

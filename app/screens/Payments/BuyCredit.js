@@ -34,7 +34,6 @@ const mapStateToProps = (store) => {
 export default class BuyCredit extends Component{
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -45,7 +44,7 @@ export default class BuyCredit extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="containerNoBg"
-                    title={_.buy_credit}
+                    title={_('Buy credit')}
                     elevation={0}/>
                 <View style={styles.container}>
                     <View style={{alignItems: 'center', justifyContent: 'center', zIndex: 100}}>
@@ -55,12 +54,12 @@ export default class BuyCredit extends Component{
                     <View style={styles.choosePayment}>
                         <View style={styles.row}>
                             <Image resizeMode='stretch' style={{width: 55, height: 50, marginRight: 20}} source={require('../../images/visa.png')}/>
-                            <Text style={styles.text}>{_.credit_cards}</Text>
+                            <Text style={styles.text}>{_('Credit cards')}</Text>
                         </View>
                         <View style={styles.separator}/>
                         <View style={styles.row}>
                             <Image resizeMode='stretch' style={{width: 55, height: 40, marginRight: 20}} source={require('../../images/bank.jpg')}/>
-                            <Text style={styles.text}>{_.bank_transfer}</Text>
+                            <Text style={styles.text}>{_('Bank transfer')}</Text>
                         </View>
                         <View style={styles.separator}/>
                         <View style={styles.row}>

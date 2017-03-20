@@ -62,7 +62,6 @@ export default class Menu extends Component {
 
 
     render() {
-        const _=this.props._;
 
         let smsItem;
         if(this.state.toggleSms){
@@ -79,43 +78,43 @@ export default class Menu extends Component {
                     <TouchableNativeFeedback onPress={(event) => Actions.CampaignCreate()}>
                         <View style={styles.menuRow}>
                             <Icon name="add" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.start_campaign}</Text>
+                            <Text style={styles.menuLink} >{_('Start campaign')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.CampaignList()}>
                         <View style={styles.menuRow}>
                             <Icon name="sms" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.campaigns}</Text>
+                            <Text style={styles.menuLink} >{_('Campaigns')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.HistoryList()}>
                         <View style={styles.menuRow}>
                             <Icon name="history" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.history}</Text>
+                            <Text style={styles.menuLink} >{_('History')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.ScheduledList()}>
                         <View style={styles.menuRow}>
                             <Icon name="alarm-on" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.scheduled}</Text>
+                            <Text style={styles.menuLink} >{_('Scheduled')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.InboxList()}>
                         <View style={styles.menuRow}>
                             <Icon name="call-received" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.inbox}</Text>
+                            <Text style={styles.menuLink} >{_('Inbox')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.OutboxList()}>
                         <View style={styles.menuRow}>
                             <Icon name="call-made" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.outbox}</Text>
+                            <Text style={styles.menuLink} >{_('Outbox')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.Statistics()}>
                         <View style={styles.menuRow}>
                             <Icon name="timeline" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.statistics}</Text>
+                            <Text style={styles.menuLink} >{_('Statistics')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -137,7 +136,7 @@ export default class Menu extends Component {
                 <TouchableNativeFeedback onPress={() => this.toggleItem('toggleStore')}>
                     <View style={styles.menuRowActive} >
                         <Icon name="store" style={styles.menuRightIconActive}/>
-                        <Text style={styles.menuLinkActive}>{_.store}</Text>
+                        <Text style={styles.menuLinkActive}>{_('Store')}</Text>
                         <View style={{flex: 1}} />
                         <Icon name="arrow-drop-down"  style={styles.menuChevronDownActive} size={25} />
                     </View>
@@ -146,19 +145,19 @@ export default class Menu extends Component {
                     <TouchableNativeFeedback onPress={(event) => Actions.StoreCreate()}>
                         <View style={styles.menuRow}>
                             <Icon name="add" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.create_store}</Text>
+                            <Text style={styles.menuLink} >{_('Create store')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.StoreList()}>
                         <View style={styles.menuRow}>
                             <Icon name="store" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.stores}</Text>
+                            <Text style={styles.menuLink} >{_('Stores')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.OrderList()}>
                         <View style={styles.menuRow}>
                             <Icon name="shopping-cart" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.orders}</Text>
+                            <Text style={styles.menuLink} >{_('Orders')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -167,7 +166,7 @@ export default class Menu extends Component {
            store = <TouchableNativeFeedback onPress={() => this.toggleItem('toggleStore')}>
                 <View style={styles.menuRow}>
                     <Icon name="store" style={styles.menuRightIcon}/>
-                    <Text style={styles.menuLink}>{_.store}</Text>
+                    <Text style={styles.menuLink}>{_('Store')}</Text>
                     <View style={{flex: 1}} />
                     <Icon name="arrow-drop-down"  style={styles.menuChevronDown} size={25} />
                 </View>
@@ -180,7 +179,7 @@ export default class Menu extends Component {
                 <TouchableNativeFeedback onPress={() => this.toggleItem('togglePayments')}>
                     <View style={styles.menuRowActive} >
                         <Icon name="payment" style={styles.menuRightIconActive}/>
-                        <Text style={styles.menuLinkActive}>{_.payments}</Text>
+                        <Text style={styles.menuLinkActive}>{_('Payments')}</Text>
                         <View style={{flex: 1}} />
                         <Icon name="arrow-drop-down"  style={styles.menuChevronDownActive} size={25} />
                     </View>
@@ -189,13 +188,13 @@ export default class Menu extends Component {
                     <TouchableNativeFeedback onPress={(event) => Actions.BuyCredit()}>
                         <View style={styles.menuRow}>
                             <Icon name="account-balance-wallet" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink}>{_.buy_credit}</Text>
+                            <Text style={styles.menuLink}>{_('Buy credit')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={(event) => Actions.Transactions()}>
                         <View style={styles.menuRow}>
                             <Icon name="compare-arrows" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink}>{_.transactions}</Text>
+                            <Text style={styles.menuLink}>{_('Transactions')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -204,7 +203,7 @@ export default class Menu extends Component {
             payments = <TouchableNativeFeedback onPress={() => this.toggleItem('togglePayments')}>
                 <View style={styles.menuRow}>
                     <Icon name="payment" style={styles.menuRightIcon}/>
-                    <Text style={styles.menuLink}>{_.payments}</Text>
+                    <Text style={styles.menuLink}>{_('Payments')}</Text>
                     <View style={{flex: 1}} />
                     <Icon name="arrow-drop-down"  style={styles.menuChevronDown} size={25} />
                 </View>
@@ -214,7 +213,7 @@ export default class Menu extends Component {
 
         return (
             <ScrollView style={styles.menu}>
-                <TouchableNativeFeedback onPress={(event) => this.navigateToScreen('Profile')}>
+                <TouchableNativeFeedback onPress={(event) => Actions.Profile()}>
                     <View style={styles.avatarContainer}>
                         <Image
                             style={styles.avatar}
@@ -227,7 +226,7 @@ export default class Menu extends Component {
                     <TouchableNativeFeedback onPress={(event) => Actions.Dashboard()}>
                         <View style={styles.menuRow} >
                             <Icon name="home"  style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.dashboard}</Text>
+                            <Text style={styles.menuLink} >{_('Dashboard')}</Text>
                             <View style={{flex: 1}} />
                         </View>
                     </TouchableNativeFeedback>
@@ -244,13 +243,13 @@ export default class Menu extends Component {
                     <TouchableNativeFeedback onPress={(event) => Actions.Settings()}>
                         <View style={styles.menuRow} >
                             <Icon name="settings"  style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_.settings}</Text>
+                            <Text style={styles.menuLink} >{_('Settings')}</Text>
                             <View style={{flex: 1}} />
                         </View>
                     </TouchableNativeFeedback>
                     <View style={styles.menuRow}>
                         <Icon name="help"  style={styles.menuRightIcon}/>
-                        <Text style={styles.menuLink}>{_.help_and_feedback}</Text>
+                        <Text style={styles.menuLink}>{_('Help and feedback')}</Text>
                         <View style={{flex: 1}} />
                     </View>
                 </View>

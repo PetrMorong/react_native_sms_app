@@ -44,7 +44,6 @@ export default class Chat extends Component{
     }
 
     render() {
-        const _=this.props._;
         return (
             <View style={styles.container}>
                 <View style={styles.toolbarContainer} elevation={2}>
@@ -90,7 +89,7 @@ export default class Chat extends Component{
                         <View style={styles.messageSmallWrap}>
                             <TextInput
                                 style={{flex: 1, borderWidth: 0}}
-                                placeholder='Write a message...'
+                                placeholder={_('Write a message...')}
                                 ref="message"
                                 underlineColorAndroid="transparent"
                                 onChangeText={(message) => {this.setState({message})}}

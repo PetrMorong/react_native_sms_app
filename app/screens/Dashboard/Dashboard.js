@@ -77,7 +77,6 @@ export default class Dashboard  extends Component {
 
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -88,7 +87,7 @@ export default class Dashboard  extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.dashboard}
+                    title={_('Dashboard')}
                     elevation={2}/>
                 <ScrollView style={styles.container}>
                     <ElevatedView style={styles.cover}>
@@ -99,18 +98,18 @@ export default class Dashboard  extends Component {
                             <Text style={styles.name}>Petr Morong</Text>
                             <Text style={styles.email}>moriandr73@gmail.com</Text>
                         </View>
-                        <View style={{flexDirection: 'row', marginTop: 25, justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15}}>
+                        <View style={{flexDirection: 'row', marginTop: 40, justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15}}>
                             <View style={styles.coverNumbersWrap}>
                                 <Text style={styles.highlightText}>254 896</Text>
-                                <Text style={{color: '#bdd6d2' }}>{_.sms}</Text>
+                                <Text style={{color: '#bdd6d2' }}>{_('sms').toUpperCase()}</Text>
                             </View>
                             <View style={styles.coverNumbersWrap}>
                                 <Text style={styles.highlightText}>78 546</Text>
-                                <Text style={{color: '#bdd6d2' }}>{_.credit}</Text>
+                                <Text style={{color: '#bdd6d2' }}>{_('Credit').toUpperCase()}</Text>
                             </View>
                             <View style={styles.coverNumbersWrap}>
                                 <Text style={styles.highlightText}>January</Text>
-                                <Text style={{color: '#bdd6d2' }}>{_.month}</Text>
+                                <Text style={{color: '#bdd6d2' }}>{_('Month').toUpperCase()}</Text>
                             </View>
                         </View>
                     </ElevatedView>

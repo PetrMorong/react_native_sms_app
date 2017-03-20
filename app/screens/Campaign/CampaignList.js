@@ -67,7 +67,6 @@ export default class CampaignList extends Component{
     }
 
     render(){
-        const _=this.props._;
         let menu  = <Menu/>;
         let status;
         let list = Object.keys(this.state.data).map((key) => {
@@ -162,7 +161,7 @@ export default class CampaignList extends Component{
             toolbar = <Toolbar
                 openMenu={() => this.drawer.openDrawer()}
                 background="container"
-                title={_.campaigns}
+                title={_('Campaigns')}
                 elevation={2}/>
         }
 

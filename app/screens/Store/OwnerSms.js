@@ -48,7 +48,6 @@ export default class OwnerSms extends Component{
     }
 
     render(){
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let variables = this.state.variables.map((variable, i) => {
@@ -73,7 +72,7 @@ export default class OwnerSms extends Component{
             optionalSender = <View style={{marginBottom: 15, paddingLeft: 15, paddingRight: 15}}>
                 <TextInput
                     disabled={true}
-                    placeholder='Text sender value'
+                    placeholder={_('Text sender value')}
                     ref="senderValue"
                     onChangeText={(senderValueSender) => this.setState({senderValueSender})}
                     value={this.state.senderValueSender}/>
@@ -84,7 +83,7 @@ export default class OwnerSms extends Component{
         }
         if(this.state.sender == 'own_number'){
             optionalSender = <View style={styles.switchSender}>
-                <Text >{_.verified_numbers}</Text>
+                <Text >{_('Verified numbers')}</Text>
                 <Picker
                     disabled={true}
                     style={styles.picker}
@@ -104,7 +103,7 @@ export default class OwnerSms extends Component{
                 <View style={{paddingLeft: 10, paddingRight: 10}}>
                     <TextInput
                         style={{height: 100}}
-                        placeholder={_.sms_text}
+                        placeholder={_('Sms text')}
                         ref="message"
                         multiline={true}
                         onChangeText={(message) => this.setState({message})}
@@ -113,14 +112,14 @@ export default class OwnerSms extends Component{
                     <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
                         <Text style={styles.fontSize10}>SMS:</Text>
                         <Text style={styles.messageStats}>{this.state.smsCount}</Text>
-                        <Text style={styles.fontSize10}>{_.length}:</Text>
+                        <Text style={styles.fontSize10}>{_('Length')}:</Text>
                         <Text style={styles.messageStats}>{this.state.message.length}</Text>
                     </View>
                 </View>
                 <View style={{marginTop: 40}}>
                     <View style={styles.separator}/>
                     <View style={styles.switchWrap}>
-                        <Text >{_.variables}</Text>
+                        <Text >{_('Variables')}</Text>
                         <Switch
                             onValueChange={(value) => this.setState({switchVariables: value})}
                             value={this.state.switchVariables} />
@@ -133,7 +132,7 @@ export default class OwnerSms extends Component{
                 <View>
                     <View style={styles.separator}/>
                     <View style={styles.switchWrap}>
-                        <Text >{_.unicode}</Text>
+                        <Text >{_('Unicode')}</Text>
                         <Switch
                             onValueChange={(value) => { this.setState({switchUnicode: value}); this.countMessage(value) }}
                             value={this.state.switchUnicode} />
@@ -142,7 +141,7 @@ export default class OwnerSms extends Component{
                 <View>
                     <View style={styles.separator}/>
                     <View style={styles.switchWrap}>
-                        <Text >{_.sender_id}</Text>
+                        <Text >{_('Sender id')}</Text>
                         <Picker
                             style={styles.picker}
                             selectedValue={this.state.sender}
@@ -168,13 +167,13 @@ export default class OwnerSms extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.owner_sms}
+                    title={_('Owner sms')}
                     elevation={2}
                     back={true}/>
                 <View style={[styles.container, {padding: 15}]}>
                     <View>
                         <View style={styles.switchWrap}>
-                            <Text>{_.activate}</Text>
+                            <Text>{_('Activate')}</Text>
                             <Switch
                                 onValueChange={(value) => this.setState({active: value})}
                                 value={this.state.active} />
@@ -185,7 +184,7 @@ export default class OwnerSms extends Component{
                     <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                         <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                     </View>
@@ -292,7 +291,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     buttonText: {
-        fontSize: 17,
+        color: Color.buttonText,
         fontWeight: '500'
     }
 });

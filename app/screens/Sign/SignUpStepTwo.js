@@ -47,7 +47,6 @@ export default class SignUpStepTwo extends Component {
     }
 
     render() {
-        const _=this.props._;
         return (
             <View style={styles.container}>
                 <View style={styles.loginWrap}>
@@ -64,7 +63,7 @@ export default class SignUpStepTwo extends Component {
                                     onChangeText={(firstName) => this.setState({firstName})}
                                     value={this.state.firstName}
                                     style={styles.input}
-                                    placeholder='First name'
+                                    placeholder={_('First name')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"/>
                             </View>
@@ -74,7 +73,7 @@ export default class SignUpStepTwo extends Component {
                                     onChangeText={(lastName) => this.setState({lastName})}
                                     value={this.state.lastName}
                                     style={styles.input}
-                                    placeholder='Last name'
+                                    placeholder={_('Last name')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"/>
                             </View>
@@ -84,7 +83,7 @@ export default class SignUpStepTwo extends Component {
                                     onChangeText={(phonePrefix) => this.setState({phonePrefix})}
                                     value={this.state.phonePrefix}
                                     style={{width: window.width / 10 * 3, color: 'white', marginTop: 10}}
-                                    placeholder='Phone prefix'
+                                    placeholder={_('Phone prefix')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"
                                     keyboardType='numeric'
@@ -93,7 +92,7 @@ export default class SignUpStepTwo extends Component {
                                     onChangeText={(phoneNumber) => this.setState({phoneNumber})}
                                     value={this.state.phoneNumber}
                                     style={styles.inputShort}
-                                    placeholder='Phone number'
+                                    placeholder={_('Phone number')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"
                                     keyboardType='numeric'
@@ -102,14 +101,14 @@ export default class SignUpStepTwo extends Component {
                         </View>
                         <TouchableNativeFeedback onPress={() => this.props.dispatch(fetchUser())}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.register}</Text>
+                                <Text style={styles.buttonText}>{_('register').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
                             <TouchableNativeFeedback>
                                 <View style={{flexDirection: 'row'}}>
                                     <TouchableNativeFeedback onPress={this.props.changeScreenSignUp}>
-                                        <Text style={{color: 'white', fontSize: 18}}>BACK</Text>
+                                        <Text style={{color: 'white', fontSize: 18}}>{_('back').toUpperCase()}</Text>
                                     </TouchableNativeFeedback>
                                 </View>
                             </TouchableNativeFeedback>
@@ -120,11 +119,6 @@ export default class SignUpStepTwo extends Component {
         )
     }
 
-    navigateToScreen(link) {
-        this.props.navigator.push({
-            ident: link
-        })
-    }
 }
 
 const styles = StyleSheet.create({

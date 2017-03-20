@@ -59,7 +59,6 @@ export default class CampaignText extends Component {
         }
     }
     render(){
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let variables = this.state.variables.map((variable, i) => {
@@ -84,7 +83,7 @@ export default class CampaignText extends Component {
         if(this.state.sender == 'text_sender'){
             optionalSender = <View style={{marginBottom: 15, paddingLeft: 15, paddingRight: 15}}>
                 <TextInput
-                    placeholder={_.text_sender_value}
+                    placeholder={_('Text sender value')}
                     ref="senderValue"
                     onChangeText={(senderValueSender) => this.setState({senderValueSender})}
                     value={this.state.senderValueSender}/>
@@ -95,7 +94,7 @@ export default class CampaignText extends Component {
         }
         if(this.state.sender == 'own_number'){
             optionalSender = <View style={styles.switchSender}>
-                <Text>{_.verified_numbers}</Text>
+                <Text>{_('Verified numbers')}</Text>
                 <Picker
                     style={styles.picker}
                     selectedValue={this.state.senderValue}
@@ -115,7 +114,7 @@ export default class CampaignText extends Component {
                     style={{width: 150}}
                     date={this.state.sendingTime}
                     mode="datetime"
-                    placeholder={_.select_date}
+                    placeholder={_('Select date')}
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     showIcon={false}
@@ -137,7 +136,7 @@ export default class CampaignText extends Component {
         if(this.state.switchRestriction){
             restriction = <View style={{paddingLeft: 15, paddingRight: 15, marginBottom: 10, marginTop: -10}}>
                 <TextInput
-                    placeholder={_.sms_per_day}
+                    placeholder={_('Sms per day')}
                     ref="smsPerDay"
                     onChangeText={(smsPerDay) => this.setState({smsPerDay})}
                     value={this.state.smsPerDay}
@@ -148,25 +147,26 @@ export default class CampaignText extends Component {
         let stepper;
         if(this.state.type == 'classic'){
             stepper =  <View style={styles.stepperContainer} >
-                <Step type="active" number="1" title={_.recipients}/>
+                <Step type="active" number="1" title={_('Recipients')}/>
                 <View style={styles.line}/>
-                <Step type="done" number="2" title={_.sms_text}/>
+                <Step type="done" number="2" title={_('Sms text')}/>
                 <View style={styles.line}/>
-                <Step type="disabled" number="3" title={_.summary}/>
+                <Step type="disabled" number="3" title={_('Summary')}/>
             </View>
         }
 
         if(this.state.type == 'smart'){
             stepper =  <View style={styles.stepperContainer} >
-                <Step type="active" number="1" title={_.recipients}/>
+                <Step type="active" number="1" title={_('Recipients')}/>
                 <View style={styles.line}/>
-                <Step type="done" number="2" title={_.deal}/>
+                <Step type="done" number="2" title={_('Deal')}/>
                 <View style={styles.line}/>
-                <Step type="done" number="3" title={_.sms_text}/>
+                <Step type="done" number="3" title={_('Sms text')}/>
                 <View style={styles.line}/>
-                <Step type="disabled" number="4" title={_.summary}/>
+                <Step type="disabled" number="4" title={_('Summary')}/>
             </View>
         }
+
 
 
         return (
@@ -178,7 +178,7 @@ export default class CampaignText extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.campaign}
+                    title={_('Campaign text')}
                     elevation={2}/>
                 <View style={styles.container}>
                     {stepper}
@@ -190,27 +190,27 @@ export default class CampaignText extends Component {
                         <View style={{paddingLeft: 10, paddingRight: 10}}>
                             <TextInput
                                 style={{height: 100}}
-                                placeholder={_.sms_text}
+                                placeholder={_('Sms text')}
                                 ref="message"
                                 multiline={true}
                                 onChangeText={(message) => this.setState({message})}
                                 value={this.state.message}
                                 onChange={()=>this.countMessage(this.state.switchUnicode)}/>
                             <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-                                <Text style={styles.fontSize10}>{_.total_sms}:</Text>
+                                <Text style={styles.fontSize10}>{_('Total sms')}:</Text>
                                 <Text style={styles.messageStats}>{this.state.totalSmsCount}</Text>
-                                <Text style={styles.fontSize10}>{_.recipients}:</Text>
+                                <Text style={styles.fontSize10}>{_('Recipients')}:</Text>
                                 <Text style={styles.messageStats}>{this.state.recipients}</Text>
                                 <Text style={styles.fontSize10}>SMS:</Text>
                                 <Text style={styles.messageStats}>{this.state.smsCount}</Text>
-                                <Text style={styles.fontSize10}>{_.length}:</Text>
+                                <Text style={styles.fontSize10}>{_('Length')}:</Text>
                                 <Text style={styles.messageStats}>{this.state.message.length}</Text>
                             </View>
                         </View>
                         <View style={{marginTop: 40}}>
                             <View style={styles.separator}/>
                             <View style={styles.switchWrap}>
-                                <Text>{_.variables}</Text>
+                                <Text>{_('Variables')}</Text>
                                 <Switch
                                     onValueChange={(value) => this.setState({switchVariables: value})}
                                     value={this.state.switchVariables} />
@@ -224,7 +224,7 @@ export default class CampaignText extends Component {
                         <View >
                             <View style={styles.separator}/>
                             <View style={styles.switchWrap}>
-                                <Text>{_.sender_id}</Text>
+                                <Text>{_('Sender id')}</Text>
                                 <Picker
                                     style={styles.picker}
                                     selectedValue={this.state.sender}
@@ -240,7 +240,7 @@ export default class CampaignText extends Component {
                         <View>
                             <View style={styles.separator}/>
                             <View style={styles.switchWrap}>
-                                <Text>{_.unicode}</Text>
+                                <Text>{_('Unicode')}</Text>
                                 <Switch
                                     onValueChange={(value) => { this.setState({switchUnicode: value}); this.countMessage(value) }}
                                     value={this.state.switchUnicode} />
@@ -249,7 +249,7 @@ export default class CampaignText extends Component {
                         <View>
                             <View style={styles.separator}/>
                             <View style={styles.switchWrap}>
-                                <Text>{_.flash_sms}</Text>
+                                <Text>{_('Flash sms')}</Text>
                                 <Switch
                                     onValueChange={(value) => this.setState({switchFlash: value})}
                                     value={this.state.switchFlash} />
@@ -258,7 +258,7 @@ export default class CampaignText extends Component {
                         <View>
                             <View style={styles.separator}/>
                             <View style={styles.switchWrap}>
-                                <Text>{_.sending_time}</Text>
+                                <Text>{_('Sending time')}</Text>
                                 <Switch
                                     onValueChange={(value) => this.setState({switchTime: value})}
                                     value={this.state.switchTime} />
@@ -268,7 +268,7 @@ export default class CampaignText extends Component {
                         <View>
                             <View style={styles.separator}/>
                             <View style={styles.switchWrap}>
-                                <Text>{_.restriction}</Text>
+                                <Text>{_('Restriction')}</Text>
                                 <Switch
                                     onValueChange={(value) => this.setState({switchRestriction: value})}
                                     value={this.state.switchRestriction} />
@@ -277,12 +277,12 @@ export default class CampaignText extends Component {
                         </View>
                         <View style={styles.separator}/>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30}}>
-                            <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignDeal')}>
-                                <Text style={{marginTop: 10, marginLeft: 10, color: 'black', fontSize: 15}}>BACK</Text>
+                            <TouchableNativeFeedback onPress={() => Actions.pop()}>
+                                <Text style={{marginTop: 10, marginLeft: 10, color: 'black', fontSize: 15}}>{('back').toUpperCase()}</Text>
                             </TouchableNativeFeedback>
                             <TouchableNativeFeedback onPress={() => Actions.CampaignSummary()}>
                                 <View style={styles.buttonWrap}>
-                                    <Text style={styles.buttonText}>{_.next.toUpperCase()}</Text>
+                                    <Text style={styles.buttonText}>{_('Next').toUpperCase()}</Text>
                                 </View>
                             </TouchableNativeFeedback>
                         </View>
@@ -401,7 +401,6 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     buttonText: {
-        fontSize: 15,
         fontWeight: '500',
         color: Color.buttonText
     }

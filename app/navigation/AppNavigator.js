@@ -93,6 +93,7 @@ export default class AppNavigator extends Component {
                         <Scene key='Language' component={Language} hideNavBar/>
                         <Scene key='ShortUrl' component={ShortUrl} hideNavBar/>
                         <Scene key='Notifications' component={Notifications} hideNavBar/>
+                        <Scene key='CompanyData' component={CompanyData} hideNavBar/>
                         <Scene key='CustomerSms' component={CustomerSms} hideNavBar/>
                         <Scene key='CustomerEmail' component={CustomerEmail} hideNavBar/>
                         <Scene key='OwnerEmail' component={OwnerEmail} hideNavBar/>

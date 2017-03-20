@@ -42,7 +42,6 @@ export default class PaymentData extends Component {
     }
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>
 
         let company;
@@ -52,18 +51,18 @@ export default class PaymentData extends Component {
                     onChangeText={(companyName) => this.setState({companyName})}
                     value={this.state.companyName}
                     style={{marginLeft: 10, marginRight: 10}}
-                    placeholder={_.company_name}/>
+                    placeholder={_('Company name')}/>
                 <View style={{flexDirection: 'row'}}>
                     <TextInput
                         onChangeText={(companyId) => this.setState({companyId})}
                         value={this.state.companyId}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                        placeholder={_.company_id}/>
+                        placeholder={_('Company id')}/>
                     <TextInput
                         onChangeText={(companyVat) => this.setState({companyVat})}
                         value={this.state.companyVat}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                        placeholder={_.company_vat}/>
+                        placeholder={_('Company vat')}/>
                 </View>
             </View>
         }
@@ -78,7 +77,7 @@ export default class PaymentData extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.payment_data}
+                    title={_('Payment data')}
                     elevation={0}
                     back={true}/>
                 <View style={styles.container}>
@@ -87,38 +86,38 @@ export default class PaymentData extends Component {
                             onChangeText={(firstName) => this.setState({firstName})}
                             value={this.state.firstName}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
-                            placeholder={_.first_name}/>
+                            placeholder={_('First name')}/>
                         <TextInput
                             onChangeText={(lastName) => this.setState({lastName})}
                             value={this.state.lastName}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
-                            placeholder={_.last_name}/>
+                            placeholder={_('Last name')}/>
                     </View>
                     <View>
                         <TextInput
                             onChangeText={(street) => this.setState({street})}
                             value={this.state.street}
                             style={{marginLeft: 10, marginRight: 10, }}
-                            placeholder={_.street}/>
+                            placeholder={_('Street')}/>
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <TextInput
                             onChangeText={(city) => this.setState({city})}
                             value={this.state.city}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
-                            placeholder={_.city}/>
+                            placeholder={_('City')}/>
                         <TextInput
                             onChangeText={(zip) => this.setState({zip})}
                             value={this.state.zip}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
-                            placeholder={_.zip}/>
+                            placeholder={_('Zip')}/>
                     </View>
                     <View>
                         <Picker
                             style={{width: window.width /10 * 9 -5, marginTop: 5, marginLeft: 5, color: 'grey'}}
                             selectedValue={this.state.timeZone}
                             onValueChange={(timeZone) => this.setState({senderValue: timeZone})}>
-                            <Picker.Item label={_.country} value="Europe/Oslo" />
+                            <Picker.Item label={_('Country')} value="Europe/Oslo" />
                             <Picker.Item label="afrika" value="h" />
                             <Picker.Item label="dfs" value="kk" />
                             <Picker.Item label="dfs" value="ff" />
@@ -126,7 +125,7 @@ export default class PaymentData extends Component {
                     </View>
                     <View style={[styles.separator, {marginLeft: 10, marginRight: 10}]}/>
                     <View style={styles.switchWrap}>
-                        <Text style={{fontSize: 16}}>{_.company}</Text>
+                        <Text style={{fontSize: 16}}>{_('Company')}</Text>
                         <Switch
                             onValueChange={(value) => this.setState({switchCompany: value})}
                             value={this.state.switchCompany} />
@@ -135,7 +134,7 @@ export default class PaymentData extends Component {
                     <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                         <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                     </View>
@@ -175,8 +174,8 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     buttonText: {
-        fontSize: 17,
-        fontWeight: '500'
+        fontWeight: '500',
+        color: Color.buttonText
     }
 });
 

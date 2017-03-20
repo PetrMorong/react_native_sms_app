@@ -45,12 +45,11 @@ export default class OrderFormComponent extends Component{
     }
 
     render(){
-        const _=this.props._;
 
         let firstName;
         if(this.state.checked.firstName){
             firstName = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.first_name}</Text>
+                <Text>{_('First name')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -59,7 +58,7 @@ export default class OrderFormComponent extends Component{
         let lastName;
         if(this.state.checked.lastName){
             lastName = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.last_name}</Text>
+                <Text>{_('Last name')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -68,7 +67,7 @@ export default class OrderFormComponent extends Component{
         let phone;
         if(this.state.checked.phone){
             phone = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.phone_number}</Text>
+                <Text>{_('Phone number')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -77,7 +76,7 @@ export default class OrderFormComponent extends Component{
         let email;
         if(this.state.checked.email){
             email = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.email}</Text>
+                <Text>{_('Email')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -86,7 +85,7 @@ export default class OrderFormComponent extends Component{
         let country;
         if(this.state.checked.country){
             country = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.country}</Text>
+                <Text>{_('Country')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -95,7 +94,7 @@ export default class OrderFormComponent extends Component{
         let city;
         if(this.state.checked.city){
             city = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.city}</Text>
+                <Text>{_('City')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -104,7 +103,7 @@ export default class OrderFormComponent extends Component{
         let state;
         if(this.state.checked.state){
             state = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.state}</Text>
+                <Text>{_('State')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -113,7 +112,7 @@ export default class OrderFormComponent extends Component{
         let street;
         if(this.state.checked.street){
             street = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.street}</Text>
+                <Text>{_('Street')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -122,7 +121,7 @@ export default class OrderFormComponent extends Component{
         let zip;
         if(this.state.checked.zip){
             zip = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.zip}</Text>
+                <Text>{_('Zip')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -131,7 +130,7 @@ export default class OrderFormComponent extends Component{
         let company;
         if(this.state.checked.company){
             company = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.company}</Text>
+                <Text>{_('Company')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -140,7 +139,7 @@ export default class OrderFormComponent extends Component{
         let company_id;
         if(this.state.checked.company_id){
             company_id = <View >
-                <Text>{_.company_id}</Text>
+                <Text>{_('Company id')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -149,7 +148,7 @@ export default class OrderFormComponent extends Component{
         let company_vat;
         if(this.state.checked.company_vat){
             company_vat = <View style={{width: window.width/3, height: 60}}>
-                <Text>{_.company_vat}</Text>
+                <Text>{_('Company vat')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -163,25 +162,25 @@ export default class OrderFormComponent extends Component{
                     <TouchableNativeFeedback onPress={() => this.check('firstName')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.firstName} onCheck={() => this.check('firstName')} />
-                            <Text style={styles.b}>{_.first_name}</Text>
+                            <Text style={styles.b}>{_('First name')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.check('lastName')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.lastName} onCheck={() => this.check('lastName')} />
-                            <Text style={styles.b}>{_.last_name}</Text>
+                            <Text style={styles.b}>{_('Last name')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.check('phone')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.phone} onCheck={() => this.check('phone')}/>
-                            <Text style={styles.b}>{_.phone_number}</Text>
+                            <Text style={styles.b}>{_('Phone number')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                      <TouchableNativeFeedback onPress={() => this.check('email')}>
                          <View style={styles.a}>
                              <Checkbox checked={this.state.checked.email} onCheck={() => this.check('email')} />
-                             <Text style={styles.b}>{_.email}</Text>
+                             <Text style={styles.b}>{_('Email')}</Text>
                          </View>
                      </TouchableNativeFeedback>
                 </View>
@@ -189,25 +188,25 @@ export default class OrderFormComponent extends Component{
                     <TouchableNativeFeedback onPress={() => this.check('country')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.country} onCheck={() => this.check('country')}/>
-                            <Text style={styles.b}>{_.country}</Text>
+                            <Text style={styles.b}>{_('Country')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.check('city')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.city} onCheck={() => this.check('city')}/>
-                            <Text style={styles.b}>{_.city}</Text>
+                            <Text style={styles.b}>{_('City')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.check('state')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.state} onCheck={() => this.check('state')}/>
-                            <Text style={styles.b}>{_.state}</Text>
+                            <Text style={styles.b}>{_('State')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.check('street')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.street} onCheck={() => this.check('street')}/>
-                            <Text style={styles.b}>{_.street}</Text>
+                            <Text style={styles.b}>{_('Street')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -215,25 +214,25 @@ export default class OrderFormComponent extends Component{
                     <TouchableNativeFeedback onPress={() => this.check('zip')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.zip} onCheck={() => this.check('zip')}/>
-                            <Text style={styles.b}>{_.zip}</Text>
+                            <Text style={styles.b}>{_('Zip')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.check('company')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.company} onCheck={() => this.check('company')}/>
-                            <Text style={styles.b}>{_.company}</Text>
+                            <Text style={styles.b}>{_('Company')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.check('company_id')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.company_id} onCheck={() => this.check('company_id')}/>
-                            <Text style={styles.b}>{_.company_id}</Text>
+                            <Text style={styles.b}>{_('Company id')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.check('company_vat')}>
                         <View style={styles.a}>
                             <Checkbox checked={this.state.checked.company_vat} onCheck={() => this.check('company_vat')}/>
-                            <Text style={styles.b}>{_.company_vat}</Text>
+                            <Text style={styles.b}>{_('Company vat')}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -243,12 +242,12 @@ export default class OrderFormComponent extends Component{
                         onChangeText={(form_headline) => this.setState({form_headline})}
                         value={this.state.form_headline}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                        placeholder={_.form_headline}/>
+                        placeholder={_('Form headline')}/>
                     <TextInput
                         onChangeText={(send_button) => this.setState({send_button})}
                         value={this.state.send_button}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                        placeholder={_.send_button}/>
+                        placeholder={_('Send button')}/>
                 </View>
                 <View style={{backgroundColor: '#C3CAD4', padding: 15,  }}>
                     <View style={{alignItems: 'center', marginTop: 10}}>
@@ -280,7 +279,7 @@ export default class OrderFormComponent extends Component{
             <ScrollView style={styles.container}>
                 <View style={{marginBottom: 10}}>
                     <View style={styles.switchWrap}>
-                        <Text>Activate</Text>
+                        <Text>{_('Activate')}</Text>
                         <Switch
                             onValueChange={(value) => this.setState({active: value})}
                             value={this.state.active} />
@@ -291,7 +290,7 @@ export default class OrderFormComponent extends Component{
                 <View style={{margin: 15, alignItems: 'flex-end'}}>
                     <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                         <View style={styles.buttonWrap}>
-                            <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                            <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -367,7 +366,7 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     buttonText: {
-        fontSize: 17,
+        color: Color.buttonText,
         fontWeight: '500'
     }
 });

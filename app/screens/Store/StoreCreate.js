@@ -42,7 +42,6 @@ export default class StoreCreate extends Component{
 
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -53,7 +52,7 @@ export default class StoreCreate extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="containerNoBg"
-                    title={_.create_store}
+                    title={_('Create store')}
                     elevation={0}/>
                 <ScrollView >
                     <View style={styles.container}>
@@ -64,13 +63,13 @@ export default class StoreCreate extends Component{
                             <TextInput
                                 onChangeText={(text) => this.setState({text})}
                                 value={this.state.text}
-                                placeholder={_.store_name}/>
+                                placeholder={_('Store name')}/>
                         </View>
                         <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                             <View style={{width: 110, margin: 25}}>
                                 <TouchableNativeFeedback onPress={() => Actions.StoreSettings()}>
                                     <View style={styles.buttonWrap}>
-                                        <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                        <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                                     </View>
                                 </TouchableNativeFeedback>
                             </View>
@@ -112,7 +111,7 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     buttonText: {
-        fontSize: 17,
+        color: Color.buttonText,
         fontWeight: '500',
     }
 });

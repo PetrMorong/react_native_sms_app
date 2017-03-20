@@ -43,7 +43,6 @@ export default class ChangePassword extends Component {
     }
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -54,7 +53,7 @@ export default class ChangePassword extends Component {
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.base_informations}
+                    title={_('Change password')}
                     elevation={0}
                     back={true}/>
                 <View style={styles.container}>
@@ -64,7 +63,7 @@ export default class ChangePassword extends Component {
                                 onChangeText={(password) => this.setState({password})}
                                 value={this.state.password}
                                 style={{flex: 1, marginLeft: 10, marginRight: 10, }}
-                                placeholder='Password'
+                                placeholder={_('Password')}
                                 secureTextEntry={true}/>
                         </View>
                         <View style={{flexDirection: 'row'}}>
@@ -72,7 +71,7 @@ export default class ChangePassword extends Component {
                                 onChangeText={(newPassword) => this.setState({newPassword})}
                                 value={this.state.newPassword}
                                 style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                                placeholder='New password'
+                                placeholder={_('New password')}
                                 secureTextEntry={true}/>
                         </View>
                         <View style={{flexDirection: 'row'}}>
@@ -80,13 +79,13 @@ export default class ChangePassword extends Component {
                                 onChangeText={(newPasswordAgain) => this.setState({newPasswordAgain})}
                                 value={this.state.newPasswordAgain}
                                 style={{flex: 1, marginLeft: 10, marginRight: 10}}
-                                placeholder='New password again'
+                                placeholder={_('New password again')}
                                 secureTextEntry={true}/>
                         </View>
                         <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                             <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                                 <View style={styles.buttonWrap}>
-                                    <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                    <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                                 </View>
                             </TouchableNativeFeedback>
                         </View>
@@ -121,8 +120,8 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     buttonText: {
-        fontSize: 17,
-        fontWeight: '500'
+        fontWeight: '500',
+        color: Color.buttonText
     }
 });
 

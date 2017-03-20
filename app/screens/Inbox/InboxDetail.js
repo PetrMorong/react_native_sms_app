@@ -37,7 +37,6 @@ const mapStateToProps = (store) => {
 export default class InboxDetail extends Component {
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid

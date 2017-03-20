@@ -66,7 +66,6 @@ export default class CampaignDeal extends Component{
     }
 
     render(){
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let variables = this.state.variables.map((variable, i) => {
@@ -90,9 +89,9 @@ export default class CampaignDeal extends Component{
         if(this.state.dealImageSource == ''){
             imageDeal = <View style={styles.a}>
                 <View style={styles.b}>
-                    <Icon name="add-a-photo" size={25} style={{color: 'white'}}/>
+                    <Icon name="add-a-photo" size={25} style={{color: Color.buttonText}}/>
                 </View>
-                <Text style={{color: '#011D2B'}}>{_.add_photo}</Text>
+                <Text style={{color: '#011D2B'}}>{_('add_photo')}</Text>
             </View>
         }else{
             imageDeal = <View>
@@ -106,14 +105,14 @@ export default class CampaignDeal extends Component{
                 <View style={{flexDirection: 'row'}}>
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                        placeholder={_.old_price}
+                        placeholder={_('Old price')}
                         keyboardType='numeric'
                         ref="priceOld"
                         onChangeText={(priceOld) => {this.setState({priceOld})}}
                         value={this.state.priceOld}/>
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                        placeholder={_.new_price}
+                        placeholder={_('New price')}
                         keyboardType='numeric'
                         ref="priceNew"
                         onChangeText={(priceNew) => {this.setState({priceNew})}}
@@ -122,14 +121,14 @@ export default class CampaignDeal extends Component{
                 <View style={{flexDirection: 'row', marginBottom: 10}}>
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                        placeholder={_.discount}
+                        placeholder={_('Discount')}
                         keyboardType='numeric'
                         ref="discount"
                         onChangeText={(discount) => {this.setState({discount})}}
                         value={this.state.discount}/>
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                        placeholder={_.currency}
+                        placeholder={_('Currency')}
                         keyboardType='numeric'
                         ref="currency"
                         onChangeText={(currency) => {this.setState({currency})}}
@@ -143,14 +142,14 @@ export default class CampaignDeal extends Component{
             quantity = <View style={{flexDirection: 'row'}}>
                 <TextInput
                     style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                    placeholder={_.quantity}
+                    placeholder={_('Quantity')}
                     keyboardType='numeric'
                     ref="quantity"
                     onChangeText={(quantity) => {this.setState({quantity: quantity})}}
                     value={this.state.quantity}/>
                 <TextInput
                     style={{flex: 1, marginLeft: 5, marginRight: 5}}
-                    placeholder={_.units}
+                    placeholder={_('Units')}
                     keyboardType='numeric'
                     ref="units"
                     onChangeText={(units) => {this.setState({units})}}
@@ -166,7 +165,7 @@ export default class CampaignDeal extends Component{
                         style={{width: 150}}
                         date={this.state.expirationDate}
                         mode="datetime"
-                        placeholder={_.select_date}
+                        placeholder={_('Select date')}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         showIcon={false}
@@ -188,9 +187,9 @@ export default class CampaignDeal extends Component{
                         style={{width: 140}}
                         selectedValue={this.state.store}
                         onValueChange={(store) => this.setState({store: store})}>
-                        <Picker.Item label="None" value="guitar_shop" />
-                        <Picker.Item label="Counter" value="short_code" />
-                        <Picker.Item label="Date" value="text_sender" />
+                        <Picker.Item label={_('None')} value="guitar_shop" />
+                        <Picker.Item label={_('Counter')} value="short_code" />
+                        <Picker.Item label={_('Date')} value="text_sender" />
                     </Picker>
                 </View>
             </View>;
@@ -206,35 +205,35 @@ export default class CampaignDeal extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.campaign}
+                    title={_('Campaign deal')}
                     elevation={2}/>
                 <View style={styles.container}>
                     <View style={styles.stepperContainer} >
-                        <Step type="active" number="1" title={_.recipients}/>
+                        <Step type="active" number="1" title={_('Recipients')}/>
                         <View style={styles.line}/>
-                        <Step type="done" number="2" title={_.deal}/>
+                        <Step type="done" number="2" title={_('Deal')}/>
                         <View style={styles.line}/>
-                        <Step type="done" number="3" title={_.sms_text}/>
+                        <Step type="done" number="3" title={_('Sms text')}/>
                         <View style={styles.line}/>
-                        <Step type="disabled" number="4" title={_.summary}/>
+                        <Step type="disabled" number="4" title={_('Summary')}/>
                     </View>
                     <ScrollView style={{padding: 15}}>
                         <View>
                             <TextInput
-                                placeholder={_.headline}
+                                placeholder={_('Headline')}
                                 ref="headline"
                                 onChangeText={(headline) => {this.setState({headline})}}
                                 value={this.state.headline}/>
                             <TextInput
                                 style={{height: 75}}
                                 multiline={true}
-                                placeholder={_.description}
+                                placeholder={_('Description')}
                                 ref="description"
                                 onChangeText={(description) => {this.setState({description})}}
                                 value={this.state.description}/>
                             <View style={{marginTop: 15}}>
                                 <View style={styles.switchWrap}>
-                                    <Text>{_.variables}</Text>
+                                    <Text>{_('Variables')}</Text>
                                     <Switch
                                         onValueChange={(value) => this.setState({switchVariables: value})}
                                         value={this.state.switchVariables} />
@@ -266,7 +265,7 @@ export default class CampaignDeal extends Component{
                                     </View>
                                 </TouchableNativeFeedback>
                             </View>
-                            <Text style={{marginTop: 15, marginBottom: 10}}>{_.color_scheme}</Text>
+                            <Text style={{marginTop: 15, marginBottom: 10}}>{_('Color scheme')}</Text>
                             <View style={{flexDirection: 'row', marginBottom: 15, justifyContent: 'space-around'}}>
                                 <TouchableNativeFeedback onPress={(event) => this.selectColorTemplate(1)}>
                                     <View style={(this.state.colorTemplate == 1 ? styles.activeTemplate : styles.template)}>
@@ -287,7 +286,7 @@ export default class CampaignDeal extends Component{
                             <View>
                                 <View style={styles.separator}/>
                                 <View  style={styles.switchWrap}>
-                                    <Text>{_.store}</Text>
+                                    <Text>{_('Store')}</Text>
                                     <Picker
                                         style={styles.picker}
                                         selectedValue={this.state.store}
@@ -302,7 +301,7 @@ export default class CampaignDeal extends Component{
                             <View>
                                 <View style={styles.separator}/>
                                 <View style={styles.switchWrap}>
-                                    <Text>{_.price}</Text>
+                                    <Text>{_('Price')}</Text>
                                     <Switch
                                         onValueChange={(value) => this.setState({switchPrice: value})}
                                         value={this.state.switchPrice} />
@@ -312,7 +311,7 @@ export default class CampaignDeal extends Component{
                             <View>
                                 <View style={styles.separator}/>
                                 <View style={styles.switchWrap}>
-                                    <Text>{_.quantity}</Text>
+                                    <Text>{_('Quantity')}</Text>
                                     <Switch
                                         onValueChange={(value) => this.setState({switchQuantity: value})}
                                         value={this.state.switchQuantity} />
@@ -322,7 +321,7 @@ export default class CampaignDeal extends Component{
                             <View>
                                 <View style={styles.separator}/>
                                 <View style={styles.switchWrap}>
-                                    <Text>{_.expiration}</Text>
+                                    <Text>{_('Expiration')}</Text>
                                     <Switch
                                         onValueChange={(value) => this.setState({switchExpiration: value})}
                                         value={this.state.switchExpiration} />
@@ -331,19 +330,19 @@ export default class CampaignDeal extends Component{
                             </View>
                             <View style={styles.separator}/>
                             <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 15, marginBottom: 25}}>
-                                <TouchableNativeFeedback onPress={() => this.navigateToScreen('CampaignRecipients')}>
-                                    <Text style={{color: 'black', fontSize: 15}}>{_.back.toUpperCase()}</Text>
+                                <TouchableNativeFeedback onPress={() => Actions.pop()}>
+                                    <Text style={{color: 'black', fontSize: 15}}>{_('Back').toUpperCase()}</Text>
                                 </TouchableNativeFeedback>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <TouchableNativeFeedback >
                                         <View style={styles.secondaryButton}>
                                             <Icon style={{marginRight: 10, color: Color.secondaryButtonText}} size={16} name="search"/>
-                                            <Text style={{color: Color.secondaryButtonText}}>{_.preview.toUpperCase()}</Text>
+                                            <Text style={{color: Color.secondaryButtonText}}>{_('Preview').toUpperCase()}</Text>
                                         </View>
                                     </TouchableNativeFeedback>
                                     <TouchableNativeFeedback onPress={() => Actions.CampaignText()}>
                                         <View style={styles.buttonWrap}>
-                                            <Text style={styles.buttonText}>{_.next.toUpperCase()}</Text>
+                                            <Text style={styles.buttonText}>{_('next').toUpperCase()}</Text>
                                         </View>
                                     </TouchableNativeFeedback>
                                 </View>
@@ -462,10 +461,10 @@ const styles = StyleSheet.create({
     b: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#BE2166',
+        backgroundColor: Color.button,
         borderRadius: 50,
-        width: 60,
-        height: 60,
+        width: 70,
+        height: 70,
         marginBottom: 10
     },
     activeTemplate: {
@@ -504,7 +503,6 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     buttonText: {
-        fontSize: 15,
         fontWeight: '500',
         color: Color.buttonText
     },

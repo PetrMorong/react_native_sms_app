@@ -48,7 +48,6 @@ export default class Language extends Component{
     }
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
 
         let languages;
@@ -76,7 +75,7 @@ export default class Language extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.language}
+                    title={_('Language')}
                     elevation={2}
                     back={true}/>
                 <View style={styles.container}>
@@ -85,7 +84,7 @@ export default class Language extends Component{
                         <View style={{ alignItems: 'flex-end'}}>
                             <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                                 <View style={styles.buttonWrap}>
-                                    <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                                    <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                                 </View>
                             </TouchableNativeFeedback>
                         </View>
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     buttonText: {
-        fontSize: 17,
+        color: Color.buttonText,
         fontWeight: '500'
     }
 });

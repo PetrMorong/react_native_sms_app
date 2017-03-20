@@ -38,7 +38,6 @@ const mapStateToProps = (store) => {
 export default class OutboxDetail extends Component {
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid

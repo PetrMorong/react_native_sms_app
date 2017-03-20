@@ -35,7 +35,6 @@ const mapStateToProps = (store) => {
 export default class OrderList extends Component{
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -46,7 +45,7 @@ export default class OrderList extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_.orders}
+                    title={_('Orders')}
                     elevation={0}/>
                 <View style={styles.container}>
                     <TouchableNativeFeedback onPress={()=> Actions.Order()}>

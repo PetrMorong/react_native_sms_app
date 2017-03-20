@@ -43,7 +43,6 @@ export default class LostPassword extends Component {
         }
     }
     render() {
-        const _=this.props._;
         return (
             <View style={styles.container}>
                 <View style={styles.loginWrap}>
@@ -51,26 +50,26 @@ export default class LostPassword extends Component {
                         <Image source={require('../../images/white-label/sunsms/logo/logo.png')} style={styles.logo} resizeMode='stretch'/>
                         <View>
                             <Text style={{color: 'white', textAlign: 'justify',marginTop: 25, fontSize: 15}}>
-                                Did you forget your password? It's ok, it can happen to everyone. Insert your email address below and we'll help you recover it.
+                                {_('Did you forget your password')}? {_('It is ok, it can happen to everyone')}. {_('Insert your email address below and we will help you recover it')}.
                             </Text>
                             <TextInput
                                 onChangeText={(email) => this.setState({email})}
                                 value={this.state.email}
                                 style={styles.input}
-                                placeholder='Email'
+                                placeholder={_('Email')}
                                 placeholderTextColor="white"
                                 underlineColorAndroid="white"/>
                         </View>
                         <TouchableNativeFeedback onPress={this.props.changeScreenSignIn}>
                             <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_.send_password}</Text>
+                                <Text style={styles.buttonText}>{_('Send password').toUpperCase()}</Text>
                             </View>
                         </TouchableNativeFeedback>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
                             <TouchableNativeFeedback>
                                 <View style={{flexDirection: 'row'}}>
                                     <TouchableNativeFeedback onPress={this.props.changeScreenSignIn}>
-                                        <Text style={{color: 'white', fontSize: 18}}>{_.back}</Text>
+                                        <Text style={{color: 'white', fontSize: 18}}>{_('back')}</Text>
                                     </TouchableNativeFeedback>
                                 </View>
                             </TouchableNativeFeedback>
