@@ -55,7 +55,7 @@ export default class InboxDetail extends Component {
                         <Icon style={styles.creditIcon} name='account-balance-wallet' size={22}/>
                         <Text style={styles.creditNumber}> 853.7</Text>
                     </View>
-                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
+                    <TouchableNativeFeedback onPress={()=> Actions.Chat()}>
                         <View>
                             <View style={styles.itemWrap}>
                                 <View>
@@ -73,7 +73,7 @@ export default class InboxDetail extends Component {
                             <View style={styles.separator}/>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
+                    <TouchableNativeFeedback onPress={()=> Actions.Chat()}>
                         <View>
                             <View style={styles.itemWrap}>
                                 <View>
@@ -91,7 +91,7 @@ export default class InboxDetail extends Component {
                             <View style={styles.separator}/>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=> this.navigateToScreen('Chat')}>
+                    <TouchableNativeFeedback onPress={()=> Actions.Chat()}>
                         <View>
                             <View style={styles.itemWrap}>
                                 <View>

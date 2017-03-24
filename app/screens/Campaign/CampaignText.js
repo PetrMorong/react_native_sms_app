@@ -341,7 +341,8 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingLeft: 15,
         paddingRight: 15,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        elevation: 2
     },
     picker: {
         width: 170

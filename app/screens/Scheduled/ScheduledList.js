@@ -38,7 +38,6 @@ const mapStateToProps = (store) => {
 export default class ScheduledList extends Component {
 
     render() {
-        const _=this.props._;
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid

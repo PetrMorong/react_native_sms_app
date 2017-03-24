@@ -27,6 +27,8 @@ import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Actions } from 'react-native-router-flux';
 import Step from '../../components/StepperSingleStep';
+import ImagePicker from 'react-native-image-crop-picker';
+
 
 
 const mapStateToProps = (store) => {
@@ -36,8 +38,6 @@ const mapStateToProps = (store) => {
 }
 
 const window = Dimensions.get('window');
-let Platform = require('react-native').Platform;
-let ImagePicker = require('react-native-image-picker');
 
 export default class CampaignDeal extends Component{
     constructor(props){
@@ -61,7 +61,9 @@ export default class CampaignDeal extends Component{
             switchExpiration: false,
             timeZone: 'Europe/Oslo',
             expirationDate: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
-            variables: [ ['< first_name >', '100%'],['< last_name >', '100%'], ['< email >', '100%'], ['< phone_number >', '100%'], ['< gender >', '100%']]
+            variables: [ ['< first_name >', '100%'],['< last_name >', '100%'], ['< email >', '100%'], ['< phone_number >', '100%'], ['< gender >', '100%']],
+            modalVisible: false,
+            showExpiration: false
         }
     }
 
@@ -91,11 +93,11 @@ export default class CampaignDeal extends Component{
                 <View style={styles.b}>
                     <Icon name="add-a-photo" size={25} style={{color: Color.buttonText}}/>
                 </View>
-                <Text style={{color: '#011D2B'}}>{_('add_photo')}</Text>
+                <Text style={{color: '#011D2B'}}>{_('Add photo')}</Text>
             </View>
         }else{
-            imageDeal = <View>
-                <Image source={this.state.dealImageSource}/>
+            imageDeal = <View >
+                <Image style={{ height: 220, width: window.width-30}} source={{uri: this.state.dealImageSource}}/>
             </View>
         }
 
@@ -129,7 +131,6 @@ export default class CampaignDeal extends Component{
                     <TextInput
                         style={{flex: 1, marginLeft: 5, marginRight: 5}}
                         placeholder={_('Currency')}
-                        keyboardType='numeric'
                         ref="currency"
                         onChangeText={(currency) => {this.setState({currency})}}
                         value={this.state.currency}/>
@@ -150,7 +151,6 @@ export default class CampaignDeal extends Component{
                 <TextInput
                     style={{flex: 1, marginLeft: 5, marginRight: 5}}
                     placeholder={_('Units')}
-                    keyboardType='numeric'
                     ref="units"
                     onChangeText={(units) => {this.setState({units})}}
                     value={this.state.units}/>
@@ -182,14 +182,14 @@ export default class CampaignDeal extends Component{
                     </Picker>
                 </View>
                 <View  style={[styles.switchWrap, {paddingLeft: 15, paddingRight: 15}]}>
-                    <Text>{_.show_expiration}</Text>
+                    <Text>{_('Show expiration')}</Text>
                     <Picker
                         style={{width: 140}}
-                        selectedValue={this.state.store}
-                        onValueChange={(store) => this.setState({store: store})}>
-                        <Picker.Item label={_('None')} value="guitar_shop" />
-                        <Picker.Item label={_('Counter')} value="short_code" />
-                        <Picker.Item label={_('Date')} value="text_sender" />
+                        selectedValue={this.state.showExpiration}
+                        onValueChange={(showExpiration) => this.setState({showExpiration: showExpiration})}>
+                        <Picker.Item label={_('None')} value={false} />
+                        <Picker.Item label={_('Counter')} value="counter" />
+                        <Picker.Item label={_('Date')} value="date" />
                     </Picker>
                 </View>
             </View>;
@@ -244,7 +244,7 @@ export default class CampaignDeal extends Component{
                                 </View>
                                 <View style={styles.separator}/>
                             </View>
-                            <TouchableNativeFeedback  onPress={(event) => this.openImageLibrary()}>
+                            <TouchableNativeFeedback  onPress={(event) => this.setModalVisible(true)}>
                                 {imageDeal}
                             </TouchableNativeFeedback>
                             <Text style={{marginTop: 15, marginBottom: 10}}>{_.template}</Text>
@@ -334,7 +334,7 @@ export default class CampaignDeal extends Component{
                                     <Text style={{color: 'black', fontSize: 15}}>{_('Back').toUpperCase()}</Text>
                                 </TouchableNativeFeedback>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                    <TouchableNativeFeedback >
+                                    <TouchableNativeFeedback onPress={() => this.goToPreview()}>
                                         <View style={styles.secondaryButton}>
                                             <Icon style={{marginRight: 10, color: Color.secondaryButtonText}} size={16} name="search"/>
                                             <Text style={{color: Color.secondaryButtonText}}>{_('Preview').toUpperCase()}</Text>
@@ -348,11 +348,51 @@ export default class CampaignDeal extends Component{
                                 </View>
                             </View>
                         </View>
+
+                        <Modal
+                            animationType={"slide"}
+                            transparent={true}
+                            visible={this.state.modalVisible}
+                            onRequestClose={() => this.setModalVisible(false)}>
+                            <View style={styles.modalContainer}>
+                                <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)} >
+                                    <View style={styles.touchableClose} />
+                                </TouchableWithoutFeedback>
+                                <View style={styles.modalSmallContainer}>
+                                    <TouchableNativeFeedback onPress={() => this.takePhoto()}>
+                                        <View style={styles.modalRow}>
+                                            <Icon name="photo-camera" size={30} style={styles.modalIcon}/>
+                                            <Text style={styles.modalText}>Take a photo</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
+                                    <TouchableNativeFeedback onPress={() => this.choosePhoto()}>
+                                        <View style={styles.modalRow}>
+                                            <Icon name="collections" size={30} style={styles.modalIcon}/>
+                                            <Text style={styles.modalText}>Choose from gallery</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
+                                    <View style={styles.separator}/>
+                                    <TouchableNativeFeedback onPress={()=>this.removePhoto()}>
+                                        <View style={styles.modalRow}>
+                                            <Icon name="delete" size={30} style={styles.modalIcon}/>
+                                            <Text style={styles.modalText}>Remove photo</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
+                                </View>
+                            </View>
+                        </Modal>
+
                     </ScrollView>
                 </View>
             </DrawerLayoutAndroid>
         )
     }
+
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+    };
+
+
     selectTemplate(number){
         this.setState({template: number})
     }
@@ -365,39 +405,63 @@ export default class CampaignDeal extends Component{
         this.setState({description: this.state.description + " " + variable})
     }
 
-    openImageLibrary(){
-        let options = {
-            title: 'Choose photo',
-            storageOptions: {
-                skipBackup: true,
-                path: 'images'
-            }
+    choosePhoto(){
+        ImagePicker.openPicker({
+            width: window.width-30,
+            height: 220,
+            cropping: true,
+            includeBase64: true,
+            cropperTintColor: '#011D2B'
+
+        }).then(image => {
+            this.setModalVisible(false);
+            this.setState({
+                dealImageSource: image.path
+            });
+        });
+
+    }
+
+    takePhoto(){
+        ImagePicker.openCamera({
+            width: window.width-30,
+            height: 220,
+            cropping: true,
+            includeBase64: true,
+            cropperTintColor: '#011D2B'
+
+        }).then(image => {
+            this.setModalVisible(false);
+            this.setState({
+                dealImageSource: image.path
+            });
+        });
+    }
+
+    removePhoto(){
+        this.setState({dealImageSource: '', modalVisible: false});
+    }
+
+    goToPreview(){
+        let data = {
+            headline: this.state.headline,
+            description: this.state.description,
+            image: this.state.dealImageSource,
+            template: this.state.template,
+            colorTemplate: this.state.colorTemplate,
+            store: this.state.store,
+            priceNew: this.state.priceNew,
+            priceOld: this.state.priceOld,
+            discount: this.state.discount,
+            currency: this.state.currency,
+            quantity: this.state.quantity,
+            units: this.state.units,
+            timeZone: this.state.timeZone,
+            expirationDate: this.state.expirationDate,
+            showExpiration: this.state.showExpiration,
         };
 
-        ImagePicker.showImagePicker(options, (response) => {
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else {
-                let source;
-                source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-                // Or a reference to the platform specific asset location
-                if (Platform.OS === 'android') {
-                    source = { uri: response.uri };
-                } else {
-                    source = { uri: response.uri.replace('file://', '') };
-                }
-
-                this.setState({
-                    dealImageSource: source
-                });
-            }
-        });
+        Actions.DealPreview(data);
     }
 
 }
@@ -455,7 +519,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#D3D3D3',
-        height: 150,
+        height: 220,
+        width: window.width-30,
         marginTop: 15
     },
     b: {
@@ -485,7 +550,7 @@ const styles = StyleSheet.create({
     },
     secondaryButton: {
         marginRight: 10,
-        padding: 10,
+        padding: 11,
         borderColor: Color.secondaryButton,
         borderWidth: 1,
         borderRadius: 2,
@@ -508,7 +573,36 @@ const styles = StyleSheet.create({
     },
     picker: {
         width: 170
-    }
+    },
+    modalContainer: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'black',
+        opacity: 0.9
+    },
+    modalSmallContainer: {
+        backgroundColor: 'white',
+        width: window.width/3 * 2 + 20,
+        height: 200,
+        elevation: 4,
+        padding: 5
+    },
+    modalRow: {
+        flexDirection: 'row',
+        height: 60,
+        alignItems: 'center',
+        padding: 15
+    },
+    modalIcon: {
+        marginRight: 10,
+        color: '#444444'
+    },
+    modalText: {
+        fontSize: 20,
+        color: '#444444'
+    },
+
 });
 
 module.exports = connect(mapStateToProps)(CampaignDeal);

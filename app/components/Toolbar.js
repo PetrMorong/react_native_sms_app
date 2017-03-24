@@ -30,14 +30,27 @@ export default class Toolbar extends Component {
 
         }
 
+        let title;
+        if(this.props.back){
+            title = <TouchableWithoutFeedback onPress={(event) => Actions.pop()}>
+                <View style={{flex: 1}}>
+                    <Text style={styles.screenName} >{this.props.title}</Text>
+                </View>
+            </TouchableWithoutFeedback>;
+        }else{
+            title = <TouchableWithoutFeedback onPress={(event) => this.openMenu()}>
+                <View style={{flex: 1}}>
+                    <Text style={styles.screenName} >{this.props.title}</Text>
+                </View>
+            </TouchableWithoutFeedback>;
+
+        }
+
+
         return (
             <ElevatedView style={styles[this.props.background]} elevation={this.props.elevation}>
                 {leftIcon}
-                <TouchableWithoutFeedback onPress={(event) => this.openMenu()}>
-                    <View style={{flex: 1}}>
-                        <Text style={styles.screenName} >{this.props.title}</Text>
-                    </View>
-                </TouchableWithoutFeedback>
+                {title}
                 <Icon style={styles.creditIcon} name='account-balance-wallet' size={22}/>
                 <Text style={styles.creditNumber}> {this.props.credit}</Text>
             </ElevatedView>

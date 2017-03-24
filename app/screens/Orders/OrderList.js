@@ -124,7 +124,7 @@ export default class OrderList extends Component{
                         <View>
                             <View style={styles.itemWrap}>
                                 <View>
-                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/BuyCredit.png')}/>
+                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/white-label/bulkgate/BuyCredit.png')}/>
                                 </View>
                                 <View style={{flexDirection: 'row', flex: 1}}>
                                     <Text style={styles.itemTextRead}>Kytara</Text>

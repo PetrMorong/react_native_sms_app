@@ -24,8 +24,9 @@ import Toolbar from '../../components/Toolbar';
 import Color from '../../config/Variables';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
 
-const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
+
 const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
@@ -39,7 +40,10 @@ export default class Profile extends Component {
 
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+            modalVisible: false,
+            imageSource: 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png'
+        }
     }
 
     render() {
@@ -63,10 +67,19 @@ export default class Profile extends Component {
                     </TouchableNativeFeedback>
                     <View>
                         <View style={styles.avatarWrap}>
-                            <Image
-                                style={styles.avatar}
-                                source={{ uri, }}/>
-                            <Text style={styles.email}>{this.props.user.email}</Text>
+                            <TouchableWithoutFeedback onPress={() => this.setState({modalVisible: true})}>
+                                <View style={{alignItems: 'center'}}>
+                                    <View style={{position: 'relative'}}>
+                                        <Image
+                                            style={styles.avatar}
+                                            source={{ uri: this.state.imageSource }}/>
+                                        <View style={{ width: 110, height: 110, borderRadius: 100, position: 'absolute', top: 0 , alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,.3)'}} >
+                                            <Icon name="photo-camera" size={35} style={{color: 'white'}}/>
+                                        </View>
+                                    </View>
+                                    <Text style={styles.email}>{this.props.user.email}</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
                         </View>
                         <View style={styles.infoWrap}>
                             <View style={{padding: 15}}>
@@ -105,9 +118,73 @@ export default class Profile extends Component {
                             </TouchableNativeFeedback>
                         </View>
                     </View>
+
+                    <Modal
+                        animationType={"slide"}
+                        transparent={true}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() => this.setModalVisible(false)}>
+                        <View style={styles.modalContainer}>
+                            <TouchableWithoutFeedback onPress={() => this.setModalVisible(false)} >
+                                <View style={styles.touchableClose} />
+                            </TouchableWithoutFeedback>
+                            <View style={styles.modalSmallContainer}>
+                                <TouchableNativeFeedback onPress={() => this.takePhoto()}>
+                                    <View style={styles.modalRow}>
+                                        <Icon name="photo-camera" size={30} style={styles.modalIcon}/>
+                                        <Text style={styles.modalText}>Take a photo</Text>
+                                    </View>
+                                </TouchableNativeFeedback>
+                                <TouchableNativeFeedback onPress={() => this.choosePhoto()}>
+                                    <View style={styles.modalRow}>
+                                        <Icon name="collections" size={30} style={styles.modalIcon}/>
+                                        <Text style={styles.modalText}>Choose from gallery</Text>
+                                    </View>
+                                </TouchableNativeFeedback>
+                            </View>
+                        </View>
+                    </Modal>
+
                 </ScrollView>
             </DrawerLayoutAndroid>
         )
+    }
+
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
+    };
+
+    choosePhoto(){
+        ImagePicker.openPicker({
+            width: 110,
+            height: 110,
+            cropping: true,
+            includeBase64: true,
+            cropperTintColor: '#011D2B'
+
+        }).then(image => {
+            this.setModalVisible(false);
+            this.setState({
+                imageSource: image.path
+            });
+        });
+
+    }
+
+    takePhoto(){
+        ImagePicker.openCamera({
+            width: 110,
+            height: 110,
+            cropping: true,
+            includeBase64: true,
+            cropperTintColor: '#011D2B'
+
+        }).then(image => {
+            this.setModalVisible(false);
+            this.setState({
+                imageSource: image.path
+            });
+        });
     }
 
 }
@@ -194,7 +271,35 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         elevation: 1,
         marginTop: 20
-    }
+    },
+    modalContainer: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'black',
+        opacity: 0.9
+    },
+    modalSmallContainer: {
+        backgroundColor: 'white',
+        width: window.width/3 * 2 + 20,
+        height: 130,
+        elevation: 4,
+        padding: 5
+    },
+    modalRow: {
+        flexDirection: 'row',
+        height: 60,
+        alignItems: 'center',
+        padding: 15
+    },
+    modalIcon: {
+        marginRight: 10,
+        color: '#444444'
+    },
+    modalText: {
+        fontSize: 20,
+        color: '#444444'
+    },
 });
 
 module.exports = connect(mapStateToProps)(Profile);

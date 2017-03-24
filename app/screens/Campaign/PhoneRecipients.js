@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Button,   Text,  View, Image, ActivityIndicator, TextInput, TouchableNativeFeedback } from 'react-native';
 import { Checkbox } from 'react-native-material-design';
 
+const Contacts = require('react-native-contacts');
 export default class PhoneRecipients extends Component{
     constructor(props){
         super(props)
@@ -15,20 +16,19 @@ export default class PhoneRecipients extends Component{
         }
     }
 
-    componentDidMount(){
-        let Contacts = require('react-native-contacts');
+    componentWillMount(){
 
         Contacts.getAll((err, contacts) => {
             if(err && err.type === 'permissionDenied'){
-                // x.x
+                console.log(err)
             } else {
+                console.log('something')
                  let newOne = contacts.map((contact, i) => {
                     return ([contact.givenName, contact.phoneNumbers[0].number, contact.thumbnailPath, false]);
                 });
                 this.setState({loading: false, contacts: newOne})
             }
         })
-
 
     }
 

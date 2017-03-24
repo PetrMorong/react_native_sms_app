@@ -86,7 +86,7 @@ export default class CampaignRecipients extends Component {
                 <View style={styles.container}>
                     {stepper}
                     <View  scrollsToTop={false} style={styles.smallContainer}>
-                        <TouchableNativeFeedback >
+                        <TouchableNativeFeedback>
                             <View style={styles.linkWrap}>
                                 <Icon style={styles.blueIcon} name="phone" size={35}/>
                                 <Text style={styles.blueText}>{_('Recipients from phone')}</Text>

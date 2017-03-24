@@ -59,6 +59,7 @@ export default class SignUp extends Component {
                                     style={styles.input}
                                     placeholder={_('Email')}
                                     placeholderTextColor="white"
+                                    keyboardType='email-address'
                                     underlineColorAndroid="white"/>
                             </View>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -84,7 +85,7 @@ export default class SignUp extends Component {
                                     secureTextEntry={true}/>
                             </View>
                         </View>
-                        <TouchableNativeFeedback onPress={this.props.changeScreenSignUpStepTwo}>
+                        <TouchableNativeFeedback onPress={()=>Actions.SignUpStepTwo()}>
                             <View style={styles.buttonWrap}>
                                 <Text style={styles.buttonText}>{_('continue').toUpperCase()}</Text>
                             </View>
@@ -92,7 +93,7 @@ export default class SignUp extends Component {
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
                             <TouchableNativeFeedback>
                                 <View style={{flexDirection: 'row'}}>
-                                    <TouchableNativeFeedback onPress={this.props.changeScreenSignIn}>
+                                    <TouchableNativeFeedback onPress={()=>Actions.SignIn()}>
                                         <Text style={{color: 'white', fontSize: 18}}>{_('back').toUpperCase()}</Text>
                                     </TouchableNativeFeedback>
                                 </View>
@@ -112,7 +113,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         width: window.width,
-        height: window.height
+        height: window.height,
+        backgroundColor: 'rgba(0,0,0,.7)'
     },
     loginWrap: {
         width: window.width,
@@ -125,13 +127,14 @@ const styles = StyleSheet.create({
     },
     loginSmallWrap: {
         width: window.width/4 * 3 +25,
-        height: window.height/5*3 + 25,
-        alignItems: 'center'
+        height: window.height,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: -50
     },
     logo: {
-        width: 180,
-        height: 120,
-        marginRight: 20
+        width: 150,
+        height: 110,
     },
     input: {
         width: window.width/ 10 * 7,

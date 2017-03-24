@@ -88,7 +88,7 @@ export default class ContactVerification extends Component{
                 <View style={{width: 80}}>
                     <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                         <View style={styles.buttonWrap}>
-                            <Text style={styles.buttonText}>{_.save.toUpperCase()}</Text>
+                            <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -133,7 +133,7 @@ export default class ContactVerification extends Component{
                             <Icon name="mail-outline" size={30} style={{color: '#BE2166'}}/>
                             <View style={styles.a}>
                                 <View>
-                                    <Text>{_.email}</Text>
+                                    <Text>{_('email')}</Text>
                                     <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>gnorom1@seznam.cz</Text>
                                 </View>
                                 <Icon name="check-circle" size={25} style={styles.b}/>

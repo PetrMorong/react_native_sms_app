@@ -48,7 +48,7 @@ export default class OrderFormComponent extends Component{
 
         let firstName;
         if(this.state.checked.firstName){
-            firstName = <View style={{width: window.width/3, height: 60}}>
+            firstName = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('First name')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -57,7 +57,7 @@ export default class OrderFormComponent extends Component{
 
         let lastName;
         if(this.state.checked.lastName){
-            lastName = <View style={{width: window.width/3, height: 60}}>
+            lastName = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Last name')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -66,7 +66,7 @@ export default class OrderFormComponent extends Component{
 
         let phone;
         if(this.state.checked.phone){
-            phone = <View style={{width: window.width/3, height: 60}}>
+            phone = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Phone number')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -75,7 +75,7 @@ export default class OrderFormComponent extends Component{
 
         let email;
         if(this.state.checked.email){
-            email = <View style={{width: window.width/3, height: 60}}>
+            email = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Email')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -84,7 +84,7 @@ export default class OrderFormComponent extends Component{
 
         let country;
         if(this.state.checked.country){
-            country = <View style={{width: window.width/3, height: 60}}>
+            country = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Country')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -93,7 +93,7 @@ export default class OrderFormComponent extends Component{
 
         let city;
         if(this.state.checked.city){
-            city = <View style={{width: window.width/3, height: 60}}>
+            city = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('City')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -102,7 +102,7 @@ export default class OrderFormComponent extends Component{
 
         let state;
         if(this.state.checked.state){
-            state = <View style={{width: window.width/3, height: 60}}>
+            state = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('State')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -111,7 +111,7 @@ export default class OrderFormComponent extends Component{
 
         let street;
         if(this.state.checked.street){
-            street = <View style={{width: window.width/3, height: 60}}>
+            street = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Street')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -120,7 +120,7 @@ export default class OrderFormComponent extends Component{
 
         let zip;
         if(this.state.checked.zip){
-            zip = <View style={{width: window.width/3, height: 60}}>
+            zip = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Zip')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -129,7 +129,7 @@ export default class OrderFormComponent extends Component{
 
         let company;
         if(this.state.checked.company){
-            company = <View style={{width: window.width/3, height: 60}}>
+            company = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Company')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -138,7 +138,7 @@ export default class OrderFormComponent extends Component{
 
         let company_id;
         if(this.state.checked.company_id){
-            company_id = <View >
+            company_id = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Company id')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -147,7 +147,7 @@ export default class OrderFormComponent extends Component{
 
         let company_vat;
         if(this.state.checked.company_vat){
-            company_vat = <View style={{width: window.width/3, height: 60}}>
+            company_vat = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Company vat')}</Text>
                 <View style={styles.formInput}>
                 </View>
@@ -249,9 +249,9 @@ export default class OrderFormComponent extends Component{
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
                         placeholder={_('Send button')}/>
                 </View>
-                <View style={{backgroundColor: '#C3CAD4', padding: 15,  }}>
+                <View style={{backgroundColor: '#C3CAD4', padding: 15}}>
                     <View style={{alignItems: 'center', marginTop: 10}}>
-                        <Text style={{fontSize: 18}}>{this.state.form_headline}</Text>
+                        <Text style={{fontSize: 18}}>Form headline</Text>
                     </View>
                     <View style={{marginTop: 15, flexWrap: 'wrap', flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
                             {firstName}
@@ -268,7 +268,7 @@ export default class OrderFormComponent extends Component{
                             {company_vat}
                     </View>
                     <View style={{alignItems: 'center', marginTop: 15}}>
-                        <Text style={styles.fakeButton}>{this.state.send_button}</Text>
+                        <Text style={styles.fakeButton}>SEND</Text>
                     </View>
                 </View>
 

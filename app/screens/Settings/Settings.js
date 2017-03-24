@@ -50,7 +50,7 @@ export default class Settings extends Component {
                     title={_('Settings')}
                     elevation={0}/>
                 <View style={styles.container}>
-                    <TouchableNativeFeedback onPress={()=>Actions.Sign()}>
+                    <TouchableNativeFeedback onPress={()=>Actions.SignIn()}>
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <View style={styles.circle}>
                                 <Icon name="power-settings-new" size={25} style={{color: 'white'}}/>

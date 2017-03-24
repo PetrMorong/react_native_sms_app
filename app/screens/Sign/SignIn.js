@@ -56,6 +56,7 @@ export default class SignIn extends Component {
                                     onChangeText={(email) => this.setState({email})}
                                     value={this.state.email}
                                     style={styles.input}
+                                    keyboardType='email-address'
                                     placeholder={_('Email')}
                                     placeholderTextColor="white"
                                     underlineColorAndroid="white"/>
@@ -78,7 +79,7 @@ export default class SignIn extends Component {
                             </View>
                         </TouchableNativeFeedback>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
-                            <TouchableNativeFeedback onPress={this.props.changeScreenLostPassword}>
+                            <TouchableNativeFeedback onPress={()=>Actions.LostPassword()}>
                                 <View style={{flexDirection: 'row'}}>
                                     <Text style={{color: 'white'}}>{_('Forgot password')} ? </Text>
                                     <Text style={{color: 'white', fontWeight: '500'}}>{_('Get help signing in')}.</Text>
@@ -97,7 +98,7 @@ export default class SignIn extends Component {
                     </View>
                 </View>
                 <View style={styles.bottomTab}>
-                    <TouchableNativeFeedback onPress={this.props.changeScreenSignUp}>
+                    <TouchableNativeFeedback onPress={()=>Actions.SignUp()}>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{color: 'white'}}>{_('Do not have an account')} ? </Text>
                             <Text style={{color: 'white', fontWeight: '500'}} >{_('Sign up')} </Text>
@@ -116,7 +117,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         width: window.width,
-        height: window.height
+        height: window.height,
+        backgroundColor: 'rgba(0,0,0,.7)'
+
     },
     backgroundImage: {
         width: window.width,
@@ -133,13 +136,14 @@ const styles = StyleSheet.create({
     },
     loginSmallWrap: {
         width: window.width/4 * 3 +25,
-        height: window.height/5*4-25,
-        alignItems: 'center'
+        height: window.height,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: -50
     },
     logo: {
-        width: 180,
-        height: 120,
-        marginRight: 20
+        width: 150,
+        height: 110,
     },
     input: {
         width: window.width/ 10 * 7,
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 24,
         width: window.width,
-        height: 40,
+        height: 50,
         backgroundColor: Color.bottomTab,
         elevation: 1,
         alignItems: 'center',

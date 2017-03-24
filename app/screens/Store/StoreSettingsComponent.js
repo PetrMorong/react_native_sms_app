@@ -20,6 +20,7 @@ import Color from '../../config/Variables';
 import { connect } from 'react-redux';
 import { save } from '../../actions/Actions'
 import { Actions } from 'react-native-router-flux';
+import ImagePicker from 'react-native-image-crop-picker';
 
 
 const mapStateToProps = (store) => {
@@ -30,16 +31,6 @@ const mapStateToProps = (store) => {
 }
 
 const window = Dimensions.get('window');
-let Platform = require('react-native').Platform;
-//let ImagePicker = require('react-native-image-picker');
-
-
-let imagePickerOptions = {
-    storageOptions: {
-        skipBackup: true,
-        path: 'images'
-    }
-};
 
 export default class StoreSettingsComponent extends Component{
     constructor(props){
@@ -58,14 +49,14 @@ export default class StoreSettingsComponent extends Component{
 
         let cover;
         if(this.state.coverSource){
-            cover = <Image style={{width: window.width, height: 180}} resizeMode='stretch' source={this.state.coverSource}/>
+            cover = <Image style={{width:window.width, height: 220}} resizeMode='contain' source={{uri: this.state.coverSource}}/>
         }else{
-            cover = <View style={{width: window.width, height: 180, backgroundColor: '#064769'}}/>
+            cover = <View style={{width: window.width, height: 220, backgroundColor: '#064769'}}/>
         }
 
         let logo;
         if(this.state.logoSource){
-            logo = <Image style={styles.logo} resizeMode='stretch' source={this.state.logoSource}/>
+            logo = <Image style={styles.logo} resizeMode='stretch' source={{uri: this.state.logoSource}}/>
         }else{
             logo = <View style={[styles.logo ,{backgroundColor: '#43433F'}]}/>
         }
@@ -163,7 +154,13 @@ export default class StoreSettingsComponent extends Component{
                 </View>
                 <View style={styles.separator}/>
 
-                <View style={{margin: 15, alignItems: 'flex-end'}}>
+                <View style={{margin: 15, flexDirection: 'row', justifyContent: 'flex-end'}}>
+                    <TouchableNativeFeedback onPress={() => Actions.StorePreview({cover: this.state.coverSource, logo: this.state.logoSource})}>
+                        <View style={styles.secondaryButton}>
+                            <Icon style={{marginRight: 10, color: Color.secondaryButtonText}} size={16} name="search"/>
+                            <Text style={{color: Color.secondaryButtonText}}>{_('Preview').toUpperCase()}</Text>
+                        </View>
+                    </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
                         <View style={styles.buttonWrap}>
                             <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
@@ -202,10 +199,12 @@ export default class StoreSettingsComponent extends Component{
                                 </View>
                             </TouchableNativeFeedback>
                             <View style={styles.separator}/>
-                            <View style={styles.modalRow}>
-                                <Icon name="delete" size={30} style={styles.modalIcon}/>
-                                <Text style={styles.modalText}>Remove photo</Text>
-                            </View>
+                            <TouchableNativeFeedback onPress={() => this.removeCover()}>
+                                <View style={styles.modalRow}>
+                                    <Icon name="delete" size={30} style={styles.modalIcon}/>
+                                    <Text style={styles.modalText}>Remove photo</Text>
+                                </View>
+                            </TouchableNativeFeedback>
                         </View>
                     </View>
                 </Modal>
@@ -240,15 +239,25 @@ export default class StoreSettingsComponent extends Component{
                                 </View>
                             </TouchableNativeFeedback>
                             <View style={styles.separator}/>
-                            <View style={styles.modalRow}>
-                                <Icon name="delete" size={30} style={styles.modalIcon}/>
-                                <Text style={styles.modalText}>Remove photo</Text>
-                            </View>
+                            <TouchableNativeFeedback onPress={() => this.removeLogo()}>
+                                <View style={styles.modalRow}>
+                                    <Icon name="delete" size={30} style={styles.modalIcon}/>
+                                    <Text style={styles.modalText}>Remove photo</Text>
+                                </View>
+                            </TouchableNativeFeedback>
                         </View>
                     </View>
                 </Modal>
             </ScrollView>
         )
+    }
+
+    removeLogo(){
+        this.setState({logoSource: false, modalLogoVisible: false});
+    }
+
+    removeCover(){
+        this.setState({coverSource: false, modalCoverVisible: false});
     }
 
     handleCoverColorPress(){
@@ -272,34 +281,34 @@ export default class StoreSettingsComponent extends Component{
 
     choosePhotoCover(){
         ImagePicker.openPicker({
-            width: 300,
-            height: 400,
+            width: window.width,
+            height: 220,
             cropping: true,
             includeBase64: true,
             cropperTintColor: '#011D2B'
 
         }).then(image => {
-            this.setState({
-                coverSource: image
-            });
             this.setModalCoverVisible(false)
+            this.setState({
+                coverSource: image.path
+            });
         });
 
     }
 
     choosePhotoLogo(){
         ImagePicker.openPicker({
-            width: 300,
-            height: 400,
+            width: window.width / 3 +10,
+            height: window.width / 3+10,
             cropping: true,
             includeBase64: true,
             cropperTintColor: '#011D2B'
 
         }).then(image => {
+            this.setModalLogoVisible(false)
             this.setState({
-                logoSource: image
+                logoSource: image.path
             });
-            this.setModalCoverVisible(false)
         });
 
     }
@@ -307,33 +316,33 @@ export default class StoreSettingsComponent extends Component{
     takePhotoCover(){
         ImagePicker.openCamera({
             width: 300,
-            height: 400,
+            height: 220,
             cropping: true,
             includeBase64: true,
             cropperTintColor: '#011D2B'
 
         }).then(image => {
-            this.setState({
-                coverSource: image
-            });
             this.setModalCoverVisible(false)
+            this.setState({
+                coverSource: image.path
+            });
         });
 
     }
 
     takePhotoLogo(){
         ImagePicker.openCamera({
-            width: 300,
-            height: 400,
+            width: window.width / 3 +10,
+            height: window.width / 3+10,
             cropping: true,
             includeBase64: true,
             cropperTintColor: '#011D2B'
 
         }).then(image => {
+            this.setModalLogoVisible(false)
             this.setState({
-                logoSource: image
+                logoSource: image.path
             });
-            this.setModalCoverVisible(false)
         });
     }
 
@@ -415,7 +424,6 @@ const styles = StyleSheet.create({
     actionSmallWrap: {
         alignItems: 'center'
     },
-
     modalContainer: {
         alignItems: 'center',
         flex: 1,
@@ -462,6 +470,17 @@ const styles = StyleSheet.create({
     buttonText: {
         color: Color.buttonText,
         fontWeight: '500'
+    },
+    secondaryButton: {
+        marginRight: 10,
+        padding: 11,
+        borderColor: Color.secondaryButton,
+        borderWidth: 1,
+        borderRadius: 2,
+        flexDirection: 'row',
+        alignItems: 'center',
+        elevation: 2,
+        height: 40
     }
 
 });

@@ -44,13 +44,6 @@ export default class DashboardNewUser extends Component {
                     title={_('Dashboard')}
                     elevation={2}/>
                 <View style={styles.container}>
-                    <View style={{height: 180, marginBottom: 10}}>
-                        <Image style={{height: 180, width: window.width}} source={require('../../images/wall.png')} resizeMode='cover'/>
-                        <View style={{position: 'absolute', top: 0, width: window.width, height: 180, alignItems: 'center', justifyContent: 'center'}}>
-                            <Text style={{fontSize: 25, color: 'white', marginRight: 15}}>{('welcome to').toUpperCase()}</Text>
-                            <Image style={{width: 100, height: 90}} resizeMode='contain' source={require('../../images/white-label/sunsms/logo/logo.png')}/>
-                        </View>
-                    </View>
                     <TouchableNativeFeedback onPress={()=>Actions.BuyCredit()}>
                         <View style={[styles.item, {backgroundColor: Color.button}]}>
                             <View style={styles.iconOutline}>
@@ -67,7 +60,7 @@ export default class DashboardNewUser extends Component {
                             <Text style={styles.text}>{_('Fill out your profile')}</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=>Actions.CreateCampaign()}>
+                    <TouchableNativeFeedback onPress={()=>Actions.CampaignCreate()}>
                         <View style={[styles.item, {backgroundColor: Color.button}]}>
                             <View style={styles.iconOutline}>
                                 <Icon name="email" size={30} style={styles.icon}/>
@@ -99,6 +92,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+        justifyContent: 'center'
 
     },
     item: {

@@ -25,7 +25,6 @@ export default class Root extends Component {
 
         AsyncStorage.getItem('translations', (err, result) => {
             if(!result){
-                console.log("no result");
                 this.props.dispatch(getTranslations());
                 return;
             }
@@ -37,7 +36,6 @@ export default class Root extends Component {
     componentWillReceiveProps(nextProps)
     {
         translatorInstance.setTranslates(nextProps.translations);
-        console.log("next props", nextProps);
     }
 
     render() {

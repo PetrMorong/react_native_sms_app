@@ -73,7 +73,9 @@ const colorSunSms = {
     stepDisabledIcon: 'white',
     stepDisabledText: 'rgba(0,0,0,.54)',
 
-    //campaign
+    //store preview
+    circleColor: '#FFDE00',
+    circleIcon: 'black',
 
 };
 

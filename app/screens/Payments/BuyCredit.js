@@ -48,7 +48,7 @@ export default class BuyCredit extends Component{
                     elevation={0}/>
                 <View style={styles.container}>
                     <View style={{alignItems: 'center', justifyContent: 'center', zIndex: 100}}>
-                        <Image resizeMode='stretch' source={require('../../images/BuyCredit.png')} style={{marginTop: -30, width: 430, height: 450}}/>
+                        <Image resizeMode='stretch' source={require('../../images/white-label/sunsms/BuyCredit.png')} style={{marginTop: 15, width: 220, height: 180}}/>
                     </View>
                     <View style={styles.backgroundCardImage}/>
                     <View style={styles.choosePayment}>
