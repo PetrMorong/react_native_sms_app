@@ -200,10 +200,6 @@ export default class SignUpStepTwo extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        position: 'absolute',
-        top: 0,
-        width: window.width,
-        height: window.height,
         backgroundColor: 'rgba(0,0,0,.7)'
 
     },

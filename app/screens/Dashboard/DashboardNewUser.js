@@ -26,6 +26,7 @@ import Color from '../../config/Variables';
 
 
 const window = Dimensions.get('window');
+const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
 
 export default class DashboardNewUser extends Component {
@@ -43,49 +44,70 @@ export default class DashboardNewUser extends Component {
                     background="container"
                     title={_('Dashboard')}
                     elevation={2}/>
-                <View style={styles.container}>
-                    <TouchableNativeFeedback onPress={()=>Actions.BuyCredit()}>
-                        <View style={[styles.item, {backgroundColor: Color.button}]}>
-                            <View style={styles.iconOutline}>
-                                <Icon name="account-balance-wallet" size={30} style={styles.icon}/>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <View style={styles.cover}>
+                            <View style={styles.avatarContainer}>
+                                <Image
+                                    style={styles.avatar}
+                                    source={{ uri, }}/>
+                                <Text style={styles.name}>Petr Morong</Text>
+                                <Text style={styles.email}>moriandr73@gmail.com</Text>
                             </View>
-                            <Text style={styles.text}>{_('Buy credit')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=>Actions.Profile()}>
-                        <View style={[styles.item, {backgroundColor: Color.button}]}>
-                            <View style={styles.iconOutline}>
-                                <Icon name="person" size={30} style={styles.icon}/>
+                            <View style={{flexDirection: 'row', marginTop: 30, justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15}}>
+                                <View style={styles.coverNumbersWrap}>
+                                    <Text style={styles.highlightText}>254 896</Text>
+                                    <Text style={{color: '#bdd6d2' }}>{_('sms').toUpperCase()}</Text>
+                                </View>
+                                <View style={styles.coverNumbersWrap}>
+                                    <Text style={styles.highlightText}>78 546</Text>
+                                    <Text style={{color: '#bdd6d2' }}>{_('Credit').toUpperCase()}</Text>
+                                </View>
+                                <View style={styles.coverNumbersWrap}>
+                                    <Text style={styles.highlightText}>January</Text>
+                                    <Text style={{color: '#bdd6d2' }}>{_('Month').toUpperCase()}</Text>
+                                </View>
                             </View>
-                            <Text style={styles.text}>{_('Fill out your profile')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=>Actions.CampaignCreate()}>
-                        <View style={[styles.item, {backgroundColor: Color.button}]}>
-                            <View style={styles.iconOutline}>
-                                <Icon name="email" size={30} style={styles.icon}/>
+
+                        <TouchableNativeFeedback onPress={()=>Actions.CampaignCreate()}>
+                            <View style={[styles.item, {backgroundColor: Color.button}]}>
+                                <View style={styles.iconOutline}>
+                                    <Icon name="email" size={30} style={styles.icon}/>
+                                </View>
+                                <Text style={styles.text}>{_('Start campaign')}</Text>
                             </View>
-                            <Text style={styles.text}>{_('Start campaign')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=>Actions.StoreCreate()}>
-                        <View style={[styles.item, {backgroundColor: Color.button}]}>
-                            <View style={styles.iconOutline}>
-                                <Icon name="store" size={30} style={styles.icon}/>
+                        </TouchableNativeFeedback>
+                        <TouchableNativeFeedback onPress={()=>Actions.StoreCreate()}>
+                            <View style={[styles.item, {backgroundColor: Color.button}]}>
+                                <View style={styles.iconOutline}>
+                                    <Icon name="store" size={30} style={styles.icon}/>
+                                </View>
+                                <Text style={styles.text}>{_('Create store')}</Text>
                             </View>
-                            <Text style={styles.text}>{_('Create store')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                </View>
+                        </TouchableNativeFeedback>
+                        <TouchableNativeFeedback onPress={()=>Actions.BuyCredit()}>
+                            <View style={[styles.item, {backgroundColor: Color.button}]}>
+                                <View style={styles.iconOutline}>
+                                    <Icon name="account-balance-wallet" size={30} style={styles.icon}/>
+                                </View>
+                                <Text style={styles.text}>{_('Buy credit')}</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                        <TouchableNativeFeedback onPress={()=>Actions.Profile()}>
+                            <View style={[styles.item, {backgroundColor: Color.button, marginBottom: 15}]}>
+                                <View style={styles.iconOutline}>
+                                    <Icon name="person" size={30} style={styles.icon}/>
+                                </View>
+                                <Text style={styles.text}>{_('Fill out your profile')}</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    </View>
+                </ScrollView>
             </DrawerLayoutAndroid>
         )
     }
 
-    navigateToScreen(link) {
-        this.props.navigator.push({
-            ident: link
-        })
-    }
 }
 
 const styles = StyleSheet.create({
@@ -121,5 +143,43 @@ const styles = StyleSheet.create({
         color: Color.buttonText,
         fontSize: 18,
         marginLeft: 15
+    },
+    cover: {
+        height: window.height/3 + 30,
+        backgroundColor: Color.dashboardBackground,
+        marginBottom: 10,
+        elevation: 2
+    },
+    avatarContainer: {
+        height: 140,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Color.dashboardBackground,
+    },
+    avatar: {
+        width: 90,
+        height: 90,
+        borderRadius: 50
+    },
+    name: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 5
+    },
+    email: {
+        color: 'white',
+        fontSize: 14,
+        marginTop: 5
+    },
+    coverNumbersWrap: {
+        alignItems: 'center'
+    },
+    highlightText: {
+        fontWeight: '500',
+        color: Color.dashboardStatsColor,
+        fontSize: 18,
+        lineHeight: 25
     }
 });

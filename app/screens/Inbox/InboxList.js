@@ -32,9 +32,14 @@ const mapStateToProps = (store) => {
     return{
         _: store.translator.translations
     }
-}
+};
+
 
 export default class InboxList extends Component {
+
+    componentWillMount(){
+
+    }
 
     render() {
         let menu  = <Menu/>;

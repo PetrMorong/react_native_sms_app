@@ -11,7 +11,9 @@ const {
     View,
     Image,
     Text,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    Animated,
+    Easing
 } = require('react-native');
 const { Component } = React;
 
@@ -34,29 +36,69 @@ export default class Menu extends Component {
         this.state = {
             toggleSms: false,
             toggleStore: false,
-            togglePayments: false
+            togglePayments: false,
+            animatedValPayments: new Animated.Value(0),
+            animatedValStore: new Animated.Value(0),
+            animatedValSms: new Animated.Value(0)
         };
     }
 
-    navigateToScreen(link){
-        this.props.navigator.push({
-            ident: link
-        })
-    }
-
-    componentWillMount(){
-        console.log(this.props)
-    }
 
     toggleItem(type){
+
         if(type == 'toggleSms'){
-            this.setState({toggleSms: !this.state[type], toggleStore: false, togglePayments: false});
+
+            let height;
+            if(this.state.toggleSms){
+                height = 0;
+            }else{
+                height = 350;
+            }
+
+            Animated.timing(this.state.animatedValSms, {
+                toValue: height,
+                duration: 450,
+                easing: Easing.inOut(Easing.ease)
+            }).start();
+
+            this.setState({toggleSms: !this.state[type]});
+
         }
         if(type == 'toggleStore'){
-            this.setState({toggleStore: !this.state[type], toggleSms: false, togglePayments: false});
+
+            let height;
+            if(this.state.toggleStore){
+                height = 0;
+            }else{
+                height = 150;
+            }
+
+            Animated.timing(this.state.animatedValStore, {
+                toValue: height,
+                duration: 450,
+                easing: Easing.inOut(Easing.ease)
+            }).start();
+
+            this.setState({toggleStore: !this.state[type]});
+
         }
         if(type == 'togglePayments'){
-            this.setState({togglePayments: !this.state[type], toggleSms: false, toggleStore: false});
+
+            let height;
+            if(this.state.togglePayments){
+                height = 0;
+            }else{
+                height = 100;
+            }
+
+            Animated.timing(this.state.animatedValPayments, {
+                toValue: height,
+                duration: 450,
+                easing: Easing.inOut(Easing.ease)
+            }).start();
+
+            this.setState({togglePayments: !this.state[type]});
+
         }
     }
 
@@ -74,50 +116,6 @@ export default class Menu extends Component {
                         <Icon name="arrow-drop-down"  style={styles.menuChevronDownActive} size={25} />
                     </View>
                 </TouchableNativeFeedback>
-                <View style={styles.collapsableBody}>
-                    <TouchableNativeFeedback onPress={(event) => Actions.CampaignCreate()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="add" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Start campaign')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.CampaignList()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="sms" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Campaigns')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.HistoryList()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="history" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('History')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.ScheduledList()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="alarm-on" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Scheduled')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.InboxList()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="call-received" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Inbox')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.OutboxList()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="call-made" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Outbox')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.Statistics()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="timeline" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Statistics')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                </View>
             </View>
         }else{
             smsItem = <TouchableNativeFeedback onPress={() => this.toggleItem('toggleSms')}>
@@ -141,26 +139,6 @@ export default class Menu extends Component {
                         <Icon name="arrow-drop-down"  style={styles.menuChevronDownActive} size={25} />
                     </View>
                 </TouchableNativeFeedback>
-                <View style={styles.collapsableBody}>
-                    <TouchableNativeFeedback onPress={(event) => Actions.StoreCreate()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="add" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Create store')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.StoreList()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="store" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Stores')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.OrderList()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="shopping-cart" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink} >{_('Orders')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                </View>
             </View>
         }else{
            store = <TouchableNativeFeedback onPress={() => this.toggleItem('toggleStore')}>
@@ -184,20 +162,6 @@ export default class Menu extends Component {
                         <Icon name="arrow-drop-down"  style={styles.menuChevronDownActive} size={25} />
                     </View>
                 </TouchableNativeFeedback>
-                <View style={styles.collapsableBody}>
-                    <TouchableNativeFeedback onPress={(event) => Actions.BuyCredit()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="account-balance-wallet" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink}>{_('Buy credit')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={(event) => Actions.Transactions()}>
-                        <View style={styles.menuRow}>
-                            <Icon name="compare-arrows" style={styles.menuRightIcon}/>
-                            <Text style={styles.menuLink}>{_('Transactions')}</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-                </View>
             </View>
         }else{
             payments = <TouchableNativeFeedback onPress={() => this.toggleItem('togglePayments')}>
@@ -232,12 +196,90 @@ export default class Menu extends Component {
                     </TouchableNativeFeedback>
                     <View>
                         {smsItem}
+                        <Animated.View style={[styles.collapsableBody, {height: this.state.animatedValSms}]}>
+                            <TouchableNativeFeedback onPress={(event) => Actions.CampaignCreate()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="add" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Start campaign')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.CampaignList()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="sms" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Campaigns')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.HistoryList()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="history" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('History')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.ScheduledList()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="alarm-on" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Scheduled')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.InboxList()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="call-received" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Inbox')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.OutboxList()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="call-made" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Outbox')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.Statistics()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="timeline" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Statistics')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                        </Animated.View>
                     </View>
                     <View>
                         {store}
+                        <Animated.View style={[styles.collapsableBody, {height: this.state.animatedValStore}]}>
+                            <TouchableNativeFeedback onPress={(event) => Actions.StoreCreate()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="add" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Create store')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.StoreList()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="store" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Stores')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.OrderList()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="shopping-cart" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink} >{_('Orders')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                        </Animated.View>
                     </View>
                     <View>
                         {payments}
+                        <Animated.View style={[styles.collapsableBody, {height: this.state.animatedValPayments}]}>
+                            <TouchableNativeFeedback onPress={(event) => Actions.BuyCredit()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="account-balance-wallet" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink}>{_('Buy credit')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                            <TouchableNativeFeedback onPress={(event) => Actions.Transactions()}>
+                                <View style={styles.menuRow}>
+                                    <Icon name="compare-arrows" style={styles.menuRightIcon}/>
+                                    <Text style={styles.menuLink}>{_('Transactions')}</Text>
+                                </View>
+                            </TouchableNativeFeedback>
+                        </Animated.View>
                     </View>
                     <View style={styles.separator} />
                     <TouchableNativeFeedback onPress={(event) => Actions.Settings()}>

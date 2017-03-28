@@ -92,7 +92,7 @@ export default class CampaignCreate  extends Component {
                 <ScrollView style={styles.container}>
                     <View style={{ height: window.height - 140}}>
                         <View style={styles.image}>
-                            <Image style={{width: window.width/3+25, height: window.height/3 - 15}} resizeMode="stretch" source={require('../../images/campaignCreateNoLogo.png')}/>
+                            <Image style={{width: 180, height: 180}} resizeMode="stretch" source={require('../../images/campaignCreateNoLogo.png')}/>
                         </View>
                         <View style={styles.padding}>
                             <TextInput

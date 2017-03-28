@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     image: {
-        height: window.height / 3 + 20,
-        width: window.width / 5 *4
+        height: 250,
+        width: 300
     },
     buttonWrap: {
         width: 110,

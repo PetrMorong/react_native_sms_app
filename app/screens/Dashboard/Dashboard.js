@@ -113,13 +113,6 @@ export default class Dashboard  extends Component {
                             </View>
                         </View>
                     </ElevatedView>
-                    <TabViewAnimated
-                        style={{height: 505}}
-                        navigationState={this.state}
-                        renderScene={this._renderScene}
-                        renderHeader={this._renderHeader}
-                        onRequestChangeTab={this._handleChangeTab}
-                    />
                 </ScrollView>
             </DrawerLayoutAndroid>
         )

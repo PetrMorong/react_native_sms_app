@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     itemImage: {
        width: 45,
         height: 45,
-        borderRadius: 100,
+        borderRadius: 350,
         marginRight: 15
    },
     itemText: {

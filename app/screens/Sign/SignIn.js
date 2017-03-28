@@ -26,12 +26,15 @@ import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Actions } from 'react-native-router-flux';
 import { fetchUser } from '../../actions/Actions'
+import SuccessError from '../../components/SuccessError'
+
 
 const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations
+        _: store.translator.translations,
+        user: store.user
     }
 }
 
@@ -40,12 +43,21 @@ export default class SignIn extends Component {
         super(props)
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            successError: false
         }
     }
+
     render() {
+        if(this.props.user.error){
+            setInterval(()=>{
+                this.setState({successError: true})
+            }, 3000)
+        }
+
         return (
             <View style={styles.container}>
+                <SuccessError display={this.props.user.error} successMessage={_('Nice')} errorMessage={_('Invalid username or password')}/>
                 <View style={styles.loginWrap}>
                     <View style={styles.loginSmallWrap}>
                         <Image source={require('../../images/white-label/sunsms/logo/logo.png')} style={styles.logo} resizeMode='stretch'/>
@@ -73,7 +85,7 @@ export default class SignIn extends Component {
                                     secureTextEntry={true}/>
                             </View>
                         </View>
-                        <TouchableNativeFeedback onPress={() => this.props.dispatch(fetchUser())}>
+                        <TouchableNativeFeedback onPress={() => this.handleLogin()}>
                             <View style={styles.buttonWrap}>
                                 <Text style={styles.buttonText}>{_('Login').toUpperCase()}</Text>
                             </View>
@@ -109,15 +121,19 @@ export default class SignIn extends Component {
         )
     }
 
+    handleLogin(){
+        this.props.dispatch(fetchUser(this.state.email, this.state.password))
+    }
+
+    closeMessageTop(){
+        this.setState({successError: false})
+    }
+
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        position: 'absolute',
-        top: 0,
-        width: window.width,
-        height: window.height,
         backgroundColor: 'rgba(0,0,0,.7)'
 
     },
@@ -170,7 +186,7 @@ const styles = StyleSheet.create({
     },
     bottomTab: {
         position: 'absolute',
-        bottom: 24,
+        bottom: 0,
         width: window.width,
         height: 50,
         backgroundColor: Color.bottomTab,

@@ -27,6 +27,8 @@ import { connect } from 'react-redux';
 
 const window = Dimensions.get('window');
 
+let colorTemplate = 'colorTemplate1';
+
 export default class DealPreview extends Component {
     constructor(props){
         super(props)
@@ -48,11 +50,21 @@ export default class DealPreview extends Component {
         }
     }
 
+
+
     render() {
+        if(this.props.colorTemplate === 1){
+            colorTemplate = 'colorTemplate1'
+        }else if(this.props.colorTemplate === 2){
+            colorTemplate = 'colorTemplate2'
+        }else{
+            colorTemplate = 'colorTemplate3'
+        }
+
         let firstName;
         if(this.state.checked.firstName){
             firstName = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('First name')}</Text>
+                <Text style={{color: 'white'}}>{_('First name')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -61,7 +73,7 @@ export default class DealPreview extends Component {
         let lastName;
         if(this.state.checked.lastName){
             lastName = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Last name')}</Text>
+                <Text style={{color: 'white'}}>{_('Last name')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -70,7 +82,7 @@ export default class DealPreview extends Component {
         let phone;
         if(this.state.checked.phone){
             phone = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Phone number')}</Text>
+                <Text style={{color: 'white'}}>{_('Phone number')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -79,7 +91,7 @@ export default class DealPreview extends Component {
         let email;
         if(this.state.checked.email){
             email = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Email')}</Text>
+                <Text style={{color: 'white'}}>{_('Email')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -88,7 +100,7 @@ export default class DealPreview extends Component {
         let country;
         if(this.state.checked.country){
             country = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Country')}</Text>
+                <Text style={{color: 'white'}}>{_('Country')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -97,7 +109,7 @@ export default class DealPreview extends Component {
         let city;
         if(this.state.checked.city){
             city = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('City')}</Text>
+                <Text style={{color: 'white'}}>{_('City')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -106,7 +118,7 @@ export default class DealPreview extends Component {
         let state;
         if(this.state.checked.state){
             state = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('State')}</Text>
+                <Text style={{color: 'white'}}>{_('State')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -115,7 +127,7 @@ export default class DealPreview extends Component {
         let street;
         if(this.state.checked.street){
             street = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Street')}</Text>
+                <Text style={{color: 'white'}}>{_('Street')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -124,7 +136,7 @@ export default class DealPreview extends Component {
         let zip;
         if(this.state.checked.zip){
             zip = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Zip')}</Text>
+                <Text style={{color: 'white'}}>{_('Zip')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -133,7 +145,7 @@ export default class DealPreview extends Component {
         let company;
         if(this.state.checked.company){
             company = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Company')}</Text>
+                <Text style={{color: 'white'}}>{_('Company')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -142,7 +154,7 @@ export default class DealPreview extends Component {
         let company_id;
         if(this.state.checked.company_id){
             company_id = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Company id')}</Text>
+                <Text style={{color: 'white'}}>{_('Company id')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -151,7 +163,7 @@ export default class DealPreview extends Component {
         let company_vat;
         if(this.state.checked.company_vat){
             company_vat = <View style={{width: window.width/2, alignItems: 'center', height: 60, alignSelf: 'flex-end'}}>
-                <Text>{_('Company vat')}</Text>
+                <Text style={{color: 'white'}}>{_('Company vat')}</Text>
                 <View style={styles.formInput}>
                 </View>
             </View>
@@ -173,7 +185,9 @@ export default class DealPreview extends Component {
 
         let clock;
         if(this.props.showExpiration == 'counter'){
-            clock = <Image style={{width: window.width-40, height: 90}} resizeMode='stretch' source={require('../../images/dealClock.jpg')} />
+            clock = <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Image style={{width: 280, height: 90}} resizeMode='stretch' source={require('../../images/dealClock.jpg')} />
+            </View>
         }else if(this.props.showExpiration == 'date'){
             clock = <View style={{alignItems: 'center'}}>
                 <Text style={{fontSize: 25, color: 'black'}}>{this.props.expirationDate}</Text>
@@ -189,9 +203,9 @@ export default class DealPreview extends Component {
         if(this.props.discount){
             let style;
             if(this.props.template === 1 || this.props.template === 3){
-                style = styles.circle
+                style = [styles.circle, {backgroundColor: Color[colorTemplate].discount}]
             } else if(this.props.template === 2){
-                style = styles.circleTemplateTwo
+                style = [styles.circleTemplateTwo, {backgroundColor: Color[colorTemplate].discount}]
             }
 
             discount = <View style={style}>
@@ -203,9 +217,9 @@ export default class DealPreview extends Component {
         if(this.props.quantity){
             let style;
             if(this.props.template === 1 || this.props.template === 3){
-                style = styles.circleQuantity
+                style = [styles.circleQuantity, {backgroundColor: Color[colorTemplate].quantity}]
             } else if(this.props.template === 2){
-                style = styles.circleQuantityTemplateTwo
+                style = [styles.circleQuantityTemplateTwo, {backgroundColor: Color[colorTemplate].quantity }]
             }
 
             quantity = <View style={style}>
@@ -213,6 +227,7 @@ export default class DealPreview extends Component {
                 <Text style={{color: 'white', fontSize: 20, fontWeight: '500'}}> {this.props.units} </Text>
             </View>
         }
+
 
         let middle;
         if(this.props.template === 1){
@@ -227,8 +242,8 @@ export default class DealPreview extends Component {
                     <Text style={{fontSize: 30, color: 'black', fontWeight: '500'}}>{this.props.headline.toUpperCase()}</Text>
                     <Text style={{marginTop: 10}}>{this.props.description}</Text>
                     <View style={{flexDirection: 'row', marginTop: 15, alignItems: 'center'}}>
-                        <Text style={{marginRight: 15, fontSize: 30, fontWeight: '500', color: 'blue'}}>{this.props.priceNew} {this.props.currency}</Text>
-                        <Text style={{textDecorationLine: 'line-through', fontSize: 20, fontWeight: '500'}}>{this.props.priceOld} {this.props.currency}</Text>
+                        <Text style={{marginRight: 15, fontSize: 30, fontWeight: '500', color: Color[colorTemplate].newPrice}}>{this.props.priceNew} {this.props.currency}</Text>
+                        <Text style={[styles.oldPrice, {color: [colorTemplate].oldPrice}]}>{this.props.priceOld} {this.props.currency}</Text>
                     </View>
                 </View>
             </View>
@@ -243,8 +258,8 @@ export default class DealPreview extends Component {
                     <Text style={styles.headlineTemplateTwo}>{this.props.headline.toUpperCase()}</Text>
                     <Text style={styles.descriptionTemplateTwo}>{this.props.description}</Text>
                     <View style={{flexDirection: 'column', marginTop: 15, alignItems: 'center', marginBottom: 20}}>
-                        <Text style={{marginBottom: 10,fontSize: 30, fontWeight: '500', color: 'blue'}}>{this.props.priceNew} {this.props.currency}</Text>
-                        <Text style={styles.priceOldTemplateTwo}>{this.props.priceOld} {this.props.currency}</Text>
+                        <Text style={{marginBottom: 10,fontSize: 30, fontWeight: '500', color: Color[colorTemplate].newPrice}}>{this.props.priceNew} {this.props.currency}</Text>
+                        <Text style={[styles.priceOldTemplateTwo, {color: Color[colorTemplate].oldPrice}]}>{this.props.priceOld} {this.props.currency}</Text>
                     </View>
                     {clock}
                 </View>
@@ -263,13 +278,15 @@ export default class DealPreview extends Component {
                 </View>
                 <View style={{alignItems: 'center'}}>
                     <View style={{ alignItems: 'center', flexDirection: 'column'}}>
-                        <Text style={{fontSize: 50, fontWeight: '500', color: 'blue'}}>{this.props.priceNew} {this.props.currency}</Text>
-                        <Text style={{textDecorationLine: 'line-through', fontSize: 20, fontWeight: '500'}}>{this.props.priceOld} {this.props.currency}</Text>
+                        <Text style={{fontSize: 50, fontWeight: '500', color: Color[colorTemplate].newPrice}}>{this.props.priceNew} {this.props.currency}</Text>
+                        <Text style={[styles.oldPrice, {color: [colorTemplate].oldPrice}]}>{this.props.priceOld} {this.props.currency}</Text>
                     </View>
                 </View>
                 {clock}
             </View>
         }
+
+
 
 
         let menu  = <Menu/>;
@@ -294,9 +311,9 @@ export default class DealPreview extends Component {
                         </View>
                     </View>
                     {middle}
-                    <View style={{backgroundColor: '#C3CAD4', paddingBottom: 20}}>
+                    <View style={{backgroundColor: Color[colorTemplate].form, paddingBottom: 20}}>
                         <View style={{alignItems: 'center', marginTop: 10}}>
-                            <Text style={{fontSize: 25, marginTop: 15}}>Form headline</Text>
+                            <Text style={{fontSize: 25, marginTop: 15, color: 'white'}}>Form headline</Text>
                         </View>
                         <View style={{marginTop: 15, flexWrap: 'wrap', flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
                             {firstName}
@@ -313,7 +330,7 @@ export default class DealPreview extends Component {
                             {company_vat}
                         </View>
                         <View style={{alignItems: 'center', marginTop: 15}}>
-                            <Text style={styles.fakeButton}>SEND</Text>
+                            <Text style={[styles.fakeButton, {backgroundColor: Color[colorTemplate].submitButton}]}>SEND</Text>
                         </View>
                     </View>
                 </ScrollView>
@@ -337,8 +354,8 @@ const styles = StyleSheet.create({
         borderColor: '#D8D8D8',
         borderWidth: 2,
         padding: 2,
-        width: window.width / 3 +10,
-        height: window.width / 3+10
+        width: 150,
+        height: 150
     },
     logoSmallWrap: {
         position: 'relative',
@@ -356,7 +373,6 @@ const styles = StyleSheet.create({
         height: 70,
         width: 70,
         borderRadius: 50,
-        backgroundColor: 'red',
         position: 'absolute',
         top: 0,
         left: -20,
@@ -367,7 +383,6 @@ const styles = StyleSheet.create({
         height: 70,
         width: 70,
         borderRadius: 50,
-        backgroundColor: 'blue',
         position: 'absolute',
         top: 60,
         left: -20,
@@ -378,7 +393,6 @@ const styles = StyleSheet.create({
         height: 70,
         width: 70,
         borderRadius: 50,
-        backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -386,10 +400,9 @@ const styles = StyleSheet.create({
         height: 70,
         width: 70,
         borderRadius: 50,
-        backgroundColor: 'blue',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: -15
+        marginLeft: -7
     },
     formInput: {
         backgroundColor: 'white',
@@ -399,11 +412,11 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     fakeButton: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 25,
-        paddingRight: 25,
-        backgroundColor: 'red'
+        paddingTop: 13,
+        paddingBottom: 13,
+        paddingLeft: 120,
+        paddingRight: 120,
+        borderRadius: 3
     },
     middleWrapTemplateTwo: {
         alignItems: 'center',
@@ -435,8 +448,13 @@ const styles = StyleSheet.create({
     priceOldTemplateTwo: {
         textDecorationLine: 'line-through',
         fontSize: 20,
+        fontWeight: '500'
+    },
+    oldPrice: {
+        textDecorationLine: 'line-through',
+        fontSize: 20,
         fontWeight: '500',
-        color: 'white'
+
     }
 
 });

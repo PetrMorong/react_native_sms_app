@@ -77,6 +77,42 @@ const colorSunSms = {
     circleColor: '#FFDE00',
     circleIcon: 'black',
 
+    //deal preview
+    colorTemplate1: {
+        form: '#ff845b',
+        discount: '#ff845b',
+        oldPrice: '#fcac91',
+        quantity: '#fcac91',
+        newPrice: '#f35d5d',
+        submitButton: '#1cdba6',
+        error: '#63326E'
+    },
+
+    colorTemplate2: {
+        form: '#D33F49',
+        discount: '#D33F49',
+        oldPrice: '#D7C0D0',
+        quantity: '#D7C0D0',
+        newPrice: '#1badf5',
+        submitButton: '#77BA99',
+        error: '#ecd100'
+    },
+
+    colorTemplate3: {
+        form: '#4E3D42',
+        discount: '#4E3D42',
+        oldPrice: '#6D6466',
+        quantity: '#6D6466',
+        newPrice: '#ce3c67',
+        submitButton: '#56b0b1',
+        error: '#ed6f6f'
+    },
+
+    //error and success message
+    error: '#D20101',
+    success: '#00C150',
+
+
 };
 
 const colorBulkgate = {

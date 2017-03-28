@@ -298,8 +298,8 @@ export default class StoreSettingsComponent extends Component{
 
     choosePhotoLogo(){
         ImagePicker.openPicker({
-            width: window.width / 3 +10,
-            height: window.width / 3+10,
+            width: 150,
+            height: 150,
             cropping: true,
             includeBase64: true,
             cropperTintColor: '#011D2B'
@@ -332,8 +332,8 @@ export default class StoreSettingsComponent extends Component{
 
     takePhotoLogo(){
         ImagePicker.openCamera({
-            width: window.width / 3 +10,
-            height: window.width / 3+10,
+            width: 150,
+            height: 150,
             cropping: true,
             includeBase64: true,
             cropperTintColor: '#011D2B'
@@ -376,8 +376,8 @@ const styles = StyleSheet.create({
         borderColor: '#D8D8D8',
         borderWidth: 2,
         padding: 2,
-        width: window.width / 3 +10,
-        height: window.width / 3+10
+        width: 150,
+        height: 150
     },
     logoSmallWrap: {
         borderColor: '#D8D8D8',
