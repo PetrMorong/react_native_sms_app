@@ -25,7 +25,7 @@ import { connect } from 'react-redux';
 import { save } from '../../actions/Actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Actions } from 'react-native-router-flux';
-import { fetchUser } from '../../actions/Actions'
+import { fetchUser, closeError } from './actions'
 import SuccessError from '../../components/SuccessError'
 
 

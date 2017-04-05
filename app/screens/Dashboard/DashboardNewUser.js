@@ -23,16 +23,23 @@ import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
 import { Actions } from 'react-native-router-flux';
 import Color from '../../config/Variables';
+import { connect } from 'react-redux';
 
+const mapStateToProps = (store) => {
+    return{
+        user: store.user.user,
+    }
+};
 
 const window = Dimensions.get('window');
-const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 
 
 export default class DashboardNewUser extends Component {
 
     render() {
+        const user = this.props.user.user;
         let menu  = <Menu/>;
+
         return (
             <DrawerLayoutAndroid
                 drawerWidth={300}
@@ -48,11 +55,13 @@ export default class DashboardNewUser extends Component {
                     <View style={styles.container}>
                         <View style={styles.cover}>
                             <View style={styles.avatarContainer}>
-                                <Image
-                                    style={styles.avatar}
-                                    source={{ uri, }}/>
-                                <Text style={styles.name}>Petr Morong</Text>
-                                <Text style={styles.email}>moriandr73@gmail.com</Text>
+                                <View style={[styles.avatar, {backgroundColor: Color.secondaryColor}]}>
+                                    <Image
+                                        style={styles.avatar}
+                                        source={{ uri: 'data:image/png;base64,' + user.photo }}/>
+                                </View>
+                                <Text style={styles.name}>{user.first_name} {user.last_name}</Text>
+                                <Text style={styles.email}>{user.email}</Text>
                             </View>
                             <View style={{flexDirection: 'row', marginTop: 30, justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15}}>
                                 <View style={styles.coverNumbersWrap}>
@@ -183,3 +192,5 @@ const styles = StyleSheet.create({
         lineHeight: 25
     }
 });
+
+module.exports = connect(mapStateToProps)(DashboardNewUser);

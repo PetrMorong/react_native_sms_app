@@ -32,7 +32,7 @@ const window = Dimensions.get('window');
 const mapStateToProps = (store) => {
     return{
         _: store.translator.translations,
-        user: store.user.user
+        user: store.user.user.user
     }
 }
 
@@ -41,8 +41,7 @@ export default class Profile extends Component {
     constructor(props){
         super(props)
         this.state = {
-            modalVisible: false,
-            imageSource: 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png'
+            modalVisible: false
         }
     }
 
@@ -72,7 +71,7 @@ export default class Profile extends Component {
                                     <View style={{position: 'relative'}}>
                                         <Image
                                             style={styles.avatar}
-                                            source={{ uri: this.state.imageSource }}/>
+                                            source={{ uri: 'data:image/png;base64,' + this.props.user.photo }}/>
                                         <View style={{ width: 110, height: 110, borderRadius: 100, position: 'absolute', top: 0 , alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,.3)'}} >
                                             <Icon name="photo-camera" size={35} style={{color: 'white'}}/>
                                         </View>
@@ -299,6 +298,12 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 20,
         color: '#444444'
+    },
+    touchableClose: {
+        width: window.width,
+        height: window.height,
+        position: 'absolute',
+        top: 0
     },
 });
 

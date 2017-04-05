@@ -41,8 +41,8 @@ export default class SignUpStepTwo extends Component {
     constructor(props){
         super(props)
         this.state = {
-            firstName: '',
-            lastName: '',
+            first_name: '',
+            last_name: '',
             phoneNumber: '',
             phonePrefix: '',
             modalVisible: false,
@@ -74,8 +74,8 @@ export default class SignUpStepTwo extends Component {
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <Icon name="person" style={{color: 'white', marginTop: 20, marginRight: 15}} size={25}/>
                                 <TextInput
-                                    onChangeText={(firstName) => this.setState({firstName})}
-                                    value={this.state.firstName}
+                                    onChangeText={(first_name) => this.setState({first_name})}
+                                    value={this.state.first_name}
                                     style={styles.input}
                                     placeholder={_('First name')}
                                     placeholderTextColor="white"
@@ -84,8 +84,8 @@ export default class SignUpStepTwo extends Component {
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <Icon name="person" style={{color: 'white', marginTop: 20, marginRight: 15}} size={25}/>
                                 <TextInput
-                                    onChangeText={(lastName) => this.setState({lastName})}
-                                    value={this.state.lastName}
+                                    onChangeText={(last_name) => this.setState({last_name})}
+                                    value={this.state.last_name}
                                     style={styles.input}
                                     placeholder={_('Last name')}
                                     placeholderTextColor="white"
@@ -94,17 +94,8 @@ export default class SignUpStepTwo extends Component {
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <Icon name="phone" style={{color: 'white', marginTop: 20, marginRight: 15}} size={25}/>
                                 <TextInput
-                                    onChangeText={(phonePrefix) => this.setState({phonePrefix})}
-                                    value={this.state.phonePrefix}
-                                    style={{width: window.width / 10 * 3, color: 'white', marginTop: 10}}
-                                    placeholder={_('Phone prefix')}
-                                    placeholderTextColor="white"
-                                    underlineColorAndroid="white"
-                                    keyboardType='numeric'
-                                />
-                                <TextInput
-                                    onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-                                    value={this.state.phoneNumber}
+                                    onChangeText={(phone_number) => this.setState({phone_number})}
+                                    value={this.state.phone_number}
                                     style={styles.inputShort}
                                     placeholder={_('Phone number')}
                                     placeholderTextColor="white"

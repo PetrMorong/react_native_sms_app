@@ -24,7 +24,7 @@ const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 const mapStateToProps = (store) => {
     return{
         _: store.translator.translations,
-        user: store.user.user,
+        user: store.user.user.user,
         credit: 853.7
     }
 }
@@ -57,7 +57,7 @@ export default class Menu extends Component {
 
             Animated.timing(this.state.animatedValSms, {
                 toValue: height,
-                duration: 450,
+                duration: 250,
                 easing: Easing.inOut(Easing.ease)
             }).start();
 
@@ -75,7 +75,7 @@ export default class Menu extends Component {
 
             Animated.timing(this.state.animatedValStore, {
                 toValue: height,
-                duration: 450,
+                duration: 250,
                 easing: Easing.inOut(Easing.ease)
             }).start();
 
@@ -93,7 +93,7 @@ export default class Menu extends Component {
 
             Animated.timing(this.state.animatedValPayments, {
                 toValue: height,
-                duration: 450,
+                duration: 250,
                 easing: Easing.inOut(Easing.ease)
             }).start();
 
@@ -179,9 +179,11 @@ export default class Menu extends Component {
             <ScrollView style={styles.menu}>
                 <TouchableNativeFeedback onPress={(event) => Actions.Profile()}>
                     <View style={styles.avatarContainer}>
-                        <Image
-                            style={styles.avatar}
-                            source={{ uri, }}/>
+                        <View style={[styles.avatar, {backgroundColor: Color.secondaryColor}]}>
+                            <Image
+                                style={styles.avatar}
+                                source={{ uri: 'data:image/png;base64,' + this.props.user.photo }}/>
+                        </View>
                         <Text style={styles.name}>{this.props.user.first_name} {this.props.user.last_name}</Text>
                         <Text style={styles.email}>{this.props.user.email}</Text>
                     </View>

@@ -83,13 +83,13 @@ export default class PaymentData extends Component {
                 <View style={styles.container}>
                     <View style={{flexDirection: 'row'}}>
                         <TextInput
-                            onChangeText={(firstName) => this.setState({firstName})}
-                            value={this.state.firstName}
+                            onChangeText={(first_name) => this.setState({first_name})}
+                            value={this.state.first_name}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
                             placeholder={_('First name')}/>
                         <TextInput
-                            onChangeText={(lastName) => this.setState({lastName})}
-                            value={this.state.lastName}
+                            onChangeText={(last_name) => this.setState({last_name})}
+                            value={this.state.last_name}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
                             placeholder={_('Last name')}/>
                     </View>

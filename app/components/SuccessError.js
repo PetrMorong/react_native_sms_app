@@ -24,7 +24,7 @@ export default class SuccessError extends Component {
             view = <View style={[styles.container, {backgroundColor: Color.error}]}>
                 <Icon name="error-outline" style={{color: 'white', opacity: 1, marginRight: 30}} size={35}/>
                 <Text style={{color: 'white', flex: 1, fontSize: 20}}>{this.props.errorMessage}</Text>
-                <TouchableNativeFeedback onPress={this.props.dispatch()}>
+                <TouchableNativeFeedback >
                     <Icon name="close" style={{color: 'white', opacity: 1}} size={35}/>
                 </TouchableNativeFeedback>
             </View>;
@@ -32,7 +32,7 @@ export default class SuccessError extends Component {
             view = <View style={[styles.container, {backgroundColor: Color.success}]}>
                 <Icon name="done" style={{color: 'white', opacity: 1, marginRight: 30}} size={35}/>
                 <Text style={{color: 'white', flex: 1, fontSize: 20}}>{this.props.successMessage}</Text>
-                <TouchableNativeFeedback onPress={this.props.close}>
+                <TouchableNativeFeedback >
                     <Icon name="close" style={{color: 'white', opacity: 1}} size={35}/>
                 </TouchableNativeFeedback>
             </View>;

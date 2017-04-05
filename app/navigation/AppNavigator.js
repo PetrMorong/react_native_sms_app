@@ -82,9 +82,9 @@ export default class AppNavigator extends Component {
 
     render() {
         return (
-            <Router>
-                <Scene key="root">
-                    <Scene key='SignIn' component={SignIn} initial={true} hideNavBar/>
+            <Router >
+                <Scene key="root" duration={0}>
+                    <Scene key='SignIn' component={SignIn}  hideNavBar />
                     <Scene key='SignUp' component={SignUp} hideNavBar/>
                     <Scene key='SignUpStepTwo' component={SignUpStepTwo} hideNavBar/>
                     <Scene key='LostPassword' component={LostPassword} hideNavBar/>
@@ -111,7 +111,7 @@ export default class AppNavigator extends Component {
                     <Scene key='CampaignList' component={CampaignList} hideNavBar/>
                     <Scene key='HistoryList' component={HistoryList} hideNavBar/>
                     <Scene key='ScheduledList' component={ScheduledList} hideNavBar/>
-                    <Scene key='InboxList' component={InboxList} hideNavBar/>
+                    <Scene key='InboxList' component={InboxList} initial={true} hideNavBar/>
                     <Scene key='Statistics' component={Statistics} hideNavBar/>
                     <Scene key='Order' component={Order} hideNavBar/>
                     <Scene key='OrderList' component={OrderList} hideNavBar/>

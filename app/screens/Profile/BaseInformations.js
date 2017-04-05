@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     Modal,
-    Button,
     Text,
     Picker,
     View,
@@ -22,33 +21,98 @@ import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
 import Color from '../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/Actions'
+import { saveBaseInformations } from './actions';
+import Button from '../../components/Button';
+import { fromJS } from 'immutable';
 
 const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return{
         _: store.translator.translations,
-        user: store.user.user
+        user: store.user.user.user,
+        profile: store.profile,
+        timezones: store.user.user.timezones,
+        countries: store.user.user.countries
     }
 }
 
 
 export default class BaseInformations extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            firstName: this.props.user.first_name,
-            lastName: this.props.user.last_name,
-            phoneNumber: this.props.user.phone_number,
-            timeZone: this.props.user.timezone,
-            country: this.props.user.country,
-            phone_prefix: this.props.user.phone_prefix
 
+
+    constructor(props){
+        super(props);
+
+        let first_name = this.props.user.first_name,
+            last_name = this.props.user.last_name,
+            phone_number = this.props.user.phone_number,
+            timezone = this.props.user.timezone,
+            country = this.props.user.country;
+
+        this.state = {
+            first_name, last_name, phone_number, timezone, country,
+            buttonStatus: 'default',
+        };
+    }
+
+    createData()
+    {
+        return {
+            first_name : this.state.first_name,
+            last_name : this.state.last_name,
+            phone_number : this.state.phone_number,
+            timezone : this.state.timezone,
+            country : this.state.country
+        };
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.profile.saving){
+            this.setState({buttonStatus: 'saving'})
+        }
+
+        if(nextProps.profile.saved){
+            this.setState({buttonStatus: 'saved'})
         }
     }
 
+
+    handleSave() {
+        let data = this.createData();
+        this.props.dispatch(saveBaseInformations(data));
+
+        let map = fromJS(this.props.user).merge(data).toJS();
+
+        this.props.dispatch({type: 'PROFILE_SAVE_SUCCESS', payload: map})
+    }
+
     render() {
+
+        let itemsTimezone = this.props.timezones.map((timezone, i)=>{
+            return <Picker.Item label={timezone} value={timezone} key={i}/>
+        });
+
+        let timezones = <Picker
+            style={{width: window.width /10 * 9 -5, marginTop: 5, marginLeft: 5, color: Color.displayText}}
+            selectedValue={this.state.timezone}
+            onValueChange={(timeZone) => this.setState({senderValue: timeZone, buttonStatus: 'changed'})}>
+            {itemsTimezone}
+        </Picker>
+
+
+        let itemsCountry = Object.keys(this.props.countries).map((key,i)=>{
+            return <Picker.Item label={this.props.countries[key]} value={key} key={i}/>
+
+        });
+
+        let countries = <Picker
+            style={{width: window.width /10 * 9 -5, marginTop: 5, marginLeft: 5, color: Color.displayText}}
+            selectedValue={this.state.time_zone}
+            onValueChange={(time_zone) => this.setState({senderValue: time_zone, buttonStatus: 'changed'})}>
+            {itemsCountry}
+        </Picker>
+
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -65,66 +129,41 @@ export default class BaseInformations extends Component {
                 <View style={[{padding: 15}, styles.container]}>
                     <View style={{flexDirection: 'row'}}>
                         <TextInput
-                            onChangeText={(firstName) => this.setState({firstName})}
-                            value={this.state.firstName}
+                            onChangeText={(first_name) => this.setState({first_name, buttonStatus: 'changed'})}
+                            value={this.state.first_name}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
                             placeholder={_('First name')}
                             placeholderTextColor={Color.displayText}
                             underlineColorAndroid={Color.displayText}/>
                         <TextInput
-                            onChangeText={(lastName) => this.setState({lastName})}
-                            value={this.state.lastName}
+                            onChangeText={(last_name) => this.setState({last_name, buttonStatus: 'changed'})}
+                            value={this.state.last_name}
                             style={{flex: 1, marginLeft: 10, marginRight: 10, }}
                             placeholder={_('Last name')}
-                            keyboardType='numeric'
                             placeholderTextColor={Color.displayText}
                             underlineColorAndroid={Color.displayText}/>
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <TextInput
-                            onChangeText={(callPrefix) => this.setState({callPrefix})}
-                            value={this.state.callPrefix}
-                            style={{width: window.width / 4, marginLeft: 10, marginRight: 10}}
-                            placeholder={_('Call prefix')}
-                            keyboardType='numeric'
-                            placeholderTextColor={Color.displayText}
-                            underlineColorAndroid={Color.displayText}/>
-                        <TextInput
-                            onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-                            value={this.state.phoneNumber}
+                            onChangeText={(phone_number) => this.setState({phone_number, buttonStatus: 'changed'})}
+                            value={this.state.phone_number}
                             style={{flex: 1, marginLeft: 10, marginRight: 10}}
                             placeholder={_('Phone number')}
                             placeholderTextColor={Color.displayText}
                             underlineColorAndroid={Color.displayText}/>
                     </View>
                     <View>
-                        <Picker
-                            style={{width: window.width /10 * 9 -5, marginTop: 5, marginLeft: 5, color: Color.displayText}}
-                            selectedValue={this.state.timeZone}
-                            onValueChange={(timeZone) => this.setState({senderValue: timeZone})}>
-                            <Picker.Item label="Europe/Oslo" value="Europe/Oslo" />
-                            <Picker.Item label="afrika" value="h" />
-                            <Picker.Item label="dfs" value="kk" />
-                            <Picker.Item label="dfs" value="ff" />
-                        </Picker>
+                        {countries}
                     </View>
                     <View>
-                        <Picker
-                            style={{width: window.width /10 * 9 -5, marginTop: 5, marginLeft: 5, color: Color.displayText}}
-                            selectedValue={this.state.timeZone}
-                            onValueChange={(timeZone) => this.setState({senderValue: timeZone})}>
-                            <Picker.Item label="United kingdom" value="Europe/Oslo" />
-                            <Picker.Item label="afrika" value="h" />
-                            <Picker.Item label="dfs" value="kk" />
-                            <Picker.Item label="dfs" value="ff" />
-                        </Picker>
+                        {timezones}
                     </View>
                     <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                        <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
-                            <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_('Save').toUpperCase()}</Text>
-                            </View>
-                        </TouchableNativeFeedback>
+                       <Button
+                           click={() => this.handleSave()}
+                           text={_('Save').toUpperCase()}
+                           buttonStatus={this.state.buttonStatus}
+                       />
                     </View>
                 </View>
             </DrawerLayoutAndroid>
