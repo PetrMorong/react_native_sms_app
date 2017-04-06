@@ -22,7 +22,7 @@ import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
 import Color from '../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/Actions'
+import { save } from '../../actions/index'
 import { ColorPicker } from 'react-native-color-picker'
 
 const window = Dimensions.get('window');

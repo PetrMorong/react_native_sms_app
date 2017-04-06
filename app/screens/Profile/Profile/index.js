@@ -16,23 +16,26 @@ import {
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
     ScrollView,
-    DrawerLayoutAndroid
+    DrawerLayoutAndroid,
+    ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Menu from '../../components/Menu';
-import Toolbar from '../../components/Toolbar';
-import Color from '../../config/Variables';
+import Menu from '../../../components/Menu';
+import Toolbar from '../../../components/Toolbar';
+import Color from '../../../config/Variables';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
-
+import { save } from '../../../actions/index';
+import { fromJS } from 'immutable';
 
 const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations,
-        user: store.user.user.user
+        user: store.user.user.user,
+        countries: store.user.user.countries,
+        profile: store.profile
     }
 }
 
@@ -45,7 +48,37 @@ export default class Profile extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.profile.saving){
+            this.setState({savingImage: true})
+        }else{
+            this.setState({savingImage: false})
+        }
+    }
+
     render() {
+        let image;
+        if(this.state.imageSource){
+            image = <Image
+                style={styles.avatar}
+                source={{ uri: this.state.imageSource }}/>
+        }else{
+            image = <Image
+                style={styles.avatar}
+                source={{ uri: 'data:image/png;base64,' + this.props.user.photo }}/>
+        }
+
+        let imageIcon;
+        if(this.state.savingImage){
+            imageIcon =<View style={{ width: 110, height: 110, borderRadius: 50, position: 'absolute', top: 0 , alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,.3)'}} >
+                <ActivityIndicator style={{height: 40}} size="large"/>
+            </View>
+        }else{
+            imageIcon = <View style={{ width: 110, height: 110, borderRadius: 500, position: 'absolute', top: 0 , alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,.3)'}} >
+                <Icon name="photo-camera" size={35} style={{color: 'white'}}/>
+            </View>
+        }
+
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -69,12 +102,8 @@ export default class Profile extends Component {
                             <TouchableWithoutFeedback onPress={() => this.setState({modalVisible: true})}>
                                 <View style={{alignItems: 'center'}}>
                                     <View style={{position: 'relative'}}>
-                                        <Image
-                                            style={styles.avatar}
-                                            source={{ uri: 'data:image/png;base64,' + this.props.user.photo }}/>
-                                        <View style={{ width: 110, height: 110, borderRadius: 100, position: 'absolute', top: 0 , alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,.3)'}} >
-                                            <Icon name="photo-camera" size={35} style={{color: 'white'}}/>
-                                        </View>
+                                        {image}
+                                        {imageIcon}
                                     </View>
                                     <Text style={styles.email}>{this.props.user.email}</Text>
                                 </View>
@@ -91,11 +120,9 @@ export default class Profile extends Component {
                                 <Text style={styles.marginTop}>{this.props.user.first_name} {this.props.user.last_name}</Text>
                                 <Text style={styles.marginTop}>{this.props.user.phone_number}</Text>
                                 <Text style={styles.marginTop}>{this.props.user.timezone}</Text>
-                                <Text style={styles.marginTop}>{this.props.user.country}</Text>
+                                <Text style={styles.marginTop}>{this.props.countries[this.props.user.country]}</Text>
                             </View>
-
                         </View>
-
                         <View style={styles.actionWrap}>
                             <TouchableNativeFeedback onPress={()=>Actions.ChangePassword()}>
                                 <View style={{alignItems: 'center', width: 100}}>
@@ -160,9 +187,15 @@ export default class Profile extends Component {
             cropping: true,
             includeBase64: true,
             cropperTintColor: '#011D2B'
-
         }).then(image => {
             this.setModalVisible(false);
+
+            this.props.dispatch(save('profile/save-image', {photo: image.data}));
+
+            let map = fromJS(this.props.user).merge({photo: image.data}).toJS();
+
+            this.props.dispatch({type: 'PROFILE_SAVE_SUCCESS', payload: map});
+
             this.setState({
                 imageSource: image.path
             });
@@ -177,9 +210,15 @@ export default class Profile extends Component {
             cropping: true,
             includeBase64: true,
             cropperTintColor: '#011D2B'
-
         }).then(image => {
             this.setModalVisible(false);
+
+            this.props.dispatch(save('profile/save-image', {photo: image.data}));
+
+            let map = fromJS(this.props.user).merge({photo: image.data}).toJS();
+
+            this.props.dispatch({type: 'PROFILE_SAVE_SUCCESS', payload: map});
+
             this.setState({
                 imageSource: image.path
             });

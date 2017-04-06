@@ -21,7 +21,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Color from '../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/Actions'
+import { save } from '../../actions/index'
 import { Actions } from 'react-native-router-flux';
 import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';

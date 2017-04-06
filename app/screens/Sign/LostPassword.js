@@ -22,10 +22,10 @@ import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
 import Color from '../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/Actions';
+import { save } from '../../actions/index';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Actions } from 'react-native-router-flux';
-import { fetchUser } from '../../actions/Actions'
+import { fetchUser } from '../../actions/index'
 
 const window = Dimensions.get('window');
 

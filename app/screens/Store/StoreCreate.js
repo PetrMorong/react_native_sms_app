@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     Modal,
-    Button,
     Text,
     Picker,
     View,
@@ -19,15 +18,16 @@ import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
 import Color from '../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/Actions'
+import { save } from './actions';
 import { Actions } from 'react-native-router-flux';
+import Button from '../../components/Button';
+
 
 
 const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations,
         user: store.user.user
     }
 }
@@ -36,7 +36,8 @@ export default class StoreCreate extends Component{
     constructor(props){
         super(props)
         this.state = {
-            text: ''
+            text: '',
+            buttonStatus: 'default'
         }
     }
 
@@ -66,13 +67,11 @@ export default class StoreCreate extends Component{
                                 placeholder={_('Store name')}/>
                         </View>
                         <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                            <View style={{width: 110, margin: 25}}>
-                                <TouchableNativeFeedback onPress={() => Actions.StoreSettings()}>
-                                    <View style={styles.buttonWrap}>
-                                        <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
-                                    </View>
-                                </TouchableNativeFeedback>
-                            </View>
+                            <Button
+                                click={() => this.handleSave()}
+                                text={_('Save').toUpperCase()}
+                                buttonStatus={this.state.buttonStatus}
+                            />
                         </View>
                     </View>
                 </ScrollView>

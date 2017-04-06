@@ -8,7 +8,7 @@ export function fetchUser(username, password){
         dispatch({type: 'FETCH_USER'});
         request
             .post('http://10.0.0.12/bulkgate/mobile-api/sign/in')
-            .send({username: 'moriandr73@gmail.com', password: 'schichijuusan73' })
+            .send({username: 'tomas.smradoch@seznam.cz', password: 'schichijuusan73' })
             .set('Accept', 'application/json')
             .end(function(err, res){
                 try{

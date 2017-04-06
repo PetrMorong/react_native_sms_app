@@ -105,6 +105,17 @@ export default class Menu extends Component {
 
     render() {
 
+        let image;
+        if(this.props.user.photo === ''){
+            image = <View style={[styles.avatar, {backgroundColor: 'grey'}]}>
+                <Icon name="person" style={{color: 'white'}} size={50}/>
+            </View>
+        }else{
+            image = <Image
+                style={styles.avatar}
+                source={{ uri: 'data:image/png;base64,' + this.props.user.photo }}/>
+        }
+
         let smsItem;
         if(this.state.toggleSms){
             smsItem = <View>
@@ -180,9 +191,7 @@ export default class Menu extends Component {
                 <TouchableNativeFeedback onPress={(event) => Actions.Profile()}>
                     <View style={styles.avatarContainer}>
                         <View style={[styles.avatar, {backgroundColor: Color.secondaryColor}]}>
-                            <Image
-                                style={styles.avatar}
-                                source={{ uri: 'data:image/png;base64,' + this.props.user.photo }}/>
+                            {image}
                         </View>
                         <Text style={styles.name}>{this.props.user.first_name} {this.props.user.last_name}</Text>
                         <Text style={styles.email}>{this.props.user.email}</Text>
@@ -319,7 +328,9 @@ const styles = StyleSheet.create({
     avatar: {
         width: 90,
         height: 90,
-        borderRadius: 50
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     name: {
         color: Color.menuName,

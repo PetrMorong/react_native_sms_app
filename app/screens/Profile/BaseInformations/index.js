@@ -17,29 +17,28 @@ import {
     ScrollView,
     DrawerLayoutAndroid
 } from 'react-native';
-import Menu from '../../components/Menu';
-import Toolbar from '../../components/Toolbar';
-import Color from '../../config/Variables';
+import Menu from '../../../components/Menu';
+import Toolbar from '../../../components/Toolbar';
+import Color from '../../../config/Variables';
 import { connect } from 'react-redux';
-import { saveBaseInformations } from './actions';
-import Button from '../../components/Button';
+import { save } from '../../../actions/index';
+import Button from '../../../components/Button';
 import { fromJS } from 'immutable';
+
 
 const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations,
         user: store.user.user.user,
-        profile: store.profile,
         timezones: store.user.user.timezones,
-        countries: store.user.user.countries
+        countries: store.user.user.countries,
+        baseInformations: store.baseInformations
     }
-}
+};
 
 
 export default class BaseInformations extends Component {
-
 
     constructor(props){
         super(props);
@@ -68,19 +67,24 @@ export default class BaseInformations extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.profile.saving){
+        if(nextProps.baseInformations.saving){
             this.setState({buttonStatus: 'saving'})
         }
 
-        if(nextProps.profile.saved){
+        if(nextProps.baseInformations.saved){
             this.setState({buttonStatus: 'saved'})
+        }
+
+        if(nextProps.baseInformations.error){
+            this.setState({buttonStatus: 'error'})
         }
     }
 
 
+
     handleSave() {
         let data = this.createData();
-        this.props.dispatch(saveBaseInformations(data));
+        this.props.dispatch(save('profile/save', data));
 
         let map = fromJS(this.props.user).merge(data).toJS();
 
@@ -96,7 +100,7 @@ export default class BaseInformations extends Component {
         let timezones = <Picker
             style={{width: window.width /10 * 9 -5, marginTop: 5, marginLeft: 5, color: Color.displayText}}
             selectedValue={this.state.timezone}
-            onValueChange={(timeZone) => this.setState({senderValue: timeZone, buttonStatus: 'changed'})}>
+            onValueChange={(timezone) => this.setState({timezone: timezone, buttonStatus: 'changed'})}>
             {itemsTimezone}
         </Picker>
 
@@ -108,8 +112,8 @@ export default class BaseInformations extends Component {
 
         let countries = <Picker
             style={{width: window.width /10 * 9 -5, marginTop: 5, marginLeft: 5, color: Color.displayText}}
-            selectedValue={this.state.time_zone}
-            onValueChange={(time_zone) => this.setState({senderValue: time_zone, buttonStatus: 'changed'})}>
+            selectedValue={this.state.country}
+            onValueChange={(country) => this.setState({country: country, buttonStatus: 'changed'})}>
             {itemsCountry}
         </Picker>
 

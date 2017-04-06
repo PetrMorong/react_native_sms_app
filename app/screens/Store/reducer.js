@@ -15,8 +15,18 @@ export default function reducer(state={
             return {
                 ...state,
                 saving: false,
-                saved: true
+                saved: true,
+                error: null
             }
+        }
+        case 'FETCH_PAYMENT': {
+            return {...state, fetching: true, saved: false}
+        }
+        case 'FETCH_PAYMENT_REJECTED': {
+            return {...state, fetching: false, error: action.payload}
+        }
+        case 'FETCH_PAYMENT_FULFILLED': {
+            return {...state, fetching: false, payment: action.payload, error: null}
         }
     }
     return state;

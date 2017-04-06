@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import AppNavigator from './navigation/AppNavigator'
-import { getTranslations } from './actions/Actions'
+import { getTranslations } from './actions/index'
 import { AsyncStorage } from 'react-native';
 import Translator from './Translator';
 

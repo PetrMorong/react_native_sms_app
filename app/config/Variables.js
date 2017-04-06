@@ -22,6 +22,8 @@ const colorSunSms = {
     //button
     button: '#FFDE00',
     buttonText: 'rgba(0,0,0,.85)',
+    buttonSuccess: 'green',
+    buttonError: 'red',
 
     //secondaryButton
     secondaryButton: 'black',

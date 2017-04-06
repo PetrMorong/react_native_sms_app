@@ -27,7 +27,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (store) => {
     return{
-        user: store.user.user,
+        user: store.user.user.user,
     }
 };
 
@@ -37,8 +37,18 @@ const window = Dimensions.get('window');
 export default class DashboardNewUser extends Component {
 
     render() {
-        const user = this.props.user.user;
         let menu  = <Menu/>;
+
+        let image;
+        if(this.props.user.photo === ''){
+            image = <View style={[styles.avatar, {backgroundColor: 'grey'}]}>
+                <Icon name="person" style={{color: 'white'}} size={60}/>
+            </View>
+        }else{
+            image = <Image
+                style={styles.avatar}
+                source={{ uri: 'data:image/png;base64,' + this.props.user.photo }}/>
+        }
 
         return (
             <DrawerLayoutAndroid
@@ -56,12 +66,10 @@ export default class DashboardNewUser extends Component {
                         <View style={styles.cover}>
                             <View style={styles.avatarContainer}>
                                 <View style={[styles.avatar, {backgroundColor: Color.secondaryColor}]}>
-                                    <Image
-                                        style={styles.avatar}
-                                        source={{ uri: 'data:image/png;base64,' + user.photo }}/>
+                                    {image}
                                 </View>
-                                <Text style={styles.name}>{user.first_name} {user.last_name}</Text>
-                                <Text style={styles.email}>{user.email}</Text>
+                                <Text style={styles.name}>{this.props.user.first_name} {this.props.user.last_name}</Text>
+                                <Text style={styles.email}>{this.props.user.email}</Text>
                             </View>
                             <View style={{flexDirection: 'row', marginTop: 30, justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15}}>
                                 <View style={styles.coverNumbersWrap}>
@@ -169,7 +177,9 @@ const styles = StyleSheet.create({
     avatar: {
         width: 90,
         height: 90,
-        borderRadius: 50
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     name: {
         color: 'white',

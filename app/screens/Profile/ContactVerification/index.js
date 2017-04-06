@@ -20,30 +20,36 @@ import {
     ScrollView,
     DrawerLayoutAndroid
 } from 'react-native';
-import Menu from '../../components/Menu';
-import Toolbar from '../../components/Toolbar';
-import Color from '../../config/Variables';
+import Menu from '../../../components/Menu';
+import Toolbar from '../../../components/Toolbar';
+import Color from '../../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/Actions'
+import { save, fetch } from '../../../actions/index';
 
 const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return {
-        _: store.translator.translations,
-        user: store.user.user
+        contactVerification: store.contactVerification,
     }
-}
+};
 
 
 export default class ContactVerification extends Component{
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             verifyPhone: false,
             typeCodePhone: false
-
         }
+    }
+
+    componentWillMount(){
+        this.props.dispatch(fetch('profile/get-verified-numbers'))
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
     }
 
     render() {
@@ -108,38 +114,34 @@ export default class ContactVerification extends Component{
                     elevation={0}
                     back={true}/>
                 <View style={styles.container}>
-                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('CustomerSms')}>
-                        <View style={[styles.border]}>
-                            <View style={styles.row}>
-                                <Icon name="phone-android" size={30} style={{color: '#BE2166'}}/>
-                                <View style={{flex: 1}}>
-                                    <View style={styles.a}>
-                                        <View>
-                                            <Text>{_('Phone number')}</Text>
-                                            <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>+420 589 654 478</Text>
-                                        </View>
-                                        <View style={{width: 80}}>
-                                            {verifyPhoneButton}
-                                        </View>
+                    <View style={[styles.border]}>
+                        <View style={styles.row}>
+                            <Icon name="phone-android" size={30} style={{color: '#BE2166'}}/>
+                            <View style={{flex: 1}}>
+                                <View style={styles.a}>
+                                    <View>
+                                        <Text>{_('Phone number')}</Text>
+                                        <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>+420 589 654 478</Text>
+                                    </View>
+                                    <View style={{width: 80}}>
+                                        {verifyPhoneButton}
                                     </View>
                                 </View>
                             </View>
-                            {sendCodePhone}
-                            {typeCodePhone}
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.navigateToScreen('CustomerEmail')}>
-                        <View style={styles.row}>
-                            <Icon name="mail-outline" size={30} style={{color: '#BE2166'}}/>
-                            <View style={styles.a}>
-                                <View>
-                                    <Text>{_('email')}</Text>
-                                    <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>gnorom1@seznam.cz</Text>
-                                </View>
-                                <Icon name="check-circle" size={25} style={styles.b}/>
+                        {sendCodePhone}
+                        {typeCodePhone}
+                    </View>
+                    <View style={styles.row}>
+                        <Icon name="mail-outline" size={30} style={{color: '#BE2166'}}/>
+                        <View style={styles.a}>
+                            <View>
+                                <Text>{_('email')}</Text>
+                                <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>gnorom1@seznam.cz</Text>
                             </View>
+                            <Icon name="check-circle" size={25} style={styles.b}/>
                         </View>
-                    </TouchableNativeFeedback>
+                    </View>
                 </View>
             </DrawerLayoutAndroid>
         )

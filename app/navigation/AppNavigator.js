@@ -67,11 +67,11 @@ import SignUp from '../screens/Sign/SignUp'
 import LostPassword from '../screens/Sign/LostPassword'
 import SignUpStepTwo from '../screens/Sign/SignUpStepTwo'
 
-import Profile from '../screens/Profile/Profile'
-import BaseInformations from '../screens/Profile/BaseInformations'
-import ChangePassword from '../screens/Profile/ChangePassword'
-import PaymentData from '../screens/Profile/PaymentData'
-import ContactVerification from '../screens/Profile/ContactVerification'
+import Profile from '../screens/Profile/Profile/index'
+import BaseInformations from '../screens/Profile/BaseInformations/index'
+import ChangePassword from '../screens/Profile/ChangePassword/index'
+import PaymentData from '../screens/Profile/PaymentData/index'
+import ContactVerification from '../screens/Profile/ContactVerification/index'
 
 BackAndroid.addEventListener("hardwareBackPress", () => {
     Actions.pop();
