@@ -1,13 +1,15 @@
 package com.app;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+<<<<<<< ours
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactInstanceManager;
+=======
+>>>>>>> theirs
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -22,7 +24,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
-    protected boolean getUseDeveloperSupport() {
+    public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
 
