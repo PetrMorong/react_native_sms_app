@@ -16,13 +16,16 @@ import {
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
     ScrollView,
-    DrawerLayoutAndroid
+    DrawerLayoutAndroid,
+    ActivityIndicator,
+    ListView,
+    RefreshControl
 } from 'react-native';
-import Menu from '../../components/Menu';
-import Toolbar from '../../components/Toolbar';
-import Color from '../../config/Variables';
+import Menu from '../../../components/Menu';
+import Toolbar from '../../../components/Toolbar';
+import Color from '../../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/index';
+import { save, fetch } from '../../../actions/index';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Actions } from 'react-native-router-flux';
 
@@ -30,13 +33,74 @@ const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations
+        storeList: store.storeList
     }
-}
+};
 
 export default class StoreList extends Component{
+    constructor(props){
+        super(props);
+
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+        this.state = {
+            dataSource: ds.cloneWithRows([]),
+            refreshing: false,
+            data: []
+        }
+    }
+
+    componentWillMount(){
+        this.initialFetch()
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.storeList.data){
+            let newData = this.state.data.concat(nextProps.storeList.data.result.list);
+            this.setState({dataSource: ds.cloneWithRows(newData), data: newData})
+        }
+    }
+
+    onEndReached(){
+
+    }
+
+    initialFetch(){
+        this.props.dispatch(fetch('store/get-store-list', {reducer: 'storeList'}, {limit: 20, offset: 0}))
+    }
+
+    renderItem(item){
+        console.log(item)
+        return <TouchableNativeFeedback onPress={()=> Actions.StoreSettings({id: item.id})}>
+            <View>
+                <View style={styles.itemWrap}>
+                    <View>
+                        <Image style={styles.itemImage} resizeMode='stretch' source={require('../../../images/guitarLogo.jpg')}/>
+                    </View>
+                    <View style={{flexDirection: 'row', flex: 1}}>
+                        <Text style={styles.itemText}>{item.name}</Text>
+                    </View>
+                </View>
+                <View style={styles.separator}/>
+            </View>
+        </TouchableNativeFeedback>
+    }
+
 
     render() {
+
+        let loader;
+        if(this.props.fetching){
+            loader = <View style={{backgroundColor: 'white', height: window.height-60, width: window.width, justifyContent: 'center'}}>
+                <ActivityIndicator
+                    style={{height: 150}}
+                    size="large"
+                />
+            </View>
+        }
+
+
+
         let menu  = <Menu/>;
         return (
             <DrawerLayoutAndroid
@@ -49,46 +113,19 @@ export default class StoreList extends Component{
                     background="container"
                     title={_('Stores')}
                     elevation={2}/>
+                {loader}
                 <View style={styles.container}>
-                    <TouchableNativeFeedback onPress={()=> Actions.StoreSettings()}>
-                        <View>
-                            <View style={styles.itemWrap}>
-                                <View>
-                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
-                                </View>
-                                <View style={{flexDirection: 'row', flex: 1}}>
-                                    <Text style={styles.itemText}>Kytara</Text>
-                                </View>
-                            </View>
-                            <View style={styles.separator}/>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=> Actions.StoreSettings()}>
-                        <View>
-                            <View style={styles.itemWrap}>
-                                <View>
-                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
-                                </View>
-                                <View style={{flexDirection: 'row', flex: 1}}>
-                                    <Text style={styles.itemText}>My top mega store</Text>
-                                </View>
-                            </View>
-                            <View style={styles.separator}/>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={()=> Actions.StoreSettings()}>
-                        <View>
-                            <View style={styles.itemWrap}>
-                                <View>
-                                    <Image style={styles.itemImage} resizeMode='stretch' source={require('../../images/guitarLogo.jpg')}/>
-                                </View>
-                                <View style={{flexDirection: 'row', flex: 1}}>
-                                    <Text style={styles.itemText}>Fun store</Text>
-                                </View>
-                            </View>
-                            <View style={styles.separator}/>
-                        </View>
-                    </TouchableNativeFeedback>
+                    <ListView
+                        refreshControl={
+                          <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={() => this.initialFetch()}/>
+                        }
+                        dataSource={this.state.dataSource}
+                        renderRow={this.renderItem}
+                        onEndReached={() => this.onEndReached()}
+                        onEndReachedThreshold={10}
+                    />
                     <TouchableNativeFeedback onPress={() => Actions.StoreCreate()}>
                         <View style={styles.bottomButton} elevation={3}>
                             <Icon name="add" style={{color: 'white'}} size={30}/>

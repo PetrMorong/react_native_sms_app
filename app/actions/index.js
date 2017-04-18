@@ -14,10 +14,10 @@ export function save(url, meta={}, data){
                 let parsedResponse;
                 try{
                     parsedResponse = JSON.parse(res.text);
-                    dispatch({type: 'SAVE_FULFILLED', payload: parsedResponse.result, meta});
+                    dispatch({type: 'SAVE_FULFILLED', meta, payload: parsedResponse.result });
                 }
                 catch (err){
-                    dispatch({type: 'SAVE_REJECTED', payload: parsedResponse.error, meta});
+                    dispatch({type: 'SAVE_REJECTED', meta, payload: {error: true} });
                 }
             });
     }
@@ -51,7 +51,7 @@ export function fetch(url, meta={}, data={}){
                     dispatch({type: 'FETCH_FULFILLED', payload: parsedResponse, meta});
                 }
                 catch (err){
-                    dispatch({type: 'FETCH_REJECTED', meta});
+                    dispatch({type: 'FETCH_REJECTED', meta, payload: {error: true}});
                 }
             });
     }

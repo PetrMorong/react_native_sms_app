@@ -307,7 +307,7 @@ export default class StoreSettings extends Component{
             language = <Image source={require('../../../images/flags/24/gb.png')} resizeMode='stretch' style={{width: 30, height: 28, marginBottom: 1}}/>;
         }
 
-        if(this.state.data.language === 'cs'){
+        if(this.state.data.language === 'cz'){
             language = <Image source={require('../../../images/flags/24/cz.png')} resizeMode='stretch' style={{width: 30, height: 28, marginBottom: 1}}/>
         }
 

@@ -14,6 +14,7 @@ import contactVerification from './screens/Profile/ContactVerification/reducer';
 import storeCreate from './screens/Store/StoreCreate/reducer';
 import storeSettings from './screens/Store/StoreSettings/reducer';
 import notifications from './screens/Store/Notifications/reducer';
+import storeList from './screens/Store/StoreList/reducer';
 
 export default combineReducers({
     dashboard,
@@ -27,5 +28,6 @@ export default combineReducers({
     contactVerification,
     storeCreate,
     storeSettings,
-    notifications
+    notifications,
+    storeList
 })

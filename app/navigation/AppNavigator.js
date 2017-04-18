@@ -35,7 +35,7 @@ import CustomerEmail from '../screens/Store/Notifications/CustomerEmail'
 import OwnerSms from '../screens/Store/Notifications/OwnerSms'
 import OwnerEmail from '../screens/Store/Notifications/OwnerEmail'
 import Language from '../screens/Store/Language'
-import StoreList from '../screens/Store/StoreList'
+import StoreList from '../screens/Store/StoreList/index'
 import StorePreview from '../screens/Store/StorePreview'
 import OrderForm from '../screens/Store/OrderForm'
 

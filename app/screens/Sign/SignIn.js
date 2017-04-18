@@ -16,7 +16,8 @@ import {
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
     ScrollView,
-    DrawerLayoutAndroid
+    DrawerLayoutAndroid,
+    ActivityIndicator
 } from 'react-native';
 import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
@@ -33,10 +34,9 @@ const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations,
         user: store.user
     }
-}
+};
 
 export default class SignIn extends Component {
     constructor(props){
@@ -48,7 +48,34 @@ export default class SignIn extends Component {
         }
     }
 
+    handleLogin(){
+        this.props.dispatch(fetchUser(this.state.email, this.state.password))
+    }
+
+    closeMessageTop(){
+        this.setState({successError: false})
+    }
+
     render() {
+
+        let signButton;
+        if(this.props.user.fetching){
+            signButton = <TouchableNativeFeedback>
+                <View style={[styles.buttonWrap, {backgroundColor: 'grey'}]}>
+                    <ActivityIndicator
+                        style={{height: 30}}
+                        size="large"
+                    />
+                </View>
+            </TouchableNativeFeedback>
+        }else{
+            signButton = <TouchableNativeFeedback onPress={() => this.handleLogin()}>
+                <View style={[styles.buttonWrap, {backgroundColor: Color.button}]}>
+                    <Text style={styles.buttonText}>{_('Login').toUpperCase()}</Text>
+                </View>
+            </TouchableNativeFeedback>
+        }
+
         if(this.props.user.error){
             setInterval(()=>{
                 this.setState({successError: true})
@@ -56,6 +83,7 @@ export default class SignIn extends Component {
         }
 
         return (
+
             <View style={styles.container}>
                 <SuccessError display={this.props.user.error} successMessage={_('Nice')} errorMessage={_('Invalid username or password')}/>
                 <View style={styles.loginWrap}>
@@ -85,11 +113,7 @@ export default class SignIn extends Component {
                                     secureTextEntry={true}/>
                             </View>
                         </View>
-                        <TouchableNativeFeedback onPress={() => this.handleLogin()}>
-                            <View style={styles.buttonWrap}>
-                                <Text style={styles.buttonText}>{_('Login').toUpperCase()}</Text>
-                            </View>
-                        </TouchableNativeFeedback>
+                        {signButton}
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
                             <TouchableNativeFeedback onPress={()=>Actions.LostPassword()}>
                                 <View style={{flexDirection: 'row'}}>
@@ -121,13 +145,6 @@ export default class SignIn extends Component {
         )
     }
 
-    handleLogin(){
-        this.props.dispatch(fetchUser(this.state.email, this.state.password))
-    }
-
-    closeMessageTop(){
-        this.setState({successError: false})
-    }
 
 }
 
@@ -172,7 +189,6 @@ const styles = StyleSheet.create({
         width: window.width/ 10 * 8,
         marginTop: 35,
         borderRadius: 2,
-        backgroundColor: Color.button,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
