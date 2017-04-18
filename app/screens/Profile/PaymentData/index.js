@@ -49,7 +49,7 @@ export default class PaymentData extends Component {
     }
 
     componentWillMount(){
-        this.props.dispatch(fetch('profile/payment-data-load'));
+        this.props.dispatch(fetch('profile/payment-data-load', {reducer: 'paymentData'}));
     }
 
     componentWillReceiveProps(nextProps){
@@ -72,7 +72,7 @@ export default class PaymentData extends Component {
 
         this.props.dispatch({type: 'SAVE_PAYMENT', payload: map});
 
-        this.props.dispatch(save('profile/payment-data-save', this.state.data ));
+        this.props.dispatch(save('profile/payment-data-save', {reducer: 'paymentData'} ,this.state.data ));
 
     }
 

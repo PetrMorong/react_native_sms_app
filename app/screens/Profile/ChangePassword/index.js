@@ -64,7 +64,7 @@ export default class ChangePassword extends Component {
 
     handleSave(){
         if(this.state.isValidPassword && this.state.isSamePassword){
-            this.props.dispatch(save('profile/password', {old_password: this.state.password, new_password: this.state.newPassword, new_password_retype: this.state.newPasswordAgain}))
+            this.props.dispatch(save('profile/password', {reducer: 'changePassword'} ,{old_password: this.state.password, new_password: this.state.newPassword, new_password_retype: this.state.newPasswordAgain}))
         }
 
     }

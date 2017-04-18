@@ -9,7 +9,7 @@ export default function reducer(state={
 }, action){
 
     try{
-        if(action.meta.reducer !== "changePassword"){
+        if(action.meta.reducer !== "notifications"){
             return state;
         }
     }catch(e){
@@ -29,6 +29,10 @@ export default function reducer(state={
     onSaveRejected(result, action);
 
     onSaveFulfilled(result, action);
+
+    if (action.type == "CHANGE_NOTIFICATIONS"){
+        result = action.payload;
+    }
 
     return result;
 }

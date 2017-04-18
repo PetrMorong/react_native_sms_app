@@ -3,6 +3,7 @@ export function onFetch(state, action) {
 
         state.fetching = true;
         state.saved = false;
+        state.fetched = false;
 
         return function (data = {}) {
             Object.assign(state, data);

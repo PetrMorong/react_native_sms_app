@@ -8,6 +8,14 @@ export default function reducer(state={
     fetched: false
 }, action){
 
+    try{
+        if(action.meta.reducer !== "profile"){
+            return state;
+        }
+    }catch(e){
+        return state;
+    }
+
     let result = {...state};
 
     onFetch(result, action);

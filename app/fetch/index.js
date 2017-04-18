@@ -1,7 +1,7 @@
 import request from 'superagent';
 import { AsyncStorage } from 'react-native';
 
-const urlBase = 'http://10.0.0.12/bulkgate/mobile-api/';
+const urlBase = 'http://10.0.0.16/bulkgate/mobile-api/';
 
 let token;
 AsyncStorage.getItem('token', (err, result) => {
@@ -28,18 +28,3 @@ export function post(url, data){
         });*/
 }
 
-export function get(url, data){
-    request
-        .get('http://10.0.0.12/bulkgate/mobile-api/profile/save')
-        .set('X-BulkGate-Api-Token', token)
-        .send({ first_name, last_name, country, phone_number, timezone })
-        .end(function(err, res){
-            console.log(res);
-            try{
-                dispatch({type: 'SAVE_FULFILLED'});
-            }
-            catch (err){
-                dispatch({type: 'SAVE_REJECTED'});
-            }
-        });
-}

@@ -1,11 +1,10 @@
 /**
- * Created by Petr on 9.2.2017.
+ * Created by Petr on 10.2.2017.
  */
 import React, {Component} from 'react';
 import {
     StyleSheet,
     Modal,
-    Button,
     Text,
     Picker,
     View,
@@ -19,26 +18,39 @@ import {
     DrawerLayoutAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Color from '../../config/Variables';
+import Color from '../../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/index'
+import { save, saveImage } from '../../../actions/index'
 import { Actions } from 'react-native-router-flux';
-import Menu from '../../components/Menu';
-import Toolbar from '../../components/Toolbar';
+import Menu from '../../../components/Menu';
+import Toolbar from '../../../components/Toolbar';
+import Button from '../../../components/Button';
+
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations,
+        notifications: store.notifications,
+        storeSettings: store.storeSettings
     }
-}
+};
 
-export default class OwnerEmail extends Component{
+
+export default class CustomerEmail extends Component{
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
-            message: '',
-            active: true,
+            message: this.props.notifications.data.result.notifications.customer_email.message,
+            active: this.props.notifications.data.result.notifications.store_values.customer_notification_email
         }
+    }
+
+    handleSave(){
+
+        let store_values = this.props.notifications.data.result.notifications.store_values;
+
+        this.props.dispatch(saveImage('store/save-notifications', {message: this.state.message ,type: 'customer_email', id: this.props.storeSettings.data.result.id, store_values: {...store_values, customer_notification_email: this.state.active}}));
+
+        Actions.Notifications();
     }
 
     render(){
@@ -55,20 +67,9 @@ export default class OwnerEmail extends Component{
                         multiline={true}
                         onChangeText={(message) => this.setState({message})}
                         value={this.state.message}/>
-                    <View style={{justifyContent: 'flex-end', flexDirection: 'row'}}>
-                        <Text style={styles.fontSize10}>{_('Total sms')}:</Text>
-                        <Text style={styles.messageStats}>2</Text>
-                        <Text style={styles.fontSize10}>{_('Recipients')}:</Text>
-                        <Text style={styles.messageStats}>3</Text>
-                        <Text style={styles.fontSize10}>SMS:</Text>
-                        <Text style={styles.messageStats}>5</Text>
-                        <Text style={styles.fontSize10}>{_('Length')}:</Text>
-                        <Text style={styles.messageStats}>130/120</Text>
-                    </View>
                 </View>
             </View>
         }
-
 
         return (
             <DrawerLayoutAndroid
@@ -79,7 +80,7 @@ export default class OwnerEmail extends Component{
                 <Toolbar
                     openMenu={() => this.drawer.openDrawer()}
                     background="container"
-                    title={_('Owner email')}
+                    title={_('Customer email')}
                     elevation={2}
                     back={true}/>
                 <View style={[styles.container, {padding: 15}]}>
@@ -95,11 +96,11 @@ export default class OwnerEmail extends Component{
                     {view}
                     <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                         <View style={{alignItems: 'flex-end'}}>
-                            <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
-                                <View style={styles.buttonWrap}>
-                                    <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
-                                </View>
-                            </TouchableNativeFeedback>
+                            <Button
+                                click={() => this.handleSave()}
+                                text={_('Save').toUpperCase()}
+                                buttonStatus={this.state.buttonStatus}
+                            />
                         </View>
                     </View>
                 </View>
@@ -156,9 +157,9 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     buttonText: {
-        color: Color.buttonText,
+        fontSize: 17,
         fontWeight: '500'
     }
 });
 
-module.exports = connect(mapStateToProps)(OwnerEmail);
+module.exports = connect(mapStateToProps)(CustomerEmail);

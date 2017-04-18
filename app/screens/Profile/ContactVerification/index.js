@@ -18,7 +18,8 @@ import {
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
     ScrollView,
-    DrawerLayoutAndroid
+    DrawerLayoutAndroid,
+    ActivityIndicator
 } from 'react-native';
 import Menu from '../../../components/Menu';
 import Toolbar from '../../../components/Toolbar';
@@ -31,6 +32,7 @@ const window = Dimensions.get('window');
 const mapStateToProps = (store) => {
     return {
         contactVerification: store.contactVerification,
+        user: store.user.user.user
     }
 };
 
@@ -39,39 +41,91 @@ export default class ContactVerification extends Component{
     constructor(props){
         super(props);
         this.state = {
-            verifyPhone: false,
-            typeCodePhone: false
+            showSend: false,
+            data: {},
+            typeCodePhone: false,
+            buttonStatus: 'default'
         }
     }
 
     componentWillMount(){
-        this.props.dispatch(fetch('profile/get-verified-numbers'))
+        this.props.dispatch(fetch('profile/get-verified-numbers', {reducer: 'contactVerification'}))
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps)
+        if(nextProps.contactVerification.data){
+            this.setState({data: nextProps.contactVerification.data.data.data})
+        }
+
+        if(nextProps.contactVerification.saving){
+            this.setState({buttonStatus: 'saving'})
+        }
+
+        if(nextProps.contactVerification.saved){
+            this.setState({buttonStatus: 'saved'})
+        }
+
+        if(nextProps.contactVerification.error){
+            this.setState({buttonStatus: 'error'})
+        }
+    }
+
+    handleSendCode(){
+        this.props.dispatch(save('profile/verify-number', {number: this.props.user.phone_number, iso: this.props.user.country}));
+        this.setState({typeCodePhone: true})
+    }
+
+    handleVerifyCode(){
+        this.props.dispatch(save('profile/check-code'), {number: this.props.user.phone_number, code: this.state.code})
     }
 
     render() {
         let menu  = <Menu/>;
+        let loader;
+        if(this.props.contactVerification.fetching){
+            loader = <View style={{backgroundColor: 'white', height: window.height-60, width: window.width, justifyContent: 'center'}}>
+                <ActivityIndicator
+                    style={{height: 150}}
+                    size="large"
+                />
+            </View>
+        }
 
         let verifyPhoneButton;
-        if(!this.state.verifyPhone){
-            verifyPhoneButton = <TouchableNativeFeedback onPress={() => this.setStateVerifyPhone()}>
-                <View style={styles.buttonWrap}>
-                    <Text style={styles.buttonText}>{_('verify').toUpperCase()}</Text>
-                </View>
-            </TouchableNativeFeedback>
+        if(!this.state.showSend){
+            if(!this.state.data){
+                verifyPhoneButton = <TouchableNativeFeedback onPress={() => this.setState({showSend: true})}>
+                    <View style={styles.buttonWrap}>
+                        <Text style={styles.buttonText}>{_('verify').toUpperCase()}</Text>
+                    </View>
+                </TouchableNativeFeedback>
+            }else{
+                try{
+                    let verified = Object.keys(this.state.data).map((item) => {
+                        return this.state.data[item].active
+                    });
+
+                    if(verified[0]){
+                        verifyPhoneButton = <Icon name="check-circle" size={25} style={styles.b}/>;
+                    }else{
+                        verifyPhoneButton = <TouchableNativeFeedback onPress={() => this.setState({showSend: true})}>
+                            <View style={styles.buttonWrap}>
+                                <Text style={styles.buttonText}>{_('verify').toUpperCase()}</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    }
+                }catch(e){}
+            }
         }
 
         let sendCodePhone;
-        if(this.state.verifyPhone && !this.state.typeCodePhone){
+        if(this.state.showSend && !this.state.typeCodePhone){
             sendCodePhone = <View style={{marginLeft: 50, flexDirection: 'row', marginTop: 10, marginBottom: 15}}>
                 <View style={{flex: 1}}>
                     <Text>{_('Verification code will be')}</Text>
                     <Text>{_('sent to your number')}</Text>
                 </View>
-                <TouchableNativeFeedback onPress={() => this.setStateTypeCodePhone() }>
+                <TouchableNativeFeedback onPress={() => this.handleSendCode()}>
                     <View style={styles.buttonWrap}>
                         <Text style={styles.buttonText}>{_('send').toUpperCase()}</Text>
                     </View>
@@ -84,15 +138,15 @@ export default class ContactVerification extends Component{
             typeCodePhone = <View style={{marginLeft: 50, flexDirection: 'row', marginTop: 10, marginBottom: 15}}>
                 <View style={{flex: 1}}>
                     <TextInput
-                        onChangeText={(password) => this.setState({password})}
-                        value={this.state.password}
+                        onChangeText={(code) => this.setState({code})}
+                        value={this.state.code}
                         keyboardType='numeric'
                         style={{flex: 1, marginRight: 10, }}
                         placeholder={_('code')}
                     />
                 </View>
                 <View style={{width: 80}}>
-                    <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
+                    <TouchableNativeFeedback onPress={() => this.handleVerifyCode()}>
                         <View style={styles.buttonWrap}>
                             <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                         </View>
@@ -113,7 +167,9 @@ export default class ContactVerification extends Component{
                     title={_('Contact verification')}
                     elevation={0}
                     back={true}/>
+                {loader}
                 <View style={styles.container}>
+
                     <View style={[styles.border]}>
                         <View style={styles.row}>
                             <Icon name="phone-android" size={30} style={{color: '#BE2166'}}/>
@@ -121,9 +177,9 @@ export default class ContactVerification extends Component{
                                 <View style={styles.a}>
                                     <View>
                                         <Text>{_('Phone number')}</Text>
-                                        <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>+420 589 654 478</Text>
+                                        <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>{this.props.user.phone_number}</Text>
                                     </View>
-                                    <View style={{width: 80}}>
+                                    <View style={{width: 80, alignItems: 'flex-end'}}>
                                         {verifyPhoneButton}
                                     </View>
                                 </View>
@@ -137,7 +193,7 @@ export default class ContactVerification extends Component{
                         <View style={styles.a}>
                             <View>
                                 <Text>{_('email')}</Text>
-                                <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>gnorom1@seznam.cz</Text>
+                                <Text style={{color: '#064769',fontWeight: '500', fontSize: 16}}>{this.props.user.email}</Text>
                             </View>
                             <Icon name="check-circle" size={25} style={styles.b}/>
                         </View>
@@ -145,14 +201,6 @@ export default class ContactVerification extends Component{
                 </View>
             </DrawerLayoutAndroid>
         )
-    }
-
-    setStateVerifyPhone(){
-        this.setState({verifyPhone: !this.state.verifyPhone})
-    }
-
-    setStateTypeCodePhone(){
-        this.setState({typeCodePhone: true})
     }
 }
 

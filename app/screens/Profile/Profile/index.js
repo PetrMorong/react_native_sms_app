@@ -37,7 +37,7 @@ const mapStateToProps = (store) => {
         countries: store.user.user.countries,
         profile: store.profile
     }
-}
+};
 
 export default class Profile extends Component {
 
@@ -190,7 +190,7 @@ export default class Profile extends Component {
         }).then(image => {
             this.setModalVisible(false);
 
-            this.props.dispatch(save('profile/save-image', {photo: image.data}));
+            this.props.dispatch(save('profile/save-image', {reducer: 'profile'} ,{photo: image.data}));
 
             let map = fromJS(this.props.user).merge({photo: image.data}).toJS();
 
@@ -213,7 +213,7 @@ export default class Profile extends Component {
         }).then(image => {
             this.setModalVisible(false);
 
-            this.props.dispatch(save('profile/save-image', {photo: image.data}));
+            this.props.dispatch(save('profile/save-image', {reducer: 'profile'} ,{photo: image.data}));
 
             let map = fromJS(this.props.user).merge({photo: image.data}).toJS();
 

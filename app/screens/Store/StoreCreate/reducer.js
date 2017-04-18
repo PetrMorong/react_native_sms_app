@@ -9,7 +9,7 @@ export default function reducer(state={
 }, action){
 
     try{
-        if(action.meta.reducer !== "changePassword"){
+        if(action.meta.reducer !== "storeCreate"){
             return state;
         }
     }catch(e){
@@ -28,7 +28,7 @@ export default function reducer(state={
 
     onSaveRejected(result, action);
 
-    onSaveFulfilled(result, action);
+    onSaveFulfilled(result, action)({storeId: action.payload});
 
     return result;
 }

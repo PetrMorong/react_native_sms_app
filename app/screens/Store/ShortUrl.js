@@ -21,15 +21,15 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Color from '../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/index'
-import { Actions } from 'react-native-router-flux';
 import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
-
+import { saveImage } from '../../actions/index'
+import { fromJS } from 'immutable';
+import { Actions } from 'react-native-router-flux';
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations,
+        storeSettings: store.storeSettings,
     }
 }
 
@@ -38,11 +38,20 @@ export default class ShortUrl extends Component{
     constructor(props){
         super(props)
         this.state = {
-            url: '',
+            data: this.props.storeSettings.data.result,
             showHelp: false
         }
     }
 
+    handleSave(){
+        let map = fromJS(this.props.storeSettings).mergeDeep({data: {result: this.state.data}}).toJS();
+
+        this.props.dispatch({type: 'CHANGE_STORE', meta: {reducer: 'storeSettings'} ,payload: map});
+
+        this.props.dispatch(saveImage('store/save-store', this.state.data));
+
+        Actions.pop();
+    }
 
     render() {
         let menu  = <Menu/>;
@@ -83,11 +92,16 @@ export default class ShortUrl extends Component{
                     back={true}/>
                 <View style={styles.container}>
                     <View style={{padding: 15}}>
-                        <TextInput
-                            onChangeText={(url) => this.setState({url})}
-                            value={this.state.url}
-                            style={{marginLeft: 15, marginRight: 15, marginBottom: 15}}
-                            placeholder={_('Short url')}/>
+                        <Picker
+                            style={{width: window.width /10 * 9 -5, marginTop: 5, marginLeft: 5, color: 'grey'}}
+                            selectedValue={this.state.data.url_shortener}
+                            onValueChange={(url_shortener) => this.setState({data: {...this.state.data, url_shortener}})}>
+                            <Picker.Item label='ur7.cz' value='ur7.cz'/>
+                            <Picker.Item label='ur7.eu' value='ur7.eu'/>
+                            <Picker.Item label='ur7.fr' value='ur7.fr'/>
+                            <Picker.Item label='ur7.co' value='ur7.co'/>
+                            <Picker.Item label='u1.pm' value='u1.pm'/>
+                        </Picker>
                     </View>
                     <View style={styles.separator}/>
                     <TouchableNativeFeedback onPress={() => this.setState({showHelp: !this.state.showHelp})}>
@@ -99,7 +113,7 @@ export default class ShortUrl extends Component{
                     {help}
                     <View style={{flex: 1, padding: 15, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                         <View style={{ alignItems: 'flex-end'}}>
-                            <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
+                            <TouchableNativeFeedback onPress={() => this.handleSave()}>
                                 <View style={styles.buttonWrap}>
                                     <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                                 </View>

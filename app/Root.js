@@ -5,16 +5,16 @@ import { getTranslations } from './actions/index'
 import { AsyncStorage } from 'react-native';
 import Translator from './Translator';
 
-const mapStateToProps = (store) => {
-    return{
-        translations: store.translator.translations
-    }
-}
+
 
 const translatorInstance = new Translator;
 
 window._ = function (key,defaultLabel) {
     return translatorInstance.translate(key, defaultLabel);
+};
+
+window.numberToBool= function (arg) {
+  return  !!+arg;
 };
 
 
@@ -46,4 +46,4 @@ export default class Root extends Component {
 
 }
 
-module.exports = connect(mapStateToProps)(Root);
+module.exports = connect()(Root);

@@ -11,7 +11,9 @@ import baseInformations from './screens/Profile/BaseInformations/reducer';
 import changePassword from './screens/Profile/ChangePassword/reducer';
 import paymentData from './screens/Profile/PaymentData/reducer';
 import contactVerification from './screens/Profile/ContactVerification/reducer';
-
+import storeCreate from './screens/Store/StoreCreate/reducer';
+import storeSettings from './screens/Store/StoreSettings/reducer';
+import notifications from './screens/Store/Notifications/reducer';
 
 export default combineReducers({
     dashboard,
@@ -22,5 +24,8 @@ export default combineReducers({
     baseInformations,
     changePassword,
     paymentData,
-    contactVerification
+    contactVerification,
+    storeCreate,
+    storeSettings,
+    notifications
 })

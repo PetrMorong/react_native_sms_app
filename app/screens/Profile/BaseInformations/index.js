@@ -84,7 +84,8 @@ export default class BaseInformations extends Component {
 
     handleSave() {
         let data = this.createData();
-        this.props.dispatch(save('profile/save', data));
+
+        this.props.dispatch(save('profile/save', {reducer: 'baseInformations"'} ,data));
 
         let map = fromJS(this.props.user).merge(data).toJS();
 

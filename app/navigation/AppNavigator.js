@@ -24,19 +24,20 @@ import CampaignList from '../screens/Campaign/CampaignList'
 import CampaignDeal from '../screens/Campaign/CampaignDeal'
 import DealPreview from '../screens/Campaign/DealPreview'
 
-import StoreCreate from '../screens/Store/StoreCreate'
-import StoreSettings from '../screens/Store/StoreSettings'
+import StoreCreate from '../screens/Store/StoreCreate/index'
+import StoreSettings from '../screens/Store/StoreSettings/index'
 import ColorPickerComponent from '../screens/Store/ColorPicker'
 import CompanyData from '../screens/Store/CompanyData'
 import ShortUrl from '../screens/Store/ShortUrl'
-import Notifications from '../screens/Store/Notifications'
-import CustomerSms from '../screens/Store/CustomerSms'
-import CustomerEmail from '../screens/Store/CustomerEmail'
-import OwnerSms from '../screens/Store/OwnerSms'
-import OwnerEmail from '../screens/Store/OwnerEmail'
+import Notifications from '../screens/Store/Notifications/index'
+import CustomerSms from '../screens/Store/Notifications/CustomerSms'
+import CustomerEmail from '../screens/Store/Notifications/CustomerEmail'
+import OwnerSms from '../screens/Store/Notifications/OwnerSms'
+import OwnerEmail from '../screens/Store/Notifications/OwnerEmail'
 import Language from '../screens/Store/Language'
 import StoreList from '../screens/Store/StoreList'
 import StorePreview from '../screens/Store/StorePreview'
+import OrderForm from '../screens/Store/OrderForm'
 
 import Order from '../screens/Orders/Order'
 import OrderList from '../screens/Orders/OrderList'
@@ -99,6 +100,7 @@ export default class AppNavigator extends Component {
                     <Scene key='StoreCreate' component={StoreCreate} hideNavBar/>
                     <Scene key='StoreSettings' component={StoreSettings} hideNavBar/>
                     <Scene key='StorePreview' component={StorePreview} hideNavBar/>
+                    <Scene key='OrderForm' component={OrderForm} hideNavBar/>
                     <Scene key='Language' component={Language} hideNavBar/>
                     <Scene key='ShortUrl' component={ShortUrl} hideNavBar/>
                     <Scene key='Notifications' component={Notifications} hideNavBar/>

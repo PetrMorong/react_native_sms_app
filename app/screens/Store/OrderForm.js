@@ -2,19 +2,23 @@
  * Created by Petr on 7.2.2017.
  */
 import React, { Component } from 'react';
-import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, ScrollView} from 'react-native';
+import { StyleSheet, Button,  Text, Picker, View, Image, Switch,  Dimensions, TextInput, TouchableNativeFeedback, TouchableWithoutFeedback, ScrollView, DrawerLayoutAndroid} from 'react-native';
 import Checkbox from '../../components/CheckBox'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Color from '../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/index'
+import { saveImage } from '../../actions/index'
 import { Actions } from 'react-native-router-flux';
+import Menu from '../../components/Menu';
+import Toolbar from '../../components/Toolbar';
+import { fromJS } from 'immutable';
+
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations,
+        storeSettings: store.storeSettings
     }
-}
+};
 
 
 const window = Dimensions.get('window');
@@ -23,31 +27,25 @@ export default class OrderFormComponent extends Component{
     constructor(props){
         super(props)
         this.state = {
-            form_headline: 'Order form',
-            send_button: 'SEND',
-            active: true,
-            checked: {
-                first_name: true,
-                last_name: true,
-                phone: false,
-                email: false,
-                country: false,
-                city: false,
-                state: false,
-                street: false,
-                zip: false,
-                company: false,
-                company_id: false,
-                company_vat: false
-            }
-
+            data: this.props.storeSettings.data.result
         }
     }
 
+    handleSave(){
+        let map = fromJS(this.props.storeSettings).mergeDeep({data: {result: {...this.state.data}}}).toJS();
+
+        this.props.dispatch({type: 'CHANGE_STORE', meta: {reducer: 'storeSettings'},payload: map});
+
+        this.props.dispatch(saveImage('store/save-store', {...this.state.data}));
+
+        Actions.pop();
+    }
+
     render(){
+        let menu  = <Menu/>;
 
         let first_name;
-        if(this.state.checked.first_name){
+        if(this.state.data.form_first_name){
             first_name = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('First name')}</Text>
                 <View style={styles.formInput}>
@@ -56,7 +54,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let last_name;
-        if(this.state.checked.last_name){
+        if(this.state.data.form_last_name){
             last_name = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Last name')}</Text>
                 <View style={styles.formInput}>
@@ -65,7 +63,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let phone;
-        if(this.state.checked.phone){
+        if(this.state.data.form_phone){
             phone = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Phone number')}</Text>
                 <View style={styles.formInput}>
@@ -74,7 +72,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let email;
-        if(this.state.checked.email){
+        if(this.state.data.form_email){
             email = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Email')}</Text>
                 <View style={styles.formInput}>
@@ -83,7 +81,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let country;
-        if(this.state.checked.country){
+        if(this.state.data.form_country){
             country = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Country')}</Text>
                 <View style={styles.formInput}>
@@ -92,7 +90,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let city;
-        if(this.state.checked.city){
+        if(this.state.data.form_city){
             city = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('City')}</Text>
                 <View style={styles.formInput}>
@@ -101,7 +99,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let state;
-        if(this.state.checked.state){
+        if(this.state.data.form_state){
             state = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('State')}</Text>
                 <View style={styles.formInput}>
@@ -110,7 +108,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let street;
-        if(this.state.checked.street){
+        if(this.state.data.form_street){
             street = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Street')}</Text>
                 <View style={styles.formInput}>
@@ -119,7 +117,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let zip;
-        if(this.state.checked.zip){
+        if(this.state.data.form_zip){
             zip = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Zip')}</Text>
                 <View style={styles.formInput}>
@@ -128,7 +126,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let company;
-        if(this.state.checked.company){
+        if(this.state.data.form_company){
             company = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Company')}</Text>
                 <View style={styles.formInput}>
@@ -137,7 +135,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let company_id;
-        if(this.state.checked.company_id){
+        if(this.state.data.form_company_id){
             company_id = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Company id')}</Text>
                 <View style={styles.formInput}>
@@ -146,7 +144,7 @@ export default class OrderFormComponent extends Component{
         }
 
         let company_vat;
-        if(this.state.checked.company_vat){
+        if(this.state.data.form_company_vat){
             company_vat = <View style={{width: window.width/3, height: 60, alignSelf: 'flex-end'}}>
                 <Text>{_('Company vat')}</Text>
                 <View style={styles.formInput}>
@@ -155,103 +153,103 @@ export default class OrderFormComponent extends Component{
         }
 
         let view;
-        if(this.state.active){
+        if(this.state.data.hide_form){
             view = <View style={{marginBottom: 20}}>
                 <View style={[styles.separator, {marginBottom: 20}]}/>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <TouchableNativeFeedback onPress={() => this.check('first_name')}>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_first_name: !this.state.data.form_first_name }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.first_name} onCheck={() => this.check('first_name')} />
+                            <Checkbox checked={this.state.data.form_first_name} onCheck={() => this.setState({data: {...this.state.data, form_first_name: !this.state.data.form_first_name }})} />
                             <Text style={styles.b}>{_('First name')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.check('last_name')}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_last_name: !this.state.data.form_last_name }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.lastName} onCheck={() => this.check('last_name')} />
+                            <Checkbox checked={this.state.data.form_last_name} onCheck={() => this.setState({data: {...this.state.data, form_last_name: !this.state.data.form_last_name }})} />
                             <Text style={styles.b}>{_('Last name')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.check('phone')}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_phone: !this.state.data.form_phone }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.phone} onCheck={() => this.check('phone')}/>
+                            <Checkbox checked={this.state.data.form_phone} onCheck={() => this.setState({data: {...this.state.data, form_phone: !this.state.data.form_phone }})}/>
                             <Text style={styles.b}>{_('Phone number')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                     <TouchableNativeFeedback onPress={() => this.check('email')}>
+                    </TouchableWithoutFeedback>
+                     <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_email: !this.state.data.form_email }})}>
                          <View style={styles.a}>
-                             <Checkbox checked={this.state.checked.email} onCheck={() => this.check('email')} />
+                             <Checkbox checked={this.state.data.form_email} onCheck={() => this.setState({data: {...this.state.data, form_email: !this.state.data.form_email }})} />
                              <Text style={styles.b}>{_('Email')}</Text>
                          </View>
-                     </TouchableNativeFeedback>
+                     </TouchableWithoutFeedback>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
-                    <TouchableNativeFeedback onPress={() => this.check('country')}>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_country: !this.state.data.form_country }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.country} onCheck={() => this.check('country')}/>
+                            <Checkbox checked={this.state.data.form_country} onCheck={() => this.setState({data: {...this.state.data, form_country: !this.state.data.form_country }})}/>
                             <Text style={styles.b}>{_('Country')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.check('city')}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_city: !this.state.data.form_city }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.city} onCheck={() => this.check('city')}/>
+                            <Checkbox checked={this.state.data.form_city} onCheck={() => this.setState({data: {...this.state.data, form_city: !this.state.data.form_city }})}/>
                             <Text style={styles.b}>{_('City')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.check('state')}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_state: !this.state.data.form_state }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.state} onCheck={() => this.check('state')}/>
+                            <Checkbox checked={this.state.data.form_state} onCheck={() => this.setState({data: {...this.state.data, form_state: !this.state.data.form_state }})}/>
                             <Text style={styles.b}>{_('State')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.check('street')}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_street: !this.state.data.form_street }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.street} onCheck={() => this.check('street')}/>
+                            <Checkbox checked={this.state.data.form_street} onCheck={() => this.setState({data: {...this.state.data, form_street: !this.state.data.form_street }})}/>
                             <Text style={styles.b}>{_('Street')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableWithoutFeedback>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15}}>
-                    <TouchableNativeFeedback onPress={() => this.check('zip')}>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_zip: !this.state.data.form_zip }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.zip} onCheck={() => this.check('zip')}/>
+                            <Checkbox checked={this.state.data.form_zip} onCheck={() => this.setState({data: {...this.state.data, form_zip: !this.state.data.form_zip }})}/>
                             <Text style={styles.b}>{_('Zip')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.check('company')}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_company: !this.state.data.form_company }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.company} onCheck={() => this.check('company')}/>
+                            <Checkbox checked={this.state.data.form_company} onCheck={() => this.setState({data: {...this.state.data, form_company: !this.state.data.form_company }})}/>
                             <Text style={styles.b}>{_('Company')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.check('company_id')}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_company_id: !this.state.data.form_company_id }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.company_id} onCheck={() => this.check('company_id')}/>
+                            <Checkbox checked={this.state.data.form_company_id} onCheck={() => this.setState({data: {...this.state.data, form_company_id: !this.state.data.form_company_id }})}/>
                             <Text style={styles.b}>{_('Company id')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => this.check('company_vat')}>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.setState({data: {...this.state.data, form_company_vat: !this.state.data.form_company_vat }})}>
                         <View style={styles.a}>
-                            <Checkbox checked={this.state.checked.company_vat} onCheck={() => this.check('company_vat')}/>
+                            <Checkbox checked={this.state.data.form_company_vat} onCheck={() => this.setState({data: {...this.state.data, form_company_vat: !this.state.data.form_company_vat }})}/>
                             <Text style={styles.b}>{_('Company vat')}</Text>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableWithoutFeedback>
                 </View>
                 <View style={styles.separator}/>
                 <View style={{flexDirection: 'row', marginBottom: 15}}>
                     <TextInput
-                        onChangeText={(form_headline) => this.setState({form_headline})}
-                        value={this.state.form_headline}
+                        onChangeText={(value) => this.setState({data: {...this.state.data, text_form_title: value}})}
+                        value={this.state.data.text_form_title}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
                         placeholder={_('Form headline')}/>
                     <TextInput
-                        onChangeText={(send_button) => this.setState({send_button})}
-                        value={this.state.send_button}
+                        onChangeText={(value) => this.setState({data: {...this.state.data, text_button: value}})}
+                        value={this.state.data.text_button}
                         style={{flex: 1, marginLeft: 10, marginRight: 10}}
                         placeholder={_('Send button')}/>
                 </View>
                 <View style={{backgroundColor: '#C3CAD4', padding: 15}}>
                     <View style={{alignItems: 'center', marginTop: 10}}>
-                        <Text style={{fontSize: 18}}>Form headline</Text>
+                        <Text style={{fontSize: 18}}>{this.state.data.text_form_title}</Text>
                     </View>
                     <View style={{marginTop: 15, flexWrap: 'wrap', flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
                             {first_name}
@@ -268,41 +266,47 @@ export default class OrderFormComponent extends Component{
                             {company_vat}
                     </View>
                     <View style={{alignItems: 'center', marginTop: 15}}>
-                        <Text style={styles.fakeButton}>SEND</Text>
+                        <Text style={styles.fakeButton}>{this.state.data.text_button}</Text>
                     </View>
                 </View>
 
             </View>
         }
 
-        return(
-            <ScrollView style={styles.container}>
-                <View style={{marginBottom: 10}}>
-                    <View style={styles.switchWrap}>
-                        <Text>{_('Activate')}</Text>
-                        <Switch
-                            onValueChange={(value) => this.setState({active: value})}
-                            value={this.state.active} />
-                    </View>
-                </View>
-                {view}
-                <View style={styles.separator}/>
-                <View style={{margin: 15, alignItems: 'flex-end'}}>
-                    <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
-                        <View style={styles.buttonWrap}>
-                            <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
+        return (
+            <DrawerLayoutAndroid
+                drawerWidth={300}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                ref={(_drawer) => this.drawer = _drawer}
+                renderNavigationView={() => menu}>
+                <Toolbar
+                    openMenu={() => this.drawer.openDrawer()}
+                    background="container"
+                    title={_('Order form')}
+                    elevation={0}
+                    back={true}/>
+                <ScrollView style={styles.container}>
+                    <View style={{marginBottom: 10}}>
+                        <View style={styles.switchWrap}>
+                            <Text>{_('Activate')}</Text>
+                            <Switch
+                                onValueChange={(value) => this.setState({data: {...this.state.data, hide_form: value}})}
+                                value={this.state.data.hide_form} />
                         </View>
-                    </TouchableNativeFeedback>
-                </View>
-            </ScrollView>
-
+                    </View>
+                    {view}
+                    <View style={styles.separator}/>
+                    <View style={{margin: 15, alignItems: 'flex-end'}}>
+                        <TouchableNativeFeedback onPress={() => this.handleSave()}>
+                            <View style={styles.buttonWrap}>
+                                <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+                    </View>
+                </ScrollView>
+            </DrawerLayoutAndroid>
         )
-    }
 
-    check(key){
-        let array = JSON.parse(JSON.stringify(this.state.checked));
-        array[key] = !array[key];
-        this.setState({checked: array})
     }
 }
 
@@ -324,6 +328,7 @@ const styles = StyleSheet.create({
     a: {
         alignItems: 'center',
         width: window.width / 4 - 30,
+        marginBottom: 8
     },
     b: {
         marginTop: 5,

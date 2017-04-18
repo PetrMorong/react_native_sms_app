@@ -14,21 +14,19 @@ import {
     ScrollView,
     DrawerLayoutAndroid
 } from 'react-native';
-import Menu from '../../components/Menu';
-import Toolbar from '../../components/Toolbar';
-import Color from '../../config/Variables';
+import Menu from '../../../components/Menu';
+import Toolbar from '../../../components/Toolbar';
+import Color from '../../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from './actions';
+import { save, fetch } from '../../../actions/index';
 import { Actions } from 'react-native-router-flux';
-import Button from '../../components/Button';
-
-
+import Button from '../../../components/Button';
 
 const window = Dimensions.get('window');
 
 const mapStateToProps = (store) => {
     return{
-        user: store.user.user
+        storeCreate: store.storeCreate
     }
 }
 
@@ -41,6 +39,26 @@ export default class StoreCreate extends Component{
         }
     }
 
+    componentWillReceiveProps(nextProps){
+
+        if(nextProps.storeCreate.saving){
+            this.setState({buttonStatus: 'saving'})
+        }
+
+        if(nextProps.storeCreate.saved){
+            this.setState({buttonStatus: 'saved'})
+            Actions.StoreSettings({id: nextProps.storeCreate.storeId})
+        }
+
+        if(nextProps.storeCreate.error){
+            this.setState({buttonStatus: 'error'})
+        }
+    }
+
+    handleSave(){
+        this.props.dispatch(save('store/create-store', {reducer: 'storeCreate'},{name: this.state.text}))
+    }
+
 
     render() {
         let menu  = <Menu/>;
@@ -50,15 +68,15 @@ export default class StoreCreate extends Component{
                 drawerPosition={DrawerLayoutAndroid.positions.Left}
                 ref={(_drawer) => this.drawer = _drawer}
                 renderNavigationView={() => menu}>
-                <Toolbar
-                    openMenu={() => this.drawer.openDrawer()}
-                    background="containerNoBg"
-                    title={_('Create store')}
-                    elevation={0}/>
                 <ScrollView >
+                    <Toolbar
+                        openMenu={() => this.drawer.openDrawer()}
+                        background="containerNoBg"
+                        title={_('Create store')}
+                        elevation={0}/>
                     <View style={styles.container}>
                         <View style={styles.imageContainer}>
-                            <Image style={styles.image} resizeMode='stretch' source={require('../../images/CreateStore.png')}/>
+                            <Image style={styles.image} resizeMode='stretch' source={require('../../../images/CreateStore.png')}/>
                         </View>
                         <View style={{padding: 15, marginTop: 30}}>
                             <TextInput
@@ -66,15 +84,15 @@ export default class StoreCreate extends Component{
                                 value={this.state.text}
                                 placeholder={_('Store name')}/>
                         </View>
-                        <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
-                            <Button
-                                click={() => this.handleSave()}
-                                text={_('Save').toUpperCase()}
-                                buttonStatus={this.state.buttonStatus}
-                            />
-                        </View>
                     </View>
                 </ScrollView>
+                <View style={{alignItems: 'flex-end', justifyContent: 'flex-end', margin: 15}}>
+                    <Button
+                        click={() => this.handleSave()}
+                        text={_('Save').toUpperCase()}
+                        buttonStatus={this.state.buttonStatus}
+                    />
+                </View>
             </DrawerLayoutAndroid>
         )
     }
@@ -84,7 +102,7 @@ export default class StoreCreate extends Component{
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
-        height: window.height-70
+        height: window.height - 160
     },
     separator: {
         borderBottomWidth: 1,
@@ -97,21 +115,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     image: {
-        height: 250,
+        height: 235,
         width: 300
-    },
-    buttonWrap: {
-        width: 110,
-        borderRadius: 2,
-        backgroundColor: Color.button,
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 2
-    },
-    buttonText: {
-        color: Color.buttonText,
-        fontWeight: '500',
     }
 });
 

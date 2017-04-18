@@ -21,15 +21,16 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Color from '../../config/Variables';
 import { connect } from 'react-redux';
-import { save } from '../../actions/index'
+import { save, fetch, saveImage } from '../../actions/index'
 import { Actions } from 'react-native-router-flux';
 import Menu from '../../components/Menu';
 import Toolbar from '../../components/Toolbar';
+import { fromJS } from 'immutable';
 
 
 const mapStateToProps = (store) => {
     return{
-        _: store.translator.translations,
+        storeSettings: store.storeSettings,
     }
 }
 
@@ -38,13 +39,24 @@ export default class Language extends Component{
         super(props)
         this.state = {
             languages: {
-                gb: [false, 'English', ],
-                cz: [true, 'Čeština', '../../images/flags/32/cz.png'],
-                sk: [false, 'Slovenština', '../../images/flags/32/sk.png'],
-                fr: [false, 'French', '../../images/flags/32/fr.png']
+                en: ['English', '../../images/flags/32/gb.png'],
+                cz: ['Čeština', '../../images/flags/32/cz.png'],
+                sk: ['Slovenčina', '../../images/flags/32/sk.png'],
+                fr: ['Français', '../../images/flags/32/fr.png']
             },
-            active: 'cz'
+            active: this.props.storeSettings.data.result.language,
+            data: this.props.storeSettings.data.result
         }
+    }
+
+    handleSave(){
+        let map = fromJS(this.props.storeSettings).mergeDeep({data: {result: {...this.state.data, language: this.state.active}}}).toJS();
+
+        this.props.dispatch({type: 'CHANGE_STORE', meta: {reducer: 'storeSettings'},payload: map});
+
+        this.props.dispatch(saveImage('store/save-store', {...this.state.data, language: this.state.active}));
+
+        Actions.pop();
     }
 
     render() {
@@ -53,15 +65,15 @@ export default class Language extends Component{
         let languages;
         languages = Object.keys(this.state.languages).map((key) => {
             return(
-                <TouchableNativeFeedback onPress={() => this.select(key)} key={key}>
+                <TouchableWithoutFeedback onPress={() => this.select(key)} key={key}>
                     <View style={styles.row}>
                         {this.flag(key)}
                         <View style={[styles.a, styles.border]}>
-                            <Text style={{color: 'black', fontSize: 20}}>{this.state.languages[key][1]}</Text>
+                            <Text style={{color: 'black', fontSize: 20}}>{this.state.languages[key][0]}</Text>
                             {this.state.active == key && <Icon name="check-circle" size={25} style={styles.b}/>}
                         </View>
                     </View>
-                </TouchableNativeFeedback>
+                </TouchableWithoutFeedback>
             )
         });
 
@@ -82,7 +94,7 @@ export default class Language extends Component{
                     {languages}
                     <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end'}}>
                         <View style={{ alignItems: 'flex-end'}}>
-                            <TouchableNativeFeedback onPress={() => this.props.dispatch(save())}>
+                            <TouchableNativeFeedback onPress={() => this.handleSave()}>
                                 <View style={styles.buttonWrap}>
                                     <Text style={styles.buttonText}>{_('save').toUpperCase()}</Text>
                                 </View>
@@ -95,7 +107,7 @@ export default class Language extends Component{
     }
 
     flag(name){
-        if(name == 'gb'){
+        if(name == 'en'){
             return(<Image source={require('../../images/flags/32/gb.png')}/>)
         }
         if(name == 'cz'){
